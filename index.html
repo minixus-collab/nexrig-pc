@@ -1,528 +1,435 @@
-<!DOCTYPE html>
-<html lang="fr">
+from pathlib import Path
+
+html = r'''<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Proposition créative indépendante pour Keeko.ma, marque de vêtements bébé au Maroc." />
-  <title>Keeko — Proposition e-commerce par MOHAMMAD AMINE</title>
-<style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NEXRIG - Gaming PC Parts & Components</title>
+  <style>
+    :root{
+      --bg:#090b10;
+      --panel:#11151d;
+      --panel2:#171c26;
+      --text:#f4f7fb;
+      --muted:#9aa3b2;
+      --line:#252c39;
+      --accent:#7c5cff;
+      --accent2:#20d6a7;
+      --danger:#ff5d73;
+      --white:#fff;
+      --shadow:0 20px 55px rgba(0,0,0,.28);
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,Helvetica,sans-serif;line-height:1.55}
+    a{text-decoration:none;color:inherit}
+    button{font:inherit}
+    img{max-width:100%;display:block}
+    .container{width:min(1180px,calc(100% - 36px));margin:auto}
 
-:root{
-  --ink:#1c2026;
-  --muted:#6d7077;
-  --pink:#e37988;
-  --pink2:#f5c9cf;
-  --cream:#fffaf6;
-  --sand:#efe3d7;
-  --blue:#dfeaf0;
-  --line:#eadfd7;
-  --white:#fff;
-  --shadow:0 22px 60px rgba(43,31,26,.12);
-}
-*{box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{margin:0;font-family:"DM Sans",sans-serif;color:var(--ink);background:#fff;line-height:1.55}
-a{text-decoration:none;color:inherit}
-button{font:inherit}
-.container{width:min(1180px,calc(100% - 40px));margin:auto}
-.topbar{background:var(--ink);color:#fff;font-size:12px}
-.topbar-inner{min-height:34px;display:flex;align-items:center;justify-content:center;gap:16px}
-.top-sale{color:#ffd6dc;font-weight:700}
-.site-header{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.94);backdrop-filter:blur(16px);border-bottom:1px solid #eee}
-.nav{height:82px;display:flex;align-items:center;gap:30px}
-.brand{display:flex;flex-direction:column;line-height:1}
-.brand-name{font:900 31px "Nunito";letter-spacing:-1.8px}
-.brand-name span{color:var(--pink)}
-.brand small{font-size:9px;color:#787b80;margin-top:5px}
-.nav-links{margin-left:auto;display:flex;gap:28px}
-.nav-links a{font-weight:600;font-size:14px}
-.nav-links a:hover{color:var(--pink)}
-.nav-icons{display:flex;gap:9px}
-.nav-icons a{width:39px;height:39px;border:1px solid #e7e7e7;border-radius:50%;display:grid;place-items:center}
-.menu-toggle{display:none;background:none;border:0;margin-left:auto}
-.menu-toggle span{display:block;width:24px;height:2px;background:#222;margin:5px}
-.hero{background:linear-gradient(120deg,#fff 0 44%,#fff5ef 44% 100%);overflow:hidden}
-.hero-grid{min-height:690px;display:grid;grid-template-columns:1fr 1fr;gap:55px;align-items:center;padding:65px 0}
-.eyebrow{font-size:11px;font-weight:800;letter-spacing:.18em;color:#9b7772}
-.hero h1{font:900 clamp(50px,6vw,80px)/.96 "Nunito";letter-spacing:-4px;margin:12px 0 24px}
-.hero h1 em{font-style:normal;color:var(--pink)}
-.lead{font-size:18px;color:#5e6268;max-width:580px}
-.hero-actions{display:flex;gap:12px;margin:30px 0 38px}
-.btn{display:inline-flex;align-items:center;justify-content:center;min-height:50px;padding:0 24px;border-radius:999px;font-weight:700;border:1px solid transparent;transition:.25s}
-.btn:hover{transform:translateY(-2px)}
-.btn-primary{background:var(--pink);color:#fff;box-shadow:0 13px 30px rgba(227,121,136,.26)}
-.btn-ghost{border-color:#dfdfdf;background:#fff}
-.btn-dark{background:var(--ink);color:#fff}
-.trust-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-.trust-row div{display:grid;grid-template-columns:auto 1fr;column-gap:9px;align-items:center}
-.trust-row div>span{grid-row:1/3;font-size:23px}
-.trust-row b{font-size:12px}
-.trust-row small{font-size:10px;color:#888}
-.hero-stage{height:525px;position:relative}
-.blob{position:absolute;border-radius:50%}
-.blob-a{width:410px;height:410px;background:#f0d8ca;right:20px;top:50px}
-.blob-b{width:190px;height:190px;background:#f5cbd1;left:20px;bottom:24px}
-.hero-photo{position:absolute;width:370px;height:475px;right:75px;top:22px;background:#e8d2c5;border-radius:190px 190px 35px 35px;display:grid;place-items:center;box-shadow:var(--shadow);overflow:hidden}
-.baby-card{text-align:center;width:82%;height:82%;background:linear-gradient(#fff8f4,#f6e7dc);border-radius:160px 160px 24px 24px;position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center}
-.baby-emoji{font-size:170px;filter:drop-shadow(0 15px 12px rgba(0,0,0,.08))}
-.sale-badge{position:absolute;top:35px;right:20px;background:var(--pink);color:#fff;border-radius:50%;width:61px;height:61px;display:grid;place-items:center;font-weight:800}
-.photo-caption{font-size:10px;letter-spacing:.16em;font-weight:800}
-.floating-note{position:absolute;background:#fff;border-radius:20px;padding:15px 18px;box-shadow:var(--shadow);font-size:12px}
-.note-a{left:0;top:80px}.note-a span{color:var(--pink)}
-.note-b{right:-4px;bottom:30px}
-.marquee{overflow:hidden;background:var(--pink);color:#fff;padding:13px 0}
-.marquee-track{display:flex;gap:28px;white-space:nowrap;min-width:max-content;animation:marquee 20s linear infinite;font:800 12px "Nunito";letter-spacing:.15em}
-.marquee i{font-style:normal}
-@keyframes marquee{to{transform:translateX(-50%)}}
-.section{padding:95px 0}
-.section-head{display:flex;align-items:end;justify-content:space-between;gap:24px;margin-bottom:34px}
-.section-head h2,.experience-copy h2,.mobile-copy h2,.proposal-card h2{font:800 clamp(32px,4vw,48px)/1.05 "Nunito";letter-spacing:-1.7px;margin:9px 0 0;max-width:760px}
-.text-link{font-weight:700;border-bottom:1px solid;padding-bottom:4px}
-.collection-grid{display:grid;grid-template-columns:1.15fr 1fr 1fr;gap:20px}
-.collection-card{min-height:390px;border-radius:30px;padding:28px;display:flex;flex-direction:column;justify-content:space-between;overflow:hidden;transition:.3s}
-.collection-card:hover{transform:translateY(-5px)}
-.collection-card.rose{background:#f8dfe3}
-.collection-card.blue{background:#e5eff3}
-.collection-card.beige{background:#f3e9df}
-.collection-art{font-size:145px;text-align:center;filter:drop-shadow(0 18px 15px rgba(0,0,0,.08))}
-.collection-card small{font-size:10px;letter-spacing:.15em;text-transform:uppercase}
-.collection-card h3{font:800 31px "Nunito";margin:4px 0}
-.collection-card span{font-weight:700;font-size:13px}
-.experience{padding:95px 0;background:#faf7f4}
-.experience-grid{display:grid;grid-template-columns:1fr 1fr;gap:65px;align-items:center}
-.experience-image{min-height:510px;background:linear-gradient(145deg,#ebddd0,#d6bfae);border-radius:38px;position:relative;display:grid;place-items:center;overflow:hidden}
-.fabric{font-size:220px}
-.quality-stamp{position:absolute;top:32px;left:32px;background:#fff;width:130px;height:130px;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:var(--shadow)}
-.quality-stamp span{font-size:10px;letter-spacing:.14em}.quality-stamp b{font:900 31px "Nunito";color:var(--pink)}.quality-stamp small{text-align:center;font-size:9px}
-.experience-copy p,.mobile-copy p,.proposal-card p{font-size:17px;color:var(--muted)}
-.benefit-list{margin-top:28px}
-.benefit-list>div{display:flex;gap:18px;padding:17px 0;border-bottom:1px solid #e4ded9}
-.benefit-list>div>span{color:var(--pink);font-weight:800}
-.benefit-list b{display:block}.benefit-list small{color:#858585}
-.products-section{overflow:hidden}
-.slider-controls{display:flex;gap:10px}
-.slider-controls button{width:45px;height:45px;border:1px solid #ddd;background:#fff;border-radius:50%;cursor:pointer}
-.product-track{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(270px,1fr);gap:18px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;padding:5px 2px 20px}
-.product-track::-webkit-scrollbar{display:none}
-.product-card{scroll-snap-align:start;border:1px solid #eaeaea;border-radius:23px;overflow:hidden;background:#fff}
-.product-img{height:330px;position:relative;display:grid;place-items:center}
-.product-img.warm{background:#f2dfd3}.product-img.sand{background:#eee6db}.product-img.pink{background:#f4dce2}.product-img.cream{background:#f6eee4}
-.cloth{font-size:140px;filter:drop-shadow(0 15px 10px rgba(0,0,0,.08))}
-  .product-photo{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  display:block;
-  filter:none;
-}
-.discount{position:absolute;left:15px;top:15px;background:var(--pink);color:white;border-radius:999px;padding:6px 10px;font-weight:800;font-size:11px}
-.heart{position:absolute;right:14px;top:14px;width:40px;height:40px;border:0;border-radius:50%;background:#fff;font-size:21px;cursor:pointer}
-.heart.active{background:var(--pink);color:white}
-.product-info{padding:20px}
-.product-info small{color:#999}.product-info h3{font:800 18px/1.25 "Nunito";min-height:46px;margin:6px 0 13px}
-.price{display:flex;gap:10px;align-items:center}.price b{color:var(--pink);font-size:19px}.price del{color:#999;font-size:13px}
-.option-btn{margin-top:17px;width:100%;min-height:43px;border:1px solid var(--ink);border-radius:999px;background:#fff;font-weight:700;cursor:pointer}
-.option-btn:hover{background:var(--ink);color:#fff}
-.data-note{font-size:11px;color:#979797;margin-top:12px}
-.mobile-section{padding:100px 0;background:#25292f;color:#fff;overflow:hidden}
-.mobile-grid{display:grid;grid-template-columns:.85fr 1.15fr;align-items:center;gap:55px}
-.mobile-copy p{color:#c6c8cc}
-.mobile-copy ul{list-style:none;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:28px}
-.mobile-copy li:before{content:"✓";color:#f19aa6;margin-right:8px}
-.phones{height:590px;position:relative}
-.phone{position:absolute;width:250px;height:510px;border:10px solid #0e1114;border-radius:42px;background:#fff;color:var(--ink);box-shadow:0 30px 70px rgba(0,0,0,.28);overflow:hidden}
-.phone-left{left:70px;top:5px;transform:rotate(-5deg)}
-.phone-right{right:55px;bottom:0;transform:rotate(6deg)}
-.notch{position:absolute;top:0;left:50%;transform:translateX(-50%);width:95px;height:22px;background:#0e1114;border-radius:0 0 16px 16px;z-index:2}
-.phone-ui{padding:29px 12px 12px}
-.phone-header{display:flex;justify-content:space-between;font-size:12px;margin-bottom:12px}
-.phone-header b{font:900 18px "Nunito"}.phone-header b::first-letter{color:inherit}
-.phone-banner{background:#f4dfd4;border-radius:16px;padding:16px;min-height:185px;position:relative;overflow:hidden}
-.phone-banner small{font-size:8px;color:var(--pink);font-weight:800}.phone-banner h4{font:800 20px/1.05 "Nunito";margin:8px 0}.phone-banner>span{font-size:70px;position:absolute;right:-2px;bottom:0}
-.phone-chips{display:flex;gap:5px;margin:10px 0}.phone-chips i{font-style:normal;background:#f2f2f2;padding:6px 9px;border-radius:999px;font-size:8px}
-.phone-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}.phone-grid div{background:#f5eee8;border-radius:12px;height:115px;display:grid;place-items:center;font-size:45px}
-.product-phone{display:flex;flex-direction:column}.phone-product-img{height:255px;background:#f2e3d8;border-radius:16px;display:grid;place-items:center;font-size:120px}
-.product-phone>small{margin-top:13px;color:#999}.product-phone h4{font:800 18px "Nunito";margin:3px 0}.phone-price{color:var(--pink);font-size:20px}.product-phone>button{margin-top:auto;border:0;background:var(--pink);color:#fff;border-radius:999px;padding:13px;font-weight:800}
-.proposal{padding:85px 0}
-.proposal-card{background:linear-gradient(120deg,#f7e8df,#fff8f4);border-radius:36px;padding:50px;display:grid;grid-template-columns:1fr auto;gap:40px;align-items:center}
-.proposal-card p{max-width:740px}
-.proposal-actions{display:flex;flex-direction:column;gap:16px;align-items:center}
-footer{border-top:1px solid #eee;padding:35px 0}
-.footer-grid{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:20px;font-size:12px;color:#757575}
-.footer-grid>a{text-align:right}
-.reveal{opacity:0;transform:translateY(24px);transition:.7s ease}
-.reveal.visible{opacity:1;transform:none}
+    .topbar{background:#050608;border-bottom:1px solid #151820;color:#c7cbd4;font-size:12px}
+    .topbar .container{min-height:34px;display:flex;justify-content:space-between;align-items:center;gap:18px}
+    .topbar strong{color:var(--accent2)}
 
-@media(max-width:950px){
-  .nav-links{display:none}.nav-icons{margin-left:auto}.menu-toggle{display:block;margin-left:0}
-  .nav-links.open{display:flex;position:absolute;top:116px;left:0;right:0;background:#fff;padding:25px;flex-direction:column;border-bottom:1px solid #eee}
-  .hero-grid,.experience-grid,.mobile-grid{grid-template-columns:1fr}
-  .hero{background:linear-gradient(#fff,#fff5ef)}
-  .collection-grid{grid-template-columns:1fr 1fr}.collection-card:first-child{grid-column:1/-1}
-  .proposal-card{grid-template-columns:1fr}
-  .footer-grid{grid-template-columns:1fr;text-align:center}.footer-grid>a{text-align:center}
-}
-@media(max-width:620px){
-  .container{width:calc(100% - 26px)}
-  .topbar-inner{gap:8px;font-size:9px}.topbar .dot{display:none}
-  .nav{height:72px}.nav-icons{display:none}
-  .hero-grid{padding:45px 0;min-height:auto}.hero h1{letter-spacing:-2.5px}.lead{font-size:15px}
-  .hero-actions{flex-direction:column}.hero-actions .btn{width:100%}
-  .trust-row{grid-template-columns:1fr}.hero-stage{height:400px}.hero-photo{width:280px;height:360px;right:10px}.baby-emoji{font-size:125px}.blob-a{width:300px;height:300px}.note-a{left:0}.note-b{right:0}
-  .section,.experience,.mobile-section{padding:70px 0}
-  .section-head{align-items:flex-start;flex-direction:column}
-  .collection-grid{grid-template-columns:1fr}.collection-card:first-child{grid-column:auto}.collection-card{min-height:300px}.collection-art{font-size:105px}
-  .experience-image{min-height:390px}.fabric{font-size:160px}
-  .mobile-copy ul{grid-template-columns:1fr}
-  .phones{height:470px}.phone{width:190px;height:390px;border-width:7px;border-radius:32px}.phone-left{left:5px}.phone-right{right:2px}.phone-banner{min-height:135px}.phone-banner h4{font-size:15px}.phone-banner>span{font-size:52px}.phone-grid div{height:82px}.phone-product-img{height:185px;font-size:85px}
-  .proposal-card{padding:30px}.proposal-actions .btn{width:100%}
-}
+    .header{position:sticky;top:0;z-index:50;background:rgba(9,11,16,.93);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+    .nav{height:78px;display:flex;align-items:center;gap:28px}
+    .logo{font-weight:900;font-size:26px;letter-spacing:-1px}
+    .logo span{color:var(--accent)}
+    .nav-links{display:flex;gap:25px;margin-left:auto}
+    .nav-links a{font-size:14px;font-weight:700;color:#d7dbe4}
+    .nav-links a:hover{color:white}
+    .nav-actions{display:flex;gap:9px}
+    .nav-actions a{width:39px;height:39px;border:1px solid var(--line);border-radius:12px;display:grid;place-items:center;background:#10141b}
+    .menu{display:none;background:none;border:0;color:white;font-size:25px}
 
-</style>
+    .hero{position:relative;overflow:hidden;background:
+      radial-gradient(circle at 76% 35%,rgba(124,92,255,.28),transparent 25%),
+      radial-gradient(circle at 88% 70%,rgba(32,214,167,.13),transparent 22%),
+      linear-gradient(135deg,#090b10,#0d1119)}
+    .hero-grid{min-height:650px;display:grid;grid-template-columns:1.05fr .95fr;gap:55px;align-items:center;padding:65px 0}
+    .eyebrow{color:var(--accent2);font-size:11px;font-weight:900;letter-spacing:.18em;text-transform:uppercase}
+    .hero h1{font-size:clamp(48px,6vw,78px);line-height:.98;letter-spacing:-4px;margin:12px 0 22px}
+    .hero h1 span{color:var(--accent)}
+    .hero p{color:#b5bdca;font-size:18px;max-width:590px}
+    .hero-actions{display:flex;gap:12px;margin:31px 0}
+    .btn{display:inline-flex;align-items:center;justify-content:center;min-height:50px;padding:0 23px;border-radius:12px;font-weight:800;border:1px solid transparent;cursor:pointer;transition:.2s}
+    .btn:hover{transform:translateY(-2px)}
+    .btn-primary{background:var(--accent);color:white;box-shadow:0 14px 35px rgba(124,92,255,.25)}
+    .btn-secondary{background:#121722;border-color:#2b3342;color:white}
+    .trust{display:flex;gap:28px;flex-wrap:wrap;color:#8f98a7;font-size:12px}
+    .trust b{display:block;color:#e6eaf1;font-size:13px}
+
+    .rig-visual{height:500px;position:relative;display:grid;place-items:center}
+    .pc-case{width:350px;height:440px;background:linear-gradient(145deg,#171d28,#090b10);border:1px solid #333d4e;border-radius:24px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+    .glass{position:absolute;inset:18px;background:linear-gradient(145deg,rgba(124,92,255,.11),rgba(32,214,167,.05));border:1px solid #30394a;border-radius:16px}
+    .fan{position:absolute;width:105px;height:105px;border-radius:50%;border:8px solid #282f3c;box-shadow:0 0 35px rgba(124,92,255,.35),inset 0 0 22px rgba(124,92,255,.3)}
+    .fan:before,.fan:after{content:"";position:absolute;inset:19px;border-radius:50%;border:3px solid var(--accent)}
+    .fan.one{right:38px;top:45px}.fan.two{right:38px;top:170px}.fan.three{right:38px;top:295px}
+    .gpu{position:absolute;left:35px;top:205px;width:205px;height:80px;border:1px solid #4a5364;background:#171c25;border-radius:10px;padding:13px;font-weight:900;font-size:12px}
+    .gpu span{display:block;color:var(--accent2);font-size:10px;margin-top:22px}
+    .floating{position:absolute;background:#141923;border:1px solid #2b3341;border-radius:14px;padding:13px 16px;box-shadow:var(--shadow);font-size:12px}
+    .floating b{display:block;font-size:15px}.float-a{left:0;top:75px}.float-b{right:0;bottom:70px}
+
+    .ticker{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:#0e1219;overflow:hidden}
+    .ticker-track{display:flex;gap:46px;white-space:nowrap;min-width:max-content;padding:14px 0;animation:move 25s linear infinite;color:#aab1bd;font-size:12px;font-weight:800;letter-spacing:.12em}
+    @keyframes move{to{transform:translateX(-50%)}}
+
+    .section{padding:88px 0}
+    .section-head{display:flex;justify-content:space-between;align-items:end;gap:20px;margin-bottom:30px}
+    .section-head h2{font-size:clamp(30px,4vw,45px);letter-spacing:-1.7px;margin:7px 0 0}
+    .section-head p{color:var(--muted);max-width:520px}
+    .text-link{color:#c9cfe0;font-size:13px;font-weight:800;border-bottom:1px solid #4a5362;padding-bottom:3px}
+
+    .category-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:15px}
+    .category{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:25px;min-height:180px;transition:.25s}
+    .category:hover{transform:translateY(-4px);border-color:#3d4759}
+    .category .icon{font-size:40px;margin-bottom:22px}
+    .category h3{margin:0 0 5px;font-size:18px}
+    .category p{margin:0;color:var(--muted);font-size:12px}
+
+    .products{background:#0c0f15}
+    .product-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:17px}
+    .product-card{background:var(--panel);border:1px solid var(--line);border-radius:18px;overflow:hidden;position:relative}
+    .product-image{height:225px;display:grid;place-items:center;background:linear-gradient(145deg,#171d28,#10141b);font-size:92px}
+    .tag{position:absolute;top:13px;left:13px;background:var(--accent);border-radius:8px;padding:5px 9px;font-size:10px;font-weight:900}
+    .product-info{padding:18px}
+    .product-info small{color:#7f8999}
+    .product-info h3{font-size:16px;min-height:48px;margin:6px 0 13px}
+    .rating{font-size:11px;color:#d6c06e;margin-bottom:9px}
+    .price{display:flex;gap:9px;align-items:center}.price b{font-size:19px}.price del{color:#687181;font-size:12px}
+    .product-card button{width:100%;margin-top:16px;padding:11px;border:1px solid #343d4c;border-radius:10px;background:#171d27;color:white;font-weight:800;cursor:pointer}
+    .product-card button:hover{background:var(--accent);border-color:var(--accent)}
+
+    .builder{background:linear-gradient(120deg,#141926,#0d1118);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+    .builder-grid{display:grid;grid-template-columns:1fr 1fr;gap:65px;align-items:center}
+    .builder-card{min-height:430px;border:1px solid #303849;border-radius:24px;background:#0b0e14;padding:25px;box-shadow:var(--shadow)}
+    .builder-row{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #242b37;padding:17px 4px}
+    .builder-row span{color:#8e98a7;font-size:12px}.builder-row b{font-size:13px}
+    .builder-total{display:flex;justify-content:space-between;margin-top:26px;font-size:20px}
+    .builder-copy h2{font-size:45px;line-height:1.05;letter-spacing:-2px;margin:10px 0 20px}
+    .builder-copy p{color:var(--muted)}
+    .check-list{padding:0;list-style:none;margin:25px 0}
+    .check-list li{margin:10px 0;color:#c7ccd5}.check-list li:before{content:"✓";color:var(--accent2);font-weight:900;margin-right:10px}
+
+    .brands{text-align:center}
+    .brand-row{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin-top:32px}
+    .brand-box{border:1px solid var(--line);background:var(--panel);border-radius:13px;padding:21px 10px;font-weight:900;color:#aeb5c1}
+
+    .why-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+    .why-card{border:1px solid var(--line);border-radius:18px;padding:27px;background:var(--panel)}
+    .why-card span{font-size:27px}.why-card h3{margin:14px 0 7px}.why-card p{color:var(--muted);font-size:13px;margin:0}
+
+    .newsletter{padding:75px 0}
+    .newsletter-card{background:linear-gradient(120deg,#7454ff,#5136d9);border-radius:24px;padding:42px;display:grid;grid-template-columns:1fr auto;gap:30px;align-items:center}
+    .newsletter h2{margin:0 0 7px;font-size:32px}.newsletter p{margin:0;color:#ded8ff}
+    .newsletter form{display:flex;gap:8px}
+    .newsletter input{min-width:290px;border:0;border-radius:10px;padding:14px}
+    .newsletter button{border:0;border-radius:10px;padding:0 18px;background:#10131a;color:white;font-weight:800}
+
+    footer{border-top:1px solid var(--line);background:#07090d;padding:45px 0 28px}
+    .footer-grid{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:35px}
+    footer h4{margin:0 0 14px}footer p,footer a{color:#858e9c;font-size:12px}
+    footer a{display:block;margin:8px 0}
+    .copyright{border-top:1px solid #1d222c;margin-top:35px;padding-top:22px;color:#646d7a;font-size:11px;display:flex;justify-content:space-between}
+
+    .reveal{opacity:0;transform:translateY(18px);transition:.6s ease}.reveal.visible{opacity:1;transform:none}
+
+    @media(max-width:950px){
+      .nav-links{display:none}.menu{display:block;margin-left:auto}.nav-actions{display:none}
+      .nav-links.open{display:flex;position:absolute;top:78px;left:0;right:0;background:#0d1118;padding:25px;flex-direction:column;border-bottom:1px solid var(--line)}
+      .hero-grid,.builder-grid{grid-template-columns:1fr}
+      .category-grid,.product-grid{grid-template-columns:repeat(2,1fr)}
+      .brand-row{grid-template-columns:repeat(3,1fr)}
+      .footer-grid{grid-template-columns:1fr 1fr}
+    }
+    @media(max-width:600px){
+      .container{width:calc(100% - 24px)}
+      .topbar .container{justify-content:center}.topbar span:last-child{display:none}
+      .hero-grid{padding:45px 0}.hero h1{letter-spacing:-2.5px}.hero p{font-size:16px}
+      .hero-actions{flex-direction:column}.btn{width:100%}
+      .rig-visual{height:410px}.pc-case{width:280px;height:370px}.fan{width:82px;height:82px}.fan.one{right:28px}.fan.two{right:28px;top:145px}.fan.three{right:28px;top:245px}.gpu{width:165px;top:175px}
+      .float-a{left:-3px}.float-b{right:-3px}
+      .section{padding:65px 0}.section-head{align-items:flex-start;flex-direction:column}
+      .category-grid,.product-grid,.why-grid{grid-template-columns:1fr}
+      .brand-row{grid-template-columns:repeat(2,1fr)}
+      .builder-copy h2{font-size:36px}
+      .newsletter-card{grid-template-columns:1fr;padding:28px}.newsletter form{flex-direction:column}.newsletter input{min-width:0}
+      .footer-grid{grid-template-columns:1fr 1fr}.copyright{flex-direction:column;gap:7px}
+    }
+  </style>
 </head>
 <body>
   <div class="topbar">
-    <div class="container topbar-inner">
-      <span>Livraison partout au Maroc</span>
-      <span class="dot">•</span>
-      <span>Vêtements bébé fille & garçon</span>
-      <span class="top-sale">Jusqu’à -50%</span>
+    <div class="container">
+      <span>Delivery available across Morocco</span>
+      <span><strong>Free delivery</strong> on selected gaming PCs</span>
     </div>
   </div>
 
-  <header class="site-header">
+  <header class="header">
     <div class="container nav">
-      <a class="brand" href="#accueil" aria-label="Keeko concept">
-        <span class="brand-name">Keeko<span>♥</span></span>
-        <small>Proposition créative indépendante</small>
-      </a>
-
-      <button class="menu-toggle" aria-label="Ouvrir le menu" aria-expanded="false">
-        <span></span><span></span><span></span>
-      </button>
-
+      <a class="logo" href="#home">NEX<span>RIG</span></a>
+      <button class="menu" aria-label="Open navigation">☰</button>
       <nav class="nav-links">
-        <a href="#accueil">Accueil</a>
-        <a href="#collections">Collections</a>
-        <a href="#experience">Expérience</a>
-        <a href="#produits">Produits</a>
-        <a href="#proposition">Proposition</a>
+        <a href="#home">Home</a>
+        <a href="#components">Components</a>
+        <a href="#deals">Deals</a>
+        <a href="#builder">PC Builder</a>
+        <a href="#about">About</a>
       </nav>
-
-      <div class="nav-icons" aria-label="Raccourcis">
-        <a href="https://keeko.ma/" target="_blank" rel="noopener" title="Recherche">⌕</a>
-        <a href="https://keeko.ma/" target="_blank" rel="noopener" title="Favoris">♡</a>
-        <a href="https://keeko.ma/" target="_blank" rel="noopener" title="Panier">🛍</a>
+      <div class="nav-actions">
+        <a href="#products" aria-label="Search">⌕</a>
+        <a href="#products" aria-label="Wishlist">♡</a>
+        <a href="#products" aria-label="Cart">🛒</a>
       </div>
     </div>
   </header>
 
   <main>
-    <section class="hero" id="accueil">
+    <section class="hero" id="home">
       <div class="container hero-grid">
-        <div class="hero-copy reveal">
-          <span class="eyebrow">CONCEPT POUR KEEKO.MA</span>
-          <h1>Des vêtements bébé<br><em>qui font sourire.</em></h1>
-          <p class="lead">
-            Une proposition e-commerce plus éditoriale pour présenter les collections Keeko
-            avec douceur, confiance et une navigation pensée mobile-first.
-          </p>
+        <div class="reveal">
+          <span class="eyebrow">Performance starts here</span>
+          <h1>Build your next<br><span>gaming PC.</span></h1>
+          <p>Shop PC components, gaming hardware and custom desktop builds. Find graphics cards, processors, memory, storage and more for your next setup.</p>
           <div class="hero-actions">
-            <a class="btn btn-primary" href="#collections">Découvrir le concept</a>
-            <a class="btn btn-ghost" href="https://keeko.ma/" target="_blank" rel="noopener">Voir Keeko.ma ↗</a>
+            <a class="btn btn-primary" href="#products">Shop components</a>
+            <a class="btn btn-secondary" href="#builder">Build a PC</a>
           </div>
-
-          <div class="trust-row">
-            <div><span>☁</span><b>100% coton naturel</b><small>Douceur au quotidien</small></div>
-            <div><span>🚚</span><b>48H–72H</b><small>Livraison au Maroc</small></div>
-            <div><span>♡</span><b>Fille & garçon</b><small>Collections variées</small></div>
+          <div class="trust">
+            <div><b>Fast delivery</b>Across Morocco</div>
+            <div><b>Quality hardware</b>Trusted brands</div>
+            <div><b>Support</b>Before & after purchase</div>
           </div>
         </div>
 
-        <div class="hero-stage reveal">
-          <div class="blob blob-a"></div>
-          <div class="blob blob-b"></div>
-          <div class="hero-photo">
-            <div class="baby-card">
-              <span class="sale-badge">-40%</span>
-              <div class="baby-emoji">🧸</div>
-              <div class="photo-caption">NOUVELLE COLLECTION</div>
-            </div>
+        <div class="rig-visual reveal">
+          <div class="pc-case">
+            <div class="glass"></div>
+            <div class="fan one"></div>
+            <div class="fan two"></div>
+            <div class="fan three"></div>
+            <div class="gpu">GEFORCE RTX<span>NEXRIG GAMING BUILD</span></div>
           </div>
-          <div class="floating-note note-a">100%<br><b>Coton</b></div>
-          <div class="floating-note note-b">Petits looks,<br><b>grands sourires ♡</b></div>
+          <div class="floating float-a"><b>RTX Ready</b>High FPS gaming</div>
+          <div class="floating float-b"><b>Custom Builds</b>Choose your parts</div>
         </div>
       </div>
     </section>
 
-    <section class="marquee">
-      <div class="marquee-track">
-        <span>DOUCEUR</span><i>♡</i><span>CONFORT</span><i>♡</i><span>STYLE</span><i>♡</i><span>QUALITÉ</span><i>♡</i>
-        <span>DOUCEUR</span><i>♡</i><span>CONFORT</span><i>♡</i><span>STYLE</span><i>♡</i><span>QUALITÉ</span><i>♡</i>
+    <div class="ticker">
+      <div class="ticker-track">
+        <span>NVIDIA GEFORCE</span><span>AMD RYZEN</span><span>INTEL CORE</span><span>CORSAIR</span><span>KINGSTON</span><span>MSI</span>
+        <span>NVIDIA GEFORCE</span><span>AMD RYZEN</span><span>INTEL CORE</span><span>CORSAIR</span><span>KINGSTON</span><span>MSI</span>
       </div>
-    </section>
+    </div>
 
-    <section class="section" id="collections">
+    <section class="section" id="components">
       <div class="container">
         <div class="section-head">
           <div>
-            <span class="eyebrow">SHOP BY COLLECTION</span>
-            <h2>Une navigation simple dès le premier regard.</h2>
+            <span class="eyebrow">PC Components</span>
+            <h2>Everything your build needs.</h2>
           </div>
-          <a class="text-link" href="https://keeko.ma/" target="_blank" rel="noopener">Toutes les collections ↗</a>
+          <a class="text-link" href="#products">View all products →</a>
         </div>
-
-        <div class="collection-grid">
-          <a class="collection-card rose reveal" href="https://keeko.ma/collections/vetements-bebe-fille/" target="_blank" rel="noopener">
-            <div class="collection-art">👗</div>
-            <div>
-              <small>Collection</small>
-              <h3>Bébé Fille</h3>
-              <span>Découvrir →</span>
-            </div>
-          </a>
-
-          <a class="collection-card blue reveal" href="https://keeko.ma/collections/baby-clothes/" target="_blank" rel="noopener">
-            <div class="collection-art">🧥</div>
-            <div>
-              <small>Collection</small>
-              <h3>Bébé Garçon</h3>
-              <span>Découvrir →</span>
-            </div>
-          </a>
-
-          <a class="collection-card beige reveal" href="https://keeko.ma/collections/vetement-bebe-naissance-maroc/" target="_blank" rel="noopener">
-            <div class="collection-art">🍼</div>
-            <div>
-              <small>Les essentiels</small>
-              <h3>Naissance</h3>
-              <span>Découvrir →</span>
-            </div>
-          </a>
+        <div class="category-grid">
+          <a class="category reveal" href="#products"><div class="icon">🎮</div><h3>Graphics Cards</h3><p>NVIDIA GeForce and AMD Radeon GPUs.</p></a>
+          <a class="category reveal" href="#products"><div class="icon">⚙️</div><h3>Processors</h3><p>AMD Ryzen and Intel Core CPUs.</p></a>
+          <a class="category reveal" href="#products"><div class="icon">🧠</div><h3>Memory</h3><p>DDR4 and DDR5 desktop RAM.</p></a>
+          <a class="category reveal" href="#products"><div class="icon">💾</div><h3>Storage</h3><p>NVMe SSDs and high-capacity drives.</p></a>
+          <a class="category reveal" href="#products"><div class="icon">🔌</div><h3>Power Supplies</h3><p>Reliable PSUs for gaming systems.</p></a>
+          <a class="category reveal" href="#products"><div class="icon">🧩</div><h3>Motherboards</h3><p>AM4, AM5 and Intel motherboards.</p></a>
+          <a class="category reveal" href="#products"><div class="icon">❄️</div><h3>Cooling</h3><p>Air and liquid CPU cooling.</p></a>
+          <a class="category reveal" href="#products"><div class="icon">🖥️</div><h3>Monitors</h3><p>High refresh rate gaming displays.</p></a>
         </div>
       </div>
     </section>
 
-    <section class="experience" id="experience">
-      <div class="container experience-grid">
-        <div class="experience-image reveal">
-          <div class="quality-stamp">
-            <span>KEEKO</span>
-            <b>100%</b>
-            <small>COTON<br>NATUREL</small>
-          </div>
-          <div class="fabric">☁</div>
-        </div>
-        <div class="experience-copy reveal">
-          <span class="eyebrow">L’UNIVERS KEEKO</span>
-          <h2>Mettre la matière et la confiance au centre.</h2>
-          <p>
-            Keeko met en avant la qualité, le confort et le coton naturel. Dans cette proposition,
-            ces arguments deviennent une vraie partie de l’expérience visuelle plutôt qu’un simple texte.
-          </p>
-          <div class="benefit-list">
-            <div><span>01</span><div><b>Douceur visible</b><small>Des textures, espaces et tons chaleureux.</small></div></div>
-            <div><span>02</span><div><b>Confiance immédiate</b><small>Livraison, qualité et sécurité visibles avant l’achat.</small></div></div>
-            <div><span>03</span><div><b>Mobile-first</b><small>Navigation rapide pour des parents en mouvement.</small></div></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section products-section" id="produits">
+    <section class="section products" id="products">
       <div class="container">
         <div class="section-head">
           <div>
-            <span class="eyebrow">PRODUITS EN VEDETTE</span>
-            <h2>Des cartes produit plus propres et plus faciles à parcourir.</h2>
+            <span class="eyebrow">Popular hardware</span>
+            <h2>Featured products</h2>
           </div>
-          <div class="slider-controls">
-            <button id="prev" aria-label="Précédent">←</button>
-            <button id="next" aria-label="Suivant">→</button>
-          </div>
+          <p>Popular parts chosen for gaming, streaming and everyday performance.</p>
         </div>
 
-        <div class="product-track" id="productTrack">
-          <article class="product-card">
-            <div class="product-img warm">
-              <span class="discount">-40%</span>
-              <button class="heart" aria-label="Ajouter aux favoris">♡</button>
-              <img class="cloth product-photo" src="B-42-IMGS_0009_B-42-Brown-Edited-1000x1333.webp" alt="Ensemble 3 pièces ROAR">
-            </div>
+        <div class="product-grid">
+          <article class="product-card reveal">
+            <span class="tag">POPULAR</span>
+            <div class="product-image">🎮</div>
             <div class="product-info">
-              <small>Bébé Garçon</small>
-              <h3>Ensemble 3 pièces « ROAR »</h3>
-              <div class="price"><b>209 DH</b><del>349 DH</del></div>
-              <button class="option-btn">Choix des options</button>
+              <small>Graphics Card</small>
+              <h3>GeForce RTX 4060 8GB Graphics Card</h3>
+              <div class="rating">★★★★★ (31)</div>
+              <div class="price"><b>4,199 DH</b><del>4,499 DH</del></div>
+              <button>Add to cart</button>
             </div>
           </article>
 
-          <article class="product-card">
-            <div class="product-img sand">
-              <span class="discount">-38%</span>
-              <button class="heart" aria-label="Ajouter aux favoris">♡</button>
-              <img class="cloth product-photo" src="B-41-IMGS_0004_B-41-Mint-Edited-1000x1333.webp" alt="Ensemble 2 pièces BEAR">
-            </div>
+          <article class="product-card reveal">
+            <div class="product-image">⚙️</div>
             <div class="product-info">
-              <small>Bébé Garçon</small>
-              <h3>Ensemble 2 pièces « BEAR »</h3>
-              <div class="price"><b>184 DH</b><del>299 DH</del></div>
-              <button class="option-btn">Choix des options</button>
+              <small>Processor</small>
+              <h3>AMD Ryzen 5 5600 Desktop Processor</h3>
+              <div class="rating">★★★★★ (46)</div>
+              <div class="price"><b>1,349 DH</b></div>
+              <button>Add to cart</button>
             </div>
           </article>
 
-          <article class="product-card">
-            <div class="product-img pink">
-              <span class="discount">-29%</span>
-              <button class="heart" aria-label="Ajouter aux favoris">♡</button>
-              <img class="cloth product-photo" src="B-37-IMGS_0011_G-37-Purple-Edited-1000x1333.webp" alt="Ensemble Douceur Lapin">
-            </div>
+          <article class="product-card reveal">
+            <span class="tag">SALE</span>
+            <div class="product-image">🧠</div>
             <div class="product-info">
-              <small>Bébé Fille</small>
-              <h3>Ensemble « Douceur Lapin »</h3>
-              <div class="price"><b>239 DH</b><del>339 DH</del></div>
-              <button class="option-btn">Choix des options</button>
+              <small>Memory</small>
+              <h3>16GB DDR4 3200MHz Gaming Memory</h3>
+              <div class="rating">★★★★☆ (18)</div>
+              <div class="price"><b>499 DH</b><del>599 DH</del></div>
+              <button>Add to cart</button>
             </div>
           </article>
 
-          <article class="product-card">
-            <div class="product-img cream">
-              <span class="discount">-23%</span>
-              <button class="heart" aria-label="Ajouter aux favoris">♡</button>
-              <img class="cloth product-photo" src="G-35-IMGS_0007_G-35-Pink-Edited-1000x1333.webp" alt="Ensemble 3 pièces motif lapin">
-            </div>
+          <article class="product-card reveal">
+            <div class="product-image">💾</div>
             <div class="product-info">
-              <small>Naissance</small>
-              <h3>Ensemble 3 pièces motif lapin</h3>
-              <div class="price"><b>199 DH</b><del>259 DH</del></div>
-              <button class="option-btn">Choix des options</button>
+              <small>Storage</small>
+              <h3>1TB NVMe M.2 Solid State Drive</h3>
+              <div class="rating">★★★★★ (25)</div>
+              <div class="price"><b>749 DH</b></div>
+              <button>Add to cart</button>
             </div>
           </article>
         </div>
-
-        <p class="data-note">
-          Les noms et prix affichés ici sont utilisés uniquement pour illustrer le concept et reflètent des articles visibles sur Keeko.ma au moment de la création.
-        </p>
       </div>
     </section>
 
-    <section class="mobile-section">
-      <div class="container mobile-grid">
-        <div class="mobile-copy reveal">
-          <span class="eyebrow">MOBILE EXPERIENCE</span>
-          <h2>Un parcours pensé pour acheter vite, sans perdre l’identité de la marque.</h2>
-          <p>
-            Catégories accessibles, cartes lisibles, prix/promotions visibles et CTA fixes :
-            le concept garde l’expérience simple même sur un petit écran.
-          </p>
-          <ul>
-            <li>Filtres simplifiés</li>
-            <li>Favoris en un geste</li>
-            <li>Ajout au panier rapide</li>
-            <li>Informations essentielles visibles</li>
+    <section class="section builder" id="builder">
+      <div class="container builder-grid">
+        <div class="builder-card reveal">
+          <span class="eyebrow">Your configuration</span>
+          <div class="builder-row"><span>Processor</span><b>Ryzen 5 7600</b></div>
+          <div class="builder-row"><span>Graphics</span><b>RTX 4060 8GB</b></div>
+          <div class="builder-row"><span>Memory</span><b>16GB DDR5</b></div>
+          <div class="builder-row"><span>Storage</span><b>1TB NVMe SSD</b></div>
+          <div class="builder-row"><span>Power</span><b>650W 80+ Bronze</b></div>
+          <div class="builder-total"><span>Estimated total</span><b>9,490 DH</b></div>
+        </div>
+        <div class="builder-copy reveal">
+          <span class="eyebrow">NEXRIG PC Builder</span>
+          <h2>Build a system around the games you play.</h2>
+          <p>Select compatible hardware and create a gaming PC based on your budget and performance target.</p>
+          <ul class="check-list">
+            <li>Choose compatible PC components</li>
+            <li>Compare hardware options</li>
+            <li>Estimate the complete build price</li>
+            <li>Upgrade individual components later</li>
           </ul>
-        </div>
-
-        <div class="phones reveal">
-          <div class="phone phone-left">
-            <div class="notch"></div>
-            <div class="phone-ui">
-              <div class="phone-header"><b>Keeko♥</b><span>♡ 🛍</span></div>
-              <div class="phone-banner"><small>JUSQU’À -50%</small><h4>Petits looks<br>pour grands sourires</h4><span>🧸</span></div>
-              <div class="phone-chips"><i>Fille</i><i>Garçon</i><i>Naissance</i></div>
-              <div class="phone-grid"><div>👗</div><div>🧥</div></div>
-            </div>
-          </div>
-          <div class="phone phone-right">
-            <div class="notch"></div>
-            <div class="phone-ui product-phone">
-              <div class="phone-header"><b>Keeko♥</b><span>♡ 🛍</span></div>
-              <div class="phone-product-img">🧥</div>
-              <small>Ensemble bébé</small>
-              <h4>Petit look, grand confort</h4>
-              <b class="phone-price">209 DH</b>
-              <button>Ajouter au panier</button>
-            </div>
-          </div>
+          <a class="btn btn-primary" href="#components">Start your build</a>
         </div>
       </div>
     </section>
 
-    <section class="proposal" id="proposition">
-      <div class="container proposal-card reveal">
-        <div>
-          <span class="eyebrow">PRÉSENTATION POUR KEEKO</span>
-          <h2>Une proposition, pas une refonte imposée.</h2>
-          <p>
-            Ce concept indépendant montre comment je pourrais apporter une direction plus éditoriale,
-            premium et mobile-first à l’expérience Keeko, tout en respectant son univers actuel.
-          </p>
+    <section class="section brands">
+      <div class="container">
+        <span class="eyebrow">Hardware brands</span>
+        <h2>Built with names gamers know.</h2>
+        <div class="brand-row">
+          <div class="brand-box">NVIDIA</div><div class="brand-box">AMD</div><div class="brand-box">INTEL</div>
+          <div class="brand-box">MSI</div><div class="brand-box">CORSAIR</div><div class="brand-box">KINGSTON</div>
         </div>
-        <div class="proposal-actions">
-          <a class="btn btn-dark" href="mailto:aminbnl05@icloud.com?subject=Proposition%20Keeko">Contacter MOHAMMAD AMINE</a>
-          <a class="text-link" href="https://keeko.ma/" target="_blank" rel="noopener">Visiter le site officiel ↗</a>
+      </div>
+    </section>
+
+    <section class="section" id="about">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <span class="eyebrow">Why NEXRIG</span>
+            <h2>Hardware without the confusion.</h2>
+          </div>
+        </div>
+        <div class="why-grid">
+          <div class="why-card reveal"><span>⚡</span><h3>Performance focused</h3><p>Parts selected for gaming, productivity and reliable everyday use.</p></div>
+          <div class="why-card reveal"><span>🛠️</span><h3>Build support</h3><p>Guidance for choosing components that work properly together.</p></div>
+          <div class="why-card reveal"><span>🚚</span><h3>Morocco delivery</h3><p>Hardware delivered to customers in cities across Morocco.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="newsletter" id="deals">
+      <div class="container">
+        <div class="newsletter-card">
+          <div><h2>Get hardware deals.</h2><p>New products, gaming PC offers and component discounts.</p></div>
+          <form id="newsletterForm">
+            <input type="email" placeholder="Your email address" required>
+            <button type="submit">Join</button>
+          </form>
         </div>
       </div>
     </section>
   </main>
 
   <footer>
-    <div class="container footer-grid">
-      <div class="brand">
-        <span class="brand-name">Keeko<span>♥</span></span>
-        <small>Concept indépendant — non affilié officiellement à Keeko</small>
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div class="logo">NEX<span>RIG</span></div>
+          <p>PC components, gaming hardware and custom desktop builds.</p>
+        </div>
+        <div><h4>Shop</h4><a href="#products">Graphics Cards</a><a href="#products">Processors</a><a href="#products">Memory</a><a href="#products">Storage</a></div>
+        <div><h4>Help</h4><a href="#about">About us</a><a href="#about">Delivery</a><a href="#about">Warranty</a><a href="#about">Contact</a></div>
+        <div><h4>Gaming</h4><a href="#builder">PC Builder</a><a href="#products">Gaming PCs</a><a href="#components">Components</a><a href="#deals">Deals</a></div>
       </div>
-      <p>Concept & développement par <b>MOHAMMAD AMINE</b> • 2026</p>
-      <a href="#accueil">Retour en haut ↑</a>
+      <div class="copyright">
+        <span>© 2026 NEXRIG. Practice e-commerce project.</span>
+        <span>Built for SEO training.</span>
+      </div>
     </div>
   </footer>
 
   <script>
+    const menu = document.querySelector('.menu');
+    const nav = document.querySelector('.nav-links');
 
-const menuButton = document.querySelector('.menu-toggle');
-const navLinks = document.querySelector('.nav-links');
+    menu.addEventListener('click', () => {
+      nav.classList.toggle('open');
+    });
 
-menuButton.addEventListener('click', () => {
-  const opened = navLinks.classList.toggle('open');
-  menuButton.setAttribute('aria-expanded', opened ? 'true' : 'false');
-});
+    document.querySelectorAll('.nav-links a').forEach(link => {
+      link.addEventListener('click', () => nav.classList.remove('open'));
+    });
 
-document.querySelectorAll('.nav-links a').forEach(link => {
-  link.addEventListener('click', () => {
-    navLinks.classList.remove('open');
-    menuButton.setAttribute('aria-expanded','false');
-  });
-});
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting) entry.target.classList.add('visible');
+      });
+    }, {threshold:.08});
 
-const track = document.getElementById('productTrack');
-document.getElementById('next').addEventListener('click', () => {
-  track.scrollBy({left: 320, behavior:'smooth'});
-});
-document.getElementById('prev').addEventListener('click', () => {
-  track.scrollBy({left: -320, behavior:'smooth'});
-});
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-document.querySelectorAll('.heart').forEach(btn => {
-  btn.addEventListener('click', () => {
-    btn.classList.toggle('active');
-    btn.textContent = btn.classList.contains('active') ? '♥' : '♡';
-  });
-});
+    document.querySelectorAll('.product-card button').forEach(button => {
+      button.addEventListener('click', () => {
+        const old = button.textContent;
+        button.textContent = 'Added ✓';
+        setTimeout(() => button.textContent = old, 1200);
+      });
+    });
 
-document.querySelectorAll('.option-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    window.open('https://keeko.ma/', '_blank', 'noopener');
-  });
-});
-
-const observer = new IntersectionObserver(entries => {
-  entries.forEach(entry => {
-    if(entry.isIntersecting) entry.target.classList.add('visible');
-  });
-}, {threshold:.1});
-
-document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-
-</script>
+    document.getElementById('newsletterForm').addEventListener('submit', e => {
+      e.preventDefault();
+      const button = e.currentTarget.querySelector('button');
+      button.textContent = 'Joined ✓';
+      e.currentTarget.querySelector('input').value = '';
+    });
+  </script>
 </body>
 </html>
+'''
+
+path = Path("/mnt/data/index.html")
+path.write_text(html, encoding="utf-8")
+print(f"Created {path} ({len(html):,} characters)")
