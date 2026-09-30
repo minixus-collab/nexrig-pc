@@ -1,0 +1,5 @@
+/* Language links stay visible with or without JavaScript. */
+.language-switch{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:8px 14px;border:1px solid #9b83ff;border-radius:10px;background:#171c26;color:#f4f7fb;text-decoration:none;font-size:.875rem;font-weight:700;white-space:nowrap;flex-shrink:0}
+.language-switch:hover{background:#2b2441;color:#fff}
+.language-switch:focus-visible{outline:3px solid #20d6a7;outline-offset:4px}
+.header-inner .language-switch{margin-left:auto}
