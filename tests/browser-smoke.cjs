@@ -10,6 +10,16 @@ const server=require('node:child_process').spawn('python3',['-m','http.server','
   assert.equal((await page.goto(base+path)).status(),200);await ready(page);
   for(const width of [320,390,768,1024,1200,1201,1440]){await page.setViewportSize({width,height:900});assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),`overflow ${path} ${width}`);}
  }
+ // Homepage hamburger works at desktop and mobile widths in both languages.
+ for(const homepage of ['', 'en/']){
+  await page.goto(base+homepage);await ready(page);
+  for(const width of [390,1440]){
+   await page.setViewportSize({width,height:900});const menu=page.locator('.menu');const nav=page.locator('#navigation');assert(await menu.isVisible());assert.equal(await menu.getAttribute('aria-expanded'),'false');assert(await nav.evaluate(el=>el.inert));
+   await menu.click();assert.equal(await menu.getAttribute('aria-expanded'),'true');await page.locator('#navigation a').first().focus();await page.keyboard.press('Escape');assert.equal(await menu.getAttribute('aria-expanded'),'false');assert(await menu.evaluate(el=>el===document.activeElement));
+   await menu.click();await page.locator('#navigation a[href="#components"]').click();assert.equal(await menu.getAttribute('aria-expanded'),'false');assert.equal(await page.evaluate(()=>document.activeElement.id),'components');
+   await menu.click();await page.mouse.click(5,850);assert.equal(await menu.getAttribute('aria-expanded'),'false');
+  }
+ }
  for(const product of products.filter(p=>['ram','storage'].includes(p.category))){await page.goto(base+'produits/'+product.id+'/');await ready(page);await page.setViewportSize({width:320,height:900});assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),'RAM SKU overflow: '+product.id);}
  await page.goto(base+'en/processors/');await ready(page);assert.equal(await page.locator('.shop-card').count(),16);await page.locator('#shop-brand').selectOption('AMD');assert.equal(await page.locator('.shop-card:visible').count(),8);await page.locator('#shop-search').fill('7800');assert.equal(await page.locator('.shop-card:visible').count(),1);await page.locator('#shop-search').fill('nonexistent');assert.equal(await page.locator('.shop-card:visible').count(),0);assert(await page.locator('#shop-empty').isVisible());await page.getByRole('button',{name:'Reset',exact:true}).click();await page.waitForFunction(()=>document.querySelector('#shop-search').value==='');await page.locator('#shop-sort').selectOption('price-low');
  const sorted=await page.locator('.shop-card:visible').evaluateAll(els=>els.map(el=>el.dataset.productId));const prices=sorted.map(id=>products.find(p=>p.id===id).demo_price_mad);assert.deepEqual(prices,[...prices].sort((a,b)=>a-b));

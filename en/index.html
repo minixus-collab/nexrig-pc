@@ -127,9 +127,15 @@
 
     .reveal{opacity:1;transform:none}
 
+    .nav{height:auto;min-height:78px;flex-wrap:wrap;padding:15px 0}
+    .nav-links{width:100%;flex-wrap:wrap;gap:16px}
+    .nav-enhanced .menu{display:flex;align-items:center;justify-content:center;width:46px;height:46px;margin-left:auto;border:1px solid var(--line);border-radius:10px;cursor:pointer}
+    .nav-enhanced .nav-links{position:absolute;top:100%;right:0;width:min(380px,100%);margin:0;padding:24px;display:flex;flex-direction:column;gap:18px;background:#0d1118;border:1px solid var(--line);border-radius:0 0 0 16px;max-height:calc(100dvh - 150px);overflow-y:auto;box-shadow:0 18px 30px #0006;visibility:hidden;opacity:0;transform:translateY(-16px);transition:transform .22s ease,opacity .22s ease,visibility .22s}
+    .nav-enhanced .nav-links.open{visibility:visible;opacity:1;transform:translateY(0)}
+    .menu:focus-visible,.nav-links a:focus-visible{outline:3px solid var(--green);outline-offset:4px}
+    @media(prefers-reduced-motion:reduce){.nav-enhanced .nav-links{transition:none}}
     @media(max-width:1200px){
-      .nav{height:auto;min-height:78px;flex-wrap:wrap;padding:15px 0}.nav-links{width:100%;flex-wrap:wrap;gap:16px}.menu{display:none;margin-left:auto}.nav-enhanced .nav-links{display:none}.nav-enhanced .menu{display:block}.nav-actions{display:none}
-      .nav-links.open{display:flex;position:absolute;top:78px;left:0;right:0;background:#0d1118;padding:25px;flex-direction:column;border-bottom:1px solid var(--line)}
+      .nav{height:auto;min-height:78px;flex-wrap:wrap;padding:15px 0}.nav-actions{display:none}
       .hero-grid,.builder-grid{grid-template-columns:1fr}
       .category-grid,.product-grid{grid-template-columns:repeat(2,1fr)}
       .brand-row{grid-template-columns:repeat(3,1fr)}
@@ -389,20 +395,19 @@
     const menu = document.querySelector('.menu');
     const nav = document.querySelector('.nav-links');
     const header = document.querySelector('.header');
-    const mobile = window.matchMedia('(max-width: 1200px)');
 
     function setMenu(open) {
       nav.classList.toggle('open', open);
       menu.setAttribute('aria-expanded', String(open));
       menu.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
-      nav.inert = mobile.matches && !open;
+      nav.inert = !open;
     }
 
     menu.addEventListener('click', () => setMenu(menu.getAttribute('aria-expanded') !== 'true'));
     nav.querySelectorAll('a').forEach(link => {
       link.addEventListener('click', () => {
         setMenu(false);
-        if (mobile.matches && link.hash) {
+        if (link.hash) {
           const target = document.querySelector(link.hash);
           if (target) {
             target.setAttribute('tabindex', '-1');
@@ -417,7 +422,9 @@
         menu.focus();
       }
     });
-    mobile.addEventListener('change', () => setMenu(false));
+    document.addEventListener('click', event => {
+      if (!header.contains(event.target)) setMenu(false);
+    });
     setMenu(false);
     header.classList.add('nav-enhanced');
   </script>
