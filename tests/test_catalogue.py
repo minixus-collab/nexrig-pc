@@ -31,10 +31,10 @@ class CatalogueTests(unittest.TestCase):
         cls.pages = [p for p in ROOT.rglob('index.html') if '.git' not in p.parts]
 
     def test_product_identity_and_demo_prices(self):
-        self.assertEqual(len(self.products), 243)
-        self.assertEqual(len({p['id'] for p in self.products}), 243)
+        self.assertEqual(len(self.products), 273)
+        self.assertEqual(len({p['id'] for p in self.products}), 273)
         self.assertEqual(collections.Counter((p['category'], p['brand']) for p in self.products),
-                         {**{('case', b): 3 for b in ['Corsair','NZXT','Fractal Design','Cooler Master']}, **{('laptop', b): 3 for b in ['ASUS','Lenovo','MSI','Acer']}, **{('keyboard', b): 3 for b in ['Keychron','Logitech','Wooting','SteelSeries']}, **{('mouse', b): 3 for b in ['Logitech','Razer','SteelSeries','Corsair']}, **{('chair', b): 3 for b in ['Secretlab','Corsair','noblechairs','Cooler Master']}, **{('monitor', brand): 4 for brand in ['ASUS','LG','Samsung','AOC','MSI','Gigabyte']}, **{('cooling', brand): 4 for brand in ['Noctua','be quiet!','ARCTIC','DeepCool','Cooler Master','Corsair']}, **{('motherboard', brand): 6 for brand in ['ASUS','MSI','Gigabyte','ASRock']}, **{('psu', brand): 4 for brand in ['Corsair','Seasonic','be quiet!','Cooler Master','Thermaltake','EVGA']}, ('cpu', 'AMD'): 8, ('cpu', 'Intel'): 8, ('gpu', 'AMD'): 8, ('gpu', 'NVIDIA'): 8, **{('gpu', brand): 1 for brand in ['ASUS','MSI','Gigabyte','Zotac','Sapphire','PowerColor','XFX']}, **{('ram', brand): 4 for brand in ['Corsair','Kingston','G.Skill','Crucial','TeamGroup','Patriot']}, **{('storage', brand): 4 for brand in ['Samsung','Western Digital','Crucial','Kingston','Seagate','Corsair']}})
+                         {**{('audio', b): count for b,count in {'7Hz': 1, 'TRUTHEAR': 1, 'MOONDROP': 1, 'TANGZU': 1, 'KZ': 1, 'SIMGOT': 1, 'Sennheiser': 1, 'beyerdynamic': 1, 'Audio-Technica': 2, 'HyperX': 2, 'Logitech': 2, 'SteelSeries': 1, 'Creative': 2, 'Edifier': 1, 'PreSonus': 1, 'Mackie': 1, 'FIFINE': 1, 'Blue': 1, 'Elgato': 1, 'RØDE': 1, 'FiiO': 1, 'Topping': 1, 'SMSL': 1, 'Schiit': 2, 'iFi': 1}.items()}, **{('case', b): 3 for b in ['Corsair','NZXT','Fractal Design','Cooler Master']}, **{('laptop', b): 3 for b in ['ASUS','Lenovo','MSI','Acer']}, **{('keyboard', b): 3 for b in ['Keychron','Logitech','Wooting','SteelSeries']}, **{('mouse', b): 3 for b in ['Logitech','Razer','SteelSeries','Corsair']}, **{('chair', b): 3 for b in ['Secretlab','Corsair','noblechairs','Cooler Master']}, **{('monitor', brand): 4 for brand in ['ASUS','LG','Samsung','AOC','MSI','Gigabyte']}, **{('cooling', brand): 4 for brand in ['Noctua','be quiet!','ARCTIC','DeepCool','Cooler Master','Corsair']}, **{('motherboard', brand): 6 for brand in ['ASUS','MSI','Gigabyte','ASRock']}, **{('psu', brand): 4 for brand in ['Corsair','Seasonic','be quiet!','Cooler Master','Thermaltake','EVGA']}, ('cpu', 'AMD'): 8, ('cpu', 'Intel'): 8, ('gpu', 'AMD'): 8, ('gpu', 'NVIDIA'): 8, **{('gpu', brand): 1 for brand in ['ASUS','MSI','Gigabyte','Zotac','Sapphire','PowerColor','XFX']}, **{('ram', brand): 4 for brand in ['Corsair','Kingston','G.Skill','Crucial','TeamGroup','Patriot']}, **{('storage', brand): 4 for brand in ['Samsung','Western Digital','Crucial','Kingston','Seagate','Corsair']}})
         for p in self.products:
             self.assertRegex(p['id'], r'^[a-z0-9-]+$')
             self.assertIs(type(p['demo_price_mad']), int)
@@ -170,6 +170,23 @@ class CatalogueTests(unittest.TestCase):
         chair=(ROOT/'en/products/secretlab-titan-evo-2022-softweave-plus-small/index.html').read_text()
         self.assertIn('medical benefits',chair)
 
+    def test_audio_types_and_signal_roles(self):
+        audio=[p for p in self.products if p['category']=='audio']
+        self.assertEqual(len(audio),30)
+        self.assertEqual(collections.Counter(p['audio_type'] for p in audio), {key:6 for key in ['iem','headphones','speakers','microphone','dac-amp']})
+        roles={p['name']:p.get('conversion_role') for p in audio}
+        self.assertEqual(roles['SMSL SU-1'],'dac-only')
+        self.assertEqual(roles['Schiit Magni+'],'amp-only')
+        pebble=next(p for p in audio if p['name']=='Creative Pebble V2')
+        self.assertEqual(pebble['signal_path'],'analog')
+        for p in audio:
+            self.assertIn(p['signal_path'], ['analog','usb','usb-analog','wireless','xlr'])
+            self.assertNotIn('latency',p)
+            self.assertNotIn('sound_quality_rating',p)
+            text=(ROOT/'en/products'/p['id']/'index.html').read_text()
+            self.assertIn('USB can provide power without carrying sound',text)
+            self.assertIn('An XLR microphone needs a suitable interface',text)
+
     def test_product_pages_and_truthful_schema(self):
         for lang, folder in [('fr', 'produits'), ('en', 'en/products')]:
             for p in self.products:
@@ -226,8 +243,8 @@ class CatalogueTests(unittest.TestCase):
     def test_sitemap_and_cart_indexing(self):
         ns = {'s': 'http://www.sitemaps.org/schemas/sitemap/0.9'}
         urls = [loc.text for loc in ET.parse(ROOT / 'sitemap.xml').findall('s:url/s:loc', ns)]
-        self.assertEqual(len(urls), 514)
-        self.assertEqual(len(set(urls)), 514)
+        self.assertEqual(len(urls), 576)
+        self.assertEqual(len(set(urls)), 576)
         for url in urls:
             self.assertTrue((ROOT / url.removeprefix(LIVE) / 'index.html').is_file(), url)
         for folder in ['panier/', 'en/cart/']:

@@ -2782,5 +2782,311 @@
     "source": "https://www.coolermaster.com/",
     "demo_price_mad": 3590,
     "upholstery": "synthetic"
+  },
+  {
+    "id": "7hz-salnotes-zero",
+    "name": "7Hz Salnotes Zero",
+    "brand": "7Hz",
+    "category": "audio",
+    "audio_type": "iem",
+    "signal_path": "analog",
+    "demo_price_mad": 249,
+    "source": "https://www.linsoul.com/"
+  },
+  {
+    "id": "truthear-hexa",
+    "name": "TRUTHEAR HEXA",
+    "brand": "TRUTHEAR",
+    "category": "audio",
+    "audio_type": "iem",
+    "signal_path": "analog",
+    "demo_price_mad": 899,
+    "source": "https://truthear.com/"
+  },
+  {
+    "id": "moondrop-chu-ii",
+    "name": "MOONDROP CHU II",
+    "brand": "MOONDROP",
+    "category": "audio",
+    "audio_type": "iem",
+    "signal_path": "analog",
+    "demo_price_mad": 249,
+    "source": "https://moondroplab.com/"
+  },
+  {
+    "id": "tangzu-wan-er-s-g",
+    "name": "TANGZU Wan’er S.G",
+    "brand": "TANGZU",
+    "category": "audio",
+    "audio_type": "iem",
+    "signal_path": "analog",
+    "demo_price_mad": 249,
+    "source": "https://tangzu.net/"
+  },
+  {
+    "id": "kz-zs10-pro-x",
+    "name": "KZ ZS10 PRO X",
+    "brand": "KZ",
+    "category": "audio",
+    "audio_type": "iem",
+    "signal_path": "analog",
+    "demo_price_mad": 599,
+    "source": "https://kz-audio.com/"
+  },
+  {
+    "id": "simgot-ew200",
+    "name": "SIMGOT EW200",
+    "brand": "SIMGOT",
+    "category": "audio",
+    "audio_type": "iem",
+    "signal_path": "analog",
+    "demo_price_mad": 499,
+    "source": "https://www.simgot.com/"
+  },
+  {
+    "id": "sennheiser-hd-560s",
+    "name": "Sennheiser HD 560S",
+    "brand": "Sennheiser",
+    "category": "audio",
+    "audio_type": "headphones",
+    "signal_path": "analog",
+    "demo_price_mad": 2190,
+    "source": "https://www.sennheiser-hearing.com/"
+  },
+  {
+    "id": "beyerdynamic-dt-770-pro-80-ohm",
+    "name": "beyerdynamic DT 770 PRO 80 Ohm",
+    "brand": "beyerdynamic",
+    "category": "audio",
+    "audio_type": "headphones",
+    "signal_path": "analog",
+    "demo_price_mad": 1990,
+    "source": "https://www.beyerdynamic.com/"
+  },
+  {
+    "id": "audio-technica-ath-m50x",
+    "name": "Audio-Technica ATH-M50x",
+    "brand": "Audio-Technica",
+    "category": "audio",
+    "audio_type": "headphones",
+    "signal_path": "analog",
+    "demo_price_mad": 1890,
+    "source": "https://www.audio-technica.com/"
+  },
+  {
+    "id": "hyperx-cloud-ii-wired",
+    "name": "HyperX Cloud II (wired)",
+    "brand": "HyperX",
+    "category": "audio",
+    "audio_type": "headphones",
+    "signal_path": "usb-analog",
+    "demo_price_mad": 1190,
+    "source": "https://hyperx.com/"
+  },
+  {
+    "id": "logitech-g-pro-x-gaming-headset-wired",
+    "name": "Logitech G PRO X Gaming Headset (wired)",
+    "brand": "Logitech",
+    "category": "audio",
+    "audio_type": "headphones",
+    "signal_path": "usb-analog",
+    "demo_price_mad": 1290,
+    "source": "https://www.logitechg.com/"
+  },
+  {
+    "id": "steelseries-arctis-nova-7",
+    "name": "SteelSeries Arctis Nova 7",
+    "brand": "SteelSeries",
+    "category": "audio",
+    "audio_type": "headphones",
+    "signal_path": "wireless",
+    "demo_price_mad": 2190,
+    "source": "https://steelseries.com/"
+  },
+  {
+    "id": "creative-pebble-v2",
+    "name": "Creative Pebble V2",
+    "brand": "Creative",
+    "category": "audio",
+    "audio_type": "speakers",
+    "signal_path": "analog",
+    "demo_price_mad": 449,
+    "source": "https://www.creative.com/"
+  },
+  {
+    "id": "logitech-z200",
+    "name": "Logitech Z200",
+    "brand": "Logitech",
+    "category": "audio",
+    "audio_type": "speakers",
+    "signal_path": "analog",
+    "demo_price_mad": 549,
+    "source": "https://www.logitechg.com/"
+  },
+  {
+    "id": "edifier-r1280t",
+    "name": "Edifier R1280T",
+    "brand": "Edifier",
+    "category": "audio",
+    "audio_type": "speakers",
+    "signal_path": "analog",
+    "demo_price_mad": 1390,
+    "source": "https://www.edifier.com/"
+  },
+  {
+    "id": "presonus-eris-3-5-2nd-gen",
+    "name": "PreSonus Eris 3.5 (2nd Gen)",
+    "brand": "PreSonus",
+    "category": "audio",
+    "audio_type": "speakers",
+    "signal_path": "analog",
+    "demo_price_mad": 1490,
+    "source": "https://www.presonus.com/"
+  },
+  {
+    "id": "mackie-cr3-x",
+    "name": "Mackie CR3-X",
+    "brand": "Mackie",
+    "category": "audio",
+    "audio_type": "speakers",
+    "signal_path": "analog",
+    "demo_price_mad": 1490,
+    "source": "https://mackie.com/"
+  },
+  {
+    "id": "creative-pebble-pro",
+    "name": "Creative Pebble Pro",
+    "brand": "Creative",
+    "category": "audio",
+    "audio_type": "speakers",
+    "signal_path": "usb-analog",
+    "demo_price_mad": 1090,
+    "source": "https://www.creative.com/"
+  },
+  {
+    "id": "fifine-k669b",
+    "name": "FIFINE K669B",
+    "brand": "FIFINE",
+    "category": "audio",
+    "audio_type": "microphone",
+    "signal_path": "usb",
+    "demo_price_mad": 399,
+    "source": "https://fifinemicrophone.com/"
+  },
+  {
+    "id": "hyperx-quadcast",
+    "name": "HyperX QuadCast",
+    "brand": "HyperX",
+    "category": "audio",
+    "audio_type": "microphone",
+    "signal_path": "usb",
+    "demo_price_mad": 1490,
+    "source": "https://hyperx.com/"
+  },
+  {
+    "id": "blue-yeti",
+    "name": "Blue Yeti",
+    "brand": "Blue",
+    "category": "audio",
+    "audio_type": "microphone",
+    "signal_path": "usb",
+    "demo_price_mad": 1390,
+    "source": "https://www.logitechg.com/"
+  },
+  {
+    "id": "elgato-wave-3",
+    "name": "Elgato Wave:3",
+    "brand": "Elgato",
+    "category": "audio",
+    "audio_type": "microphone",
+    "signal_path": "usb",
+    "demo_price_mad": 1690,
+    "source": "https://www.elgato.com/"
+  },
+  {
+    "id": "audio-technica-at2020",
+    "name": "Audio-Technica AT2020",
+    "brand": "Audio-Technica",
+    "category": "audio",
+    "audio_type": "microphone",
+    "signal_path": "xlr",
+    "demo_price_mad": 1190,
+    "source": "https://www.audio-technica.com/"
+  },
+  {
+    "id": "r-de-podmic",
+    "name": "RØDE PodMic",
+    "brand": "RØDE",
+    "category": "audio",
+    "audio_type": "microphone",
+    "signal_path": "xlr",
+    "demo_price_mad": 1290,
+    "source": "https://rode.com/"
+  },
+  {
+    "id": "fiio-k3",
+    "name": "FiiO K3",
+    "brand": "FiiO",
+    "category": "audio",
+    "audio_type": "dac-amp",
+    "signal_path": "usb",
+    "demo_price_mad": 1290,
+    "source": "https://www.fiio.com/",
+    "conversion_role": "dac-and-amp"
+  },
+  {
+    "id": "topping-dx3-pro",
+    "name": "Topping DX3 Pro+",
+    "brand": "Topping",
+    "category": "audio",
+    "audio_type": "dac-amp",
+    "signal_path": "usb",
+    "demo_price_mad": 2390,
+    "source": "https://www.toppingaudio.com/",
+    "conversion_role": "dac-and-amp"
+  },
+  {
+    "id": "smsl-su-1",
+    "name": "SMSL SU-1",
+    "brand": "SMSL",
+    "category": "audio",
+    "audio_type": "dac-amp",
+    "signal_path": "usb",
+    "demo_price_mad": 1090,
+    "source": "https://www.smsl-audio.com/",
+    "conversion_role": "dac-only"
+  },
+  {
+    "id": "schiit-fulla-e",
+    "name": "Schiit Fulla E",
+    "brand": "Schiit",
+    "category": "audio",
+    "audio_type": "dac-amp",
+    "signal_path": "usb",
+    "demo_price_mad": 1590,
+    "source": "https://www.schiit.com/",
+    "conversion_role": "dac-and-amp"
+  },
+  {
+    "id": "schiit-magni",
+    "name": "Schiit Magni+",
+    "brand": "Schiit",
+    "category": "audio",
+    "audio_type": "dac-amp",
+    "signal_path": "analog",
+    "demo_price_mad": 1590,
+    "source": "https://www.schiit.com/",
+    "conversion_role": "amp-only"
+  },
+  {
+    "id": "ifi-zen-dac-v2",
+    "name": "iFi ZEN DAC V2",
+    "brand": "iFi",
+    "category": "audio",
+    "audio_type": "dac-amp",
+    "signal_path": "usb",
+    "demo_price_mad": 2290,
+    "source": "https://ifi-audio.com/",
+    "conversion_role": "dac-and-amp"
   }
 ]

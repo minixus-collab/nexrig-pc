@@ -24,17 +24,18 @@ WORDS = {
 # Additional storefront categories share translated specifications and filter definitions.
 EXPANSION_PATHS = {
  'case':('boitiers/','en/cases/'), 'laptop':('ordinateurs-portables/','en/laptops/'),
- 'keyboard':('claviers/','en/keyboards/'), 'mouse':('souris/','en/mice/'), 'chair':('chaises-gaming/','en/gaming-chairs/')}
-EXPANSION_LABELS = {'fr':{'case':'Boîtiers PC','laptop':'Ordinateurs portables','keyboard':'Claviers','mouse':'Souris','chair':'Chaises gaming'},'en':{'case':'PC cases','laptop':'Laptops','keyboard':'Keyboards','mouse':'Mice','chair':'Gaming chairs'}}
+ 'keyboard':('claviers/','en/keyboards/'), 'mouse':('souris/','en/mice/'), 'chair':('chaises-gaming/','en/gaming-chairs/'), 'audio':('audio/','en/audio/')}
+EXPANSION_LABELS = {'fr':{'audio':'Audio','case':'Boîtiers PC','laptop':'Ordinateurs portables','keyboard':'Claviers','mouse':'Souris','chair':'Chaises gaming'},'en':{'audio':'Audio','case':'PC cases','laptop':'Laptops','keyboard':'Keyboards','mouse':'Mice','chair':'Gaming chairs'}}
 EXPANSION_FIELDS = {
+ 'audio':[('audio_type','Type audio','Audio type'),('signal_path','Signal principal','Primary signal')],
  'case':[('case_format','Format principal','Primary form factor')],
  'laptop':[('screen_inches','Diagonale nominale','Nominal screen size')],
  'keyboard':[('switch_technology','Technologie de touches','Switch technology'),('keyboard_size','Format','Form factor')],
  'mouse':[('connection_type','Connexion principale','Primary connection')],
  'chair':[('upholstery','Revêtement','Upholstery')]}
 EXPANSION_VALUES = {
- 'fr':{'mechanical':'Mécanique conventionnel','magnetic':'Magnétique Hall-effect','compact':'Compact','full-size':'Complet','TKL':'TKL (sans pavé numérique)','wired':'Filaire','wireless':'Sans fil','fabric':'Tissu','synthetic':'Revêtement synthétique'},
- 'en':{'mechanical':'Conventional mechanical','magnetic':'Magnetic Hall-effect','compact':'Compact','full-size':'Full-size','TKL':'TKL (no number pad)','wired':'Wired','wireless':'Wireless','fabric':'Fabric','synthetic':'Synthetic upholstery'}}
+ 'fr':{'iem':'IEM / intra-auriculaires','headphones':'Casques et micro-casques','speakers':'Enceintes','microphone':'Microphones','dac-amp':'DAC et amplificateurs','analog':'Audio analogique','usb':'Audio USB','usb-analog':'Audio USB et analogique','xlr':'Micro XLR','dac-only':'DAC seul','amp-only':'Amplificateur seul','dac-and-amp':'DAC et amplificateur','mechanical':'Mécanique conventionnel','magnetic':'Magnétique Hall-effect','compact':'Compact','full-size':'Complet','TKL':'TKL (sans pavé numérique)','wired':'Filaire','wireless':'Sans fil','fabric':'Tissu','synthetic':'Revêtement synthétique'},
+ 'en':{'iem':'IEMs / in-ear monitors','headphones':'Headphones and headsets','speakers':'Speakers','microphone':'Microphones','dac-amp':'DACs and amplifiers','analog':'Analog audio','usb':'USB audio','usb-analog':'USB and analog audio','xlr':'XLR microphone','dac-only':'DAC only','amp-only':'Amplifier only','dac-and-amp':'DAC and amplifier','mechanical':'Conventional mechanical','magnetic':'Magnetic Hall-effect','compact':'Compact','full-size':'Full-size','TKL':'TKL (no number pad)','wired':'Wired','wireless':'Wireless','fabric':'Fabric','synthetic':'Synthetic upholstery'}}
 for language,index in [('fr',0),('en',1)]:
  CATEGORY_PATHS[language].update({key:paths[index] for key,paths in EXPANSION_PATHS.items()})
  WORDS[language].update(EXPANSION_LABELS[language])
@@ -45,6 +46,7 @@ def expansion_value(key,value,lang):
  return EXPANSION_VALUES[lang].get(value,str(value))
 
 EXPANSION_ADVICE = {
+ 'audio':('Vérifiez le signal audio, les connecteurs et les câbles de la référence exacte. USB peut alimenter un appareil sans transporter le son : les Creative Pebble V2 utilisent une entrée audio analogique. Un microphone XLR nécessite une interface ou un préampli adapté ; un adaptateur passif XLR-vers-USB ne suffit pas. Un DAC seul ne remplace pas un amplificateur de casque.','Check audio signal, connectors and cables for the exact model. USB can provide power without carrying sound: Creative Pebble V2 uses an analog audio input. An XLR microphone needs a suitable interface or preamp; a passive XLR-to-USB adapter is not enough. A standalone DAC does not replace a headphone amplifier.'),
  'case':('Vérifiez les dimensions exactes et la révision : format de carte mère, longueur GPU, hauteur du ventirad, baie PSU et radiateurs avec ventilateurs. Le format principal ne décrit pas toutes les possibilités de montage.','Check exact dimensions and revision: motherboard format, GPU length, cooler height, PSU bay and radiators with fans. The primary form factor does not describe every mounting option.'),
  'laptop':('Cette fiche présente une famille de modèles, pas une configuration commerciale précise. CPU, GPU, RAM, SSD, écran et système peuvent varier selon le SKU et la région. Le prix est uniquement une démonstration pour cette famille.','This page describes a model family, not an exact retail configuration. CPU, GPU, RAM, SSD, display and operating system can vary by SKU and region. The price is only a demonstration for this family.'),
  'keyboard':('Vérifiez la disposition AZERTY/QWERTY, la variante ISO/ANSI et les touches réellement fournies. Les claviers magnétiques utilisent des capteurs Hall-effect ; leurs fonctions, zones de touches et réglages varient selon le modèle et le firmware.','Check AZERTY/QWERTY layout, ISO/ANSI variant and supplied keycaps. Magnetic keyboards use Hall-effect sensing; features, affected keys and settings vary by model and firmware.'),
@@ -82,7 +84,7 @@ def resolution_label(value):
 def label_specs(p, lang):
  w=WORDS[lang]
  if p['category'] in EXPANSION_FIELDS:
-  return [(w['brand'],p['brand'])]+[(fr if lang=='fr' else en,expansion_value(key,p[key],lang)) for key,fr,en in EXPANSION_FIELDS[p['category']]]
+  return [(w['brand'],p['brand'])]+[(fr if lang=='fr' else en,expansion_value(key,p[key],lang)) for key,fr,en in EXPANSION_FIELDS[p['category']]]+([('Fonction' if lang=='fr' else 'Function',expansion_value('conversion_role',p['conversion_role'],lang))] if 'conversion_role' in p else [])
  if p['category']=='monitor':
   return [(w['brand'],p['brand']), ('Diagonale' if lang=='fr' else 'Diagonal size',screen_size(p['size_inches'],lang)), ('Résolution native' if lang=='fr' else 'Native resolution',resolution_label(p['resolution'])), ('Fréquence nominale' if lang=='fr' else 'Nominal refresh rate',f"{p['refresh_hz']} Hz"), ('Dalle' if lang=='fr' else 'Panel',p['panel_type'])]
  if p['category']=='cooling':
@@ -104,6 +106,7 @@ def summary(p, lang):
  w=WORDS[lang]
  if p['category'] in EXPANSION_FIELDS:
   values=' · '.join(expansion_value(key,p[key],lang) for key,_,_ in EXPANSION_FIELDS[p['category']])
+  if 'conversion_role' in p:values+=' · '+expansion_value('conversion_role',p['conversion_role'],lang)
   return values+(' · Famille de modèles' if lang=='fr' else ' · Model family') if p['category']=='laptop' else values
  if p['category']=='monitor':return f"{screen_size(p['size_inches'],lang)} · {resolution_label(p['resolution'])} · {p['refresh_hz']} Hz · {p['panel_type']}"
  if p['category']=='cooling':return cooling_label(p['cooler_type'],lang)+(f" · {p['radiator_mm']} mm" if p['cooler_type']=='aio' else '')
@@ -237,7 +240,7 @@ def build_product(p,lang):
  dl=''.join(f'<div><dt>{e(k)}</dt><dd>{e(v)}</dd></div>' for k,v in label_specs(p,lang))
  body=f'''<div class="product-layout"><figure><img src="{BASE}assets/images/{p['category']}-illustration.svg" alt="{w[p['category']+'_alt']}" width="480" height="320"><figcaption class="illustration-label">{w['illustration']}</figcaption></figure>
 <div class="product-purchase"><span class="eyebrow">{e(p['brand'])} · {w[p['category']]}</span><h1>{e(p['name'])}</h1><p>{e(product_description(p,lang))}</p><div class="shop-price">{money(p['demo_price_mad'],lang)}<small class="shop-disclaimer">{w['demo']}</small></div><dl aria-label="{w['specs']}">{dl}</dl><button class="shop-button" type="button" data-add-to-cart="{p['id']}" disabled>{w['add']}</button><noscript><p class="shop-noscript">{w['filters_note']}</p></noscript><p class="shop-disclaimer">{'Le panier sert uniquement à simuler une sélection. Aucun paiement ni commande réelle.' if lang=='fr' else 'The cart only simulates a selection. No payment or real order.'}</p><a href="{BASE+category}">{w['back']}</a></div></div>
-<section><h2>{w['compat']}</h2><p>{advice}</p><p>{extra}</p><p><a href="{e(p['source'])}">{w['source']} : {e(p['brand'])}</a></p></section>
+<section><h2>{w['compat']}</h2><p>{advice}</p><p>{extra}</p><p><a href="{e(p['source'])}">{('Référence externe' if lang=='fr' else 'External reference') if p['category']=='audio' else w['source']} : {e(p['brand'])}</a></p></section>
 <section><h2>{w['related']}</h2><div class="shop-grid">{''.join(card(x,lang) for x in related)}</div></section>'''
  doc=document(p['name']+(' – Caractéristiques | NEXRIG' if lang=='fr' else ' – Specifications | NEXRIG'),product_description(p,lang),url,alt,lang,body,[(w['home'],homedir(lang)),(w[p['category']],category),(p['name'],url)])
  product={'@context':'https://schema.org','@type':'Product','name':p['name'],'brand':{'@type':'Brand','name':p['brand']},'category':w[p['category']],'description':product_description(p,lang),'url':LIVE+url,'additionalProperty':[{'@type':'PropertyValue','name':k,'value':v} for k,v in label_specs(p,lang)]}
