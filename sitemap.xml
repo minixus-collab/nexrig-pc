@@ -28,6 +28,9 @@
     <loc>https://minixus-collab.github.io/nexrig-pc/refroidissement/</loc>
   </url>
   <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/ecrans/</loc>
+  </url>
+  <url>
     <loc>https://minixus-collab.github.io/nexrig-pc/en/processors/</loc>
   </url>
   <url>
@@ -47,6 +50,9 @@
   </url>
   <url>
     <loc>https://minixus-collab.github.io/nexrig-pc/en/cooling/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/en/monitors/</loc>
   </url>
   <url>
     <loc>https://minixus-collab.github.io/nexrig-pc/produits/amd-ryzen-5-5600/</loc>
@@ -526,6 +532,78 @@
     <loc>https://minixus-collab.github.io/nexrig-pc/produits/corsair-h100x-rgb-elite/</loc>
   </url>
   <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/produits/asus-tuf-gaming-vg249q/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/produits/asus-tuf-gaming-vg27aq/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/produits/asus-tuf-gaming-vg28uql1a/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/produits/asus-rog-swift-pg279qm/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/produits/lg-ultragear-24gn600-b/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/produits/lg-ultragear-27gp850-b/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/produits/lg-ultragear-27gl850-b/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/produits/lg-ultragear-27gp950-b/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/produits/samsung-odyssey-g3-s24ag300/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/produits/samsung-odyssey-g5-c27g55t/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/produits/samsung-odyssey-g7-c27g75t/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/produits/samsung-odyssey-g7-s28ag700/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/produits/aoc-24g2u/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/produits/aoc-24g2spu/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/produits/aoc-q27g2u/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/produits/aoc-cq27g2u/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/produits/msi-optix-g241/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/produits/msi-optix-g273qf/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/produits/msi-optix-mag274qrf-qd/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/produits/msi-optix-mag281urf/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/produits/gigabyte-g24f/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/produits/gigabyte-g27q/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/produits/gigabyte-m27q-rev-2-0/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/produits/gigabyte-m28u/</loc>
+  </url>
+  <url>
     <loc>https://minixus-collab.github.io/nexrig-pc/en/products/amd-ryzen-5-5600/</loc>
   </url>
   <url>
@@ -1001,5 +1079,77 @@
   </url>
   <url>
     <loc>https://minixus-collab.github.io/nexrig-pc/en/products/corsair-h100x-rgb-elite/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/en/products/asus-tuf-gaming-vg249q/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/en/products/asus-tuf-gaming-vg27aq/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/en/products/asus-tuf-gaming-vg28uql1a/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/en/products/asus-rog-swift-pg279qm/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/en/products/lg-ultragear-24gn600-b/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/en/products/lg-ultragear-27gp850-b/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/en/products/lg-ultragear-27gl850-b/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/en/products/lg-ultragear-27gp950-b/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/en/products/samsung-odyssey-g3-s24ag300/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/en/products/samsung-odyssey-g5-c27g55t/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/en/products/samsung-odyssey-g7-c27g75t/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/en/products/samsung-odyssey-g7-s28ag700/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/en/products/aoc-24g2u/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/en/products/aoc-24g2spu/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/en/products/aoc-q27g2u/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/en/products/aoc-cq27g2u/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/en/products/msi-optix-g241/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/en/products/msi-optix-g273qf/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/en/products/msi-optix-mag274qrf-qd/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/en/products/msi-optix-mag281urf/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/en/products/gigabyte-g24f/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/en/products/gigabyte-g27q/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/en/products/gigabyte-m27q-rev-2-0/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/en/products/gigabyte-m28u/</loc>
   </url>
 </urlset>

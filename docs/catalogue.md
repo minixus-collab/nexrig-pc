@@ -13,7 +13,7 @@ NEXRIG is a fictional Moroccan PC store and SEO learning project. Continue this 
 
 ## Content and generation
 
-`data/products.json` is the shared source for CPU/GPU/RAM/storage/PSU/motherboard/cooling cards, product details, demonstration prices and cart calculations. IDs are stable URL slugs and cart identifiers. Do not rename existing IDs casually.
+`data/products.json` is the shared source for CPU/GPU/RAM/storage/PSU/motherboard/cooling/monitor cards, product details, demonstration prices and cart calculations. IDs are stable URL slugs and cart identifiers. Do not rename existing IDs casually.
 
 Run from the repository root:
 
@@ -60,3 +60,7 @@ Categories are `/cartes-meres/` and `/en/motherboards/`, with 24 boards from ASU
 ## Cooling
 
 Categories are `/refroidissement/` and `/en/cooling/`, with 24 CPU coolers from six brands: 12 air coolers and 12 sealed-loop AIOs. Store `cooler_type` and nominal `radiator_mm` (null for air coolers); filter by brand, type and radiator size. Nominal radiator class is not an exact physical length. Do not infer socket support, included mounting hardware, dimensions, temperature, noise or TDP capacity without verifying the exact reference and package revision. Manufacturer documentation remains inaccessible here. Explain case and RAM clearance, mounting kits, pump/fan connections, RGB voltage differences and checking installation instructions. NH-L9a-AM5 is the AM5 variant, not a universal cooler. Use labeled original illustrations and the existing cart; selections are not automatically validated builds.
+
+## Monitors
+
+Categories are `/ecrans/` and `/en/monitors/`, with 24 monitors from ASUS, LG, Samsung, AOC, MSI and Gigabyte. Store model-specific diagonal size, native resolution, nominal (non-overclock) refresh rate and panel type. Keep revision identifiers, including Gigabyte M27Q rev. 2.0; similar models may differ. Filter by brand, resolution, refresh rate and IPS/VA panel. A listed refresh rate is not a guarantee for every input or cable and does not guarantee game FPS. Manufacturer documentation remains inaccessible; verify response times, HDR, VRR, port capabilities, speakers, supplied accessories and mounting features before adding claims. Explain GPU/port/cable modes and system settings. Generic images and demo prices are labeled, and the cart does not validate display compatibility automatically.

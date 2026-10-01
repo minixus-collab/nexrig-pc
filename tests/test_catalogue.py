@@ -31,10 +31,10 @@ class CatalogueTests(unittest.TestCase):
         cls.pages = [p for p in ROOT.rglob('index.html') if '.git' not in p.parts]
 
     def test_product_identity_and_demo_prices(self):
-        self.assertEqual(len(self.products), 159)
-        self.assertEqual(len({p['id'] for p in self.products}), 159)
+        self.assertEqual(len(self.products), 183)
+        self.assertEqual(len({p['id'] for p in self.products}), 183)
         self.assertEqual(collections.Counter((p['category'], p['brand']) for p in self.products),
-                         {**{('cooling', brand): 4 for brand in ['Noctua','be quiet!','ARCTIC','DeepCool','Cooler Master','Corsair']}, **{('motherboard', brand): 6 for brand in ['ASUS','MSI','Gigabyte','ASRock']}, **{('psu', brand): 4 for brand in ['Corsair','Seasonic','be quiet!','Cooler Master','Thermaltake','EVGA']}, ('cpu', 'AMD'): 8, ('cpu', 'Intel'): 8, ('gpu', 'AMD'): 8, ('gpu', 'NVIDIA'): 8, **{('gpu', brand): 1 for brand in ['ASUS','MSI','Gigabyte','Zotac','Sapphire','PowerColor','XFX']}, **{('ram', brand): 4 for brand in ['Corsair','Kingston','G.Skill','Crucial','TeamGroup','Patriot']}, **{('storage', brand): 4 for brand in ['Samsung','Western Digital','Crucial','Kingston','Seagate','Corsair']}})
+                         {**{('monitor', brand): 4 for brand in ['ASUS','LG','Samsung','AOC','MSI','Gigabyte']}, **{('cooling', brand): 4 for brand in ['Noctua','be quiet!','ARCTIC','DeepCool','Cooler Master','Corsair']}, **{('motherboard', brand): 6 for brand in ['ASUS','MSI','Gigabyte','ASRock']}, **{('psu', brand): 4 for brand in ['Corsair','Seasonic','be quiet!','Cooler Master','Thermaltake','EVGA']}, ('cpu', 'AMD'): 8, ('cpu', 'Intel'): 8, ('gpu', 'AMD'): 8, ('gpu', 'NVIDIA'): 8, **{('gpu', brand): 1 for brand in ['ASUS','MSI','Gigabyte','Zotac','Sapphire','PowerColor','XFX']}, **{('ram', brand): 4 for brand in ['Corsair','Kingston','G.Skill','Crucial','TeamGroup','Patriot']}, **{('storage', brand): 4 for brand in ['Samsung','Western Digital','Crucial','Kingston','Seagate','Corsair']}})
         for p in self.products:
             self.assertRegex(p['id'], r'^[a-z0-9-]+$')
             self.assertIs(type(p['demo_price_mad']), int)
@@ -131,6 +131,25 @@ class CatalogueTests(unittest.TestCase):
             self.assertIn('Check socket support and the mounting kit', text)
             self.assertIn('Radiator size is nominal' if p['cooler_type']=='aio' else 'check case height clearance', text)
 
+    def test_monitor_identity_and_display_modes(self):
+        monitors = [p for p in self.products if p['category']=='monitor']
+        self.assertEqual(len(monitors), 24)
+        self.assertEqual(len({p['name'] for p in monitors}), 24)
+        self.assertEqual(collections.Counter(p['resolution'] for p in monitors), {'1920x1080':7,'2560x1440':12,'3840x2160':5})
+        for p in monitors:
+            self.assertIn(p['panel_type'], ['IPS','VA'])
+            self.assertIn(p['refresh_hz'], [144,165,240])
+            self.assertGreaterEqual(p['size_inches'],23.8)
+            self.assertLessEqual(p['size_inches'],28)
+            self.assertNotIn('response_time',p)
+            self.assertNotIn('hdr',p)
+            text=(ROOT / 'en/products' / p['id'] / 'index.html').read_text()
+            self.assertIn('Nominal refresh rate',text)
+            self.assertIn('Some models offer a separate overclock mode',text)
+            self.assertIn('does not guarantee the frame rate',text)
+        revision=next(p for p in monitors if p['id']=='gigabyte-m27q-rev-2-0')
+        self.assertEqual(revision['refresh_hz'],165)
+
     def test_product_pages_and_truthful_schema(self):
         for lang, folder in [('fr', 'produits'), ('en', 'en/products')]:
             for p in self.products:
@@ -187,8 +206,8 @@ class CatalogueTests(unittest.TestCase):
     def test_sitemap_and_cart_indexing(self):
         ns = {'s': 'http://www.sitemaps.org/schemas/sitemap/0.9'}
         urls = [loc.text for loc in ET.parse(ROOT / 'sitemap.xml').findall('s:url/s:loc', ns)]
-        self.assertEqual(len(urls), 334)
-        self.assertEqual(len(set(urls)), 334)
+        self.assertEqual(len(urls), 384)
+        self.assertEqual(len(set(urls)), 384)
         for url in urls:
             self.assertTrue((ROOT / url.removeprefix(LIVE) / 'index.html').is_file(), url)
         for folder in ['panier/', 'en/cart/']:
