@@ -1690,5 +1690,245 @@
     "form_factor": "ATX",
     "demo_price_mad": 3190,
     "source": "https://www.asrock.com/mb/"
+  },
+  {
+    "id": "noctua-nh-d15",
+    "name": "Noctua NH-D15",
+    "brand": "Noctua",
+    "category": "cooling",
+    "cooler_type": "air",
+    "radiator_mm": null,
+    "demo_price_mad": 890,
+    "source": "https://noctua.at/en/products/cpu-cooler-retail"
+  },
+  {
+    "id": "noctua-nh-u12s",
+    "name": "Noctua NH-U12S",
+    "brand": "Noctua",
+    "category": "cooling",
+    "cooler_type": "air",
+    "radiator_mm": null,
+    "demo_price_mad": 890,
+    "source": "https://noctua.at/en/products/cpu-cooler-retail"
+  },
+  {
+    "id": "noctua-nh-u12a",
+    "name": "Noctua NH-U12A",
+    "brand": "Noctua",
+    "category": "cooling",
+    "cooler_type": "air",
+    "radiator_mm": null,
+    "demo_price_mad": 890,
+    "source": "https://noctua.at/en/products/cpu-cooler-retail"
+  },
+  {
+    "id": "noctua-nh-l9a-am5",
+    "name": "Noctua NH-L9a-AM5",
+    "brand": "Noctua",
+    "category": "cooling",
+    "cooler_type": "air",
+    "radiator_mm": null,
+    "demo_price_mad": 890,
+    "source": "https://noctua.at/en/products/cpu-cooler-retail"
+  },
+  {
+    "id": "be-quiet-dark-rock-4",
+    "name": "be quiet! Dark Rock 4",
+    "brand": "be quiet!",
+    "category": "cooling",
+    "cooler_type": "air",
+    "radiator_mm": null,
+    "demo_price_mad": 890,
+    "source": "https://www.bequiet.com/en/cpucooler"
+  },
+  {
+    "id": "be-quiet-pure-rock-2",
+    "name": "be quiet! Pure Rock 2",
+    "brand": "be quiet!",
+    "category": "cooling",
+    "cooler_type": "air",
+    "radiator_mm": null,
+    "demo_price_mad": 890,
+    "source": "https://www.bequiet.com/en/cpucooler"
+  },
+  {
+    "id": "be-quiet-pure-loop-2-240mm",
+    "name": "be quiet! Pure Loop 2 240mm",
+    "brand": "be quiet!",
+    "category": "cooling",
+    "cooler_type": "aio",
+    "radiator_mm": 240,
+    "demo_price_mad": 1680,
+    "source": "https://www.bequiet.com/en/cpucooler"
+  },
+  {
+    "id": "be-quiet-pure-loop-2-360mm",
+    "name": "be quiet! Pure Loop 2 360mm",
+    "brand": "be quiet!",
+    "category": "cooling",
+    "cooler_type": "aio",
+    "radiator_mm": 360,
+    "demo_price_mad": 1920,
+    "source": "https://www.bequiet.com/en/cpucooler"
+  },
+  {
+    "id": "arctic-freezer-36",
+    "name": "ARCTIC Freezer 36",
+    "brand": "ARCTIC",
+    "category": "cooling",
+    "cooler_type": "air",
+    "radiator_mm": null,
+    "demo_price_mad": 890,
+    "source": "https://www.arctic.de/en/products/cooling/"
+  },
+  {
+    "id": "arctic-freezer-34-esports-duo",
+    "name": "ARCTIC Freezer 34 eSports DUO",
+    "brand": "ARCTIC",
+    "category": "cooling",
+    "cooler_type": "air",
+    "radiator_mm": null,
+    "demo_price_mad": 890,
+    "source": "https://www.arctic.de/en/products/cooling/"
+  },
+  {
+    "id": "arctic-liquid-freezer-iii-240",
+    "name": "ARCTIC Liquid Freezer III 240",
+    "brand": "ARCTIC",
+    "category": "cooling",
+    "cooler_type": "aio",
+    "radiator_mm": 240,
+    "demo_price_mad": 1680,
+    "source": "https://www.arctic.de/en/products/cooling/"
+  },
+  {
+    "id": "arctic-liquid-freezer-iii-360",
+    "name": "ARCTIC Liquid Freezer III 360",
+    "brand": "ARCTIC",
+    "category": "cooling",
+    "cooler_type": "aio",
+    "radiator_mm": 360,
+    "demo_price_mad": 1920,
+    "source": "https://www.arctic.de/en/products/cooling/"
+  },
+  {
+    "id": "deepcool-ak400",
+    "name": "DeepCool AK400",
+    "brand": "DeepCool",
+    "category": "cooling",
+    "cooler_type": "air",
+    "radiator_mm": null,
+    "demo_price_mad": 890,
+    "source": "https://www.deepcool.com/products/Cooling/"
+  },
+  {
+    "id": "deepcool-ak620",
+    "name": "DeepCool AK620",
+    "brand": "DeepCool",
+    "category": "cooling",
+    "cooler_type": "air",
+    "radiator_mm": null,
+    "demo_price_mad": 890,
+    "source": "https://www.deepcool.com/products/Cooling/"
+  },
+  {
+    "id": "deepcool-ls520",
+    "name": "DeepCool LS520",
+    "brand": "DeepCool",
+    "category": "cooling",
+    "cooler_type": "aio",
+    "radiator_mm": 240,
+    "demo_price_mad": 1680,
+    "source": "https://www.deepcool.com/products/Cooling/"
+  },
+  {
+    "id": "deepcool-ls720",
+    "name": "DeepCool LS720",
+    "brand": "DeepCool",
+    "category": "cooling",
+    "cooler_type": "aio",
+    "radiator_mm": 360,
+    "demo_price_mad": 1920,
+    "source": "https://www.deepcool.com/products/Cooling/"
+  },
+  {
+    "id": "cooler-master-hyper-212-black-edition",
+    "name": "Cooler Master Hyper 212 Black Edition",
+    "brand": "Cooler Master",
+    "category": "cooling",
+    "cooler_type": "air",
+    "radiator_mm": null,
+    "demo_price_mad": 890,
+    "source": "https://www.coolermaster.com/"
+  },
+  {
+    "id": "cooler-master-hyper-622-halo",
+    "name": "Cooler Master Hyper 622 Halo",
+    "brand": "Cooler Master",
+    "category": "cooling",
+    "cooler_type": "air",
+    "radiator_mm": null,
+    "demo_price_mad": 890,
+    "source": "https://www.coolermaster.com/"
+  },
+  {
+    "id": "cooler-master-masterliquid-240l-core-argb",
+    "name": "Cooler Master MasterLiquid 240L Core ARGB",
+    "brand": "Cooler Master",
+    "category": "cooling",
+    "cooler_type": "aio",
+    "radiator_mm": 240,
+    "demo_price_mad": 1680,
+    "source": "https://www.coolermaster.com/"
+  },
+  {
+    "id": "cooler-master-masterliquid-360l-core-argb",
+    "name": "Cooler Master MasterLiquid 360L Core ARGB",
+    "brand": "Cooler Master",
+    "category": "cooling",
+    "cooler_type": "aio",
+    "radiator_mm": 360,
+    "demo_price_mad": 1920,
+    "source": "https://www.coolermaster.com/"
+  },
+  {
+    "id": "corsair-icue-h100i-elite-capellix-xt",
+    "name": "Corsair iCUE H100i ELITE CAPELLIX XT",
+    "brand": "Corsair",
+    "category": "cooling",
+    "cooler_type": "aio",
+    "radiator_mm": 240,
+    "demo_price_mad": 1680,
+    "source": "https://www.corsair.com/us/en/c/cpu-coolers"
+  },
+  {
+    "id": "corsair-icue-h115i-elite-capellix-xt",
+    "name": "Corsair iCUE H115i ELITE CAPELLIX XT",
+    "brand": "Corsair",
+    "category": "cooling",
+    "cooler_type": "aio",
+    "radiator_mm": 280,
+    "demo_price_mad": 1760,
+    "source": "https://www.corsair.com/us/en/c/cpu-coolers"
+  },
+  {
+    "id": "corsair-icue-h150i-elite-capellix-xt",
+    "name": "Corsair iCUE H150i ELITE CAPELLIX XT",
+    "brand": "Corsair",
+    "category": "cooling",
+    "cooler_type": "aio",
+    "radiator_mm": 360,
+    "demo_price_mad": 1920,
+    "source": "https://www.corsair.com/us/en/c/cpu-coolers"
+  },
+  {
+    "id": "corsair-h100x-rgb-elite",
+    "name": "Corsair H100x RGB ELITE",
+    "brand": "Corsair",
+    "category": "cooling",
+    "cooler_type": "aio",
+    "radiator_mm": 240,
+    "demo_price_mad": 1680,
+    "source": "https://www.corsair.com/us/en/c/cpu-coolers"
   }
 ]

@@ -25,6 +25,9 @@
     <loc>https://minixus-collab.github.io/nexrig-pc/cartes-meres/</loc>
   </url>
   <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/refroidissement/</loc>
+  </url>
+  <url>
     <loc>https://minixus-collab.github.io/nexrig-pc/en/processors/</loc>
   </url>
   <url>
@@ -41,6 +44,9 @@
   </url>
   <url>
     <loc>https://minixus-collab.github.io/nexrig-pc/en/motherboards/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/en/cooling/</loc>
   </url>
   <url>
     <loc>https://minixus-collab.github.io/nexrig-pc/produits/amd-ryzen-5-5600/</loc>
@@ -448,6 +454,78 @@
     <loc>https://minixus-collab.github.io/nexrig-pc/produits/asrock-z790-pro-rs/</loc>
   </url>
   <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/produits/noctua-nh-d15/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/produits/noctua-nh-u12s/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/produits/noctua-nh-u12a/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/produits/noctua-nh-l9a-am5/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/produits/be-quiet-dark-rock-4/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/produits/be-quiet-pure-rock-2/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/produits/be-quiet-pure-loop-2-240mm/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/produits/be-quiet-pure-loop-2-360mm/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/produits/arctic-freezer-36/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/produits/arctic-freezer-34-esports-duo/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/produits/arctic-liquid-freezer-iii-240/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/produits/arctic-liquid-freezer-iii-360/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/produits/deepcool-ak400/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/produits/deepcool-ak620/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/produits/deepcool-ls520/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/produits/deepcool-ls720/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/produits/cooler-master-hyper-212-black-edition/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/produits/cooler-master-hyper-622-halo/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/produits/cooler-master-masterliquid-240l-core-argb/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/produits/cooler-master-masterliquid-360l-core-argb/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/produits/corsair-icue-h100i-elite-capellix-xt/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/produits/corsair-icue-h115i-elite-capellix-xt/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/produits/corsair-icue-h150i-elite-capellix-xt/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/produits/corsair-h100x-rgb-elite/</loc>
+  </url>
+  <url>
     <loc>https://minixus-collab.github.io/nexrig-pc/en/products/amd-ryzen-5-5600/</loc>
   </url>
   <url>
@@ -851,5 +929,77 @@
   </url>
   <url>
     <loc>https://minixus-collab.github.io/nexrig-pc/en/products/asrock-z790-pro-rs/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/en/products/noctua-nh-d15/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/en/products/noctua-nh-u12s/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/en/products/noctua-nh-u12a/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/en/products/noctua-nh-l9a-am5/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/en/products/be-quiet-dark-rock-4/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/en/products/be-quiet-pure-rock-2/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/en/products/be-quiet-pure-loop-2-240mm/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/en/products/be-quiet-pure-loop-2-360mm/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/en/products/arctic-freezer-36/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/en/products/arctic-freezer-34-esports-duo/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/en/products/arctic-liquid-freezer-iii-240/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/en/products/arctic-liquid-freezer-iii-360/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/en/products/deepcool-ak400/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/en/products/deepcool-ak620/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/en/products/deepcool-ls520/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/en/products/deepcool-ls720/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/en/products/cooler-master-hyper-212-black-edition/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/en/products/cooler-master-hyper-622-halo/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/en/products/cooler-master-masterliquid-240l-core-argb/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/en/products/cooler-master-masterliquid-360l-core-argb/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/en/products/corsair-icue-h100i-elite-capellix-xt/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/en/products/corsair-icue-h115i-elite-capellix-xt/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/en/products/corsair-icue-h150i-elite-capellix-xt/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/en/products/corsair-h100x-rgb-elite/</loc>
   </url>
 </urlset>

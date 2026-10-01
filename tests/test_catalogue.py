@@ -31,10 +31,10 @@ class CatalogueTests(unittest.TestCase):
         cls.pages = [p for p in ROOT.rglob('index.html') if '.git' not in p.parts]
 
     def test_product_identity_and_demo_prices(self):
-        self.assertEqual(len(self.products), 135)
-        self.assertEqual(len({p['id'] for p in self.products}), 135)
+        self.assertEqual(len(self.products), 159)
+        self.assertEqual(len({p['id'] for p in self.products}), 159)
         self.assertEqual(collections.Counter((p['category'], p['brand']) for p in self.products),
-                         {**{('motherboard', brand): 6 for brand in ['ASUS','MSI','Gigabyte','ASRock']}, **{('psu', brand): 4 for brand in ['Corsair','Seasonic','be quiet!','Cooler Master','Thermaltake','EVGA']}, ('cpu', 'AMD'): 8, ('cpu', 'Intel'): 8, ('gpu', 'AMD'): 8, ('gpu', 'NVIDIA'): 8, **{('gpu', brand): 1 for brand in ['ASUS','MSI','Gigabyte','Zotac','Sapphire','PowerColor','XFX']}, **{('ram', brand): 4 for brand in ['Corsair','Kingston','G.Skill','Crucial','TeamGroup','Patriot']}, **{('storage', brand): 4 for brand in ['Samsung','Western Digital','Crucial','Kingston','Seagate','Corsair']}})
+                         {**{('cooling', brand): 4 for brand in ['Noctua','be quiet!','ARCTIC','DeepCool','Cooler Master','Corsair']}, **{('motherboard', brand): 6 for brand in ['ASUS','MSI','Gigabyte','ASRock']}, **{('psu', brand): 4 for brand in ['Corsair','Seasonic','be quiet!','Cooler Master','Thermaltake','EVGA']}, ('cpu', 'AMD'): 8, ('cpu', 'Intel'): 8, ('gpu', 'AMD'): 8, ('gpu', 'NVIDIA'): 8, **{('gpu', brand): 1 for brand in ['ASUS','MSI','Gigabyte','Zotac','Sapphire','PowerColor','XFX']}, **{('ram', brand): 4 for brand in ['Corsair','Kingston','G.Skill','Crucial','TeamGroup','Patriot']}, **{('storage', brand): 4 for brand in ['Samsung','Western Digital','Crucial','Kingston','Seagate','Corsair']}})
         for p in self.products:
             self.assertRegex(p['id'], r'^[a-z0-9-]+$')
             self.assertIs(type(p['demo_price_mad']), int)
@@ -114,6 +114,23 @@ class CatalogueTests(unittest.TestCase):
             self.assertIn('minimum BIOS version', text)
             self.assertIn('does not automatically validate a build', text)
 
+    def test_cooling_types_and_nominal_sizes(self):
+        coolers = [p for p in self.products if p['category'] == 'cooling']
+        self.assertEqual(len(coolers), 24)
+        self.assertEqual(len({p['name'] for p in coolers}), 24)
+        self.assertEqual(collections.Counter(p['cooler_type'] for p in coolers), {'air': 12, 'aio': 12})
+        self.assertEqual(collections.Counter(p['radiator_mm'] for p in coolers if p['cooler_type']=='aio'), {240: 6, 280: 1, 360: 5})
+        for p in coolers:
+            if p['cooler_type'] == 'air':
+                self.assertIsNone(p['radiator_mm'])
+            else:
+                self.assertIn(p['radiator_mm'], [240,280,360])
+            self.assertNotIn('tdp', p)
+            self.assertNotIn('sockets', p)
+            text = (ROOT / 'en/products' / p['id'] / 'index.html').read_text()
+            self.assertIn('Check socket support and the mounting kit', text)
+            self.assertIn('Radiator size is nominal' if p['cooler_type']=='aio' else 'check case height clearance', text)
+
     def test_product_pages_and_truthful_schema(self):
         for lang, folder in [('fr', 'produits'), ('en', 'en/products')]:
             for p in self.products:
@@ -170,8 +187,8 @@ class CatalogueTests(unittest.TestCase):
     def test_sitemap_and_cart_indexing(self):
         ns = {'s': 'http://www.sitemaps.org/schemas/sitemap/0.9'}
         urls = [loc.text for loc in ET.parse(ROOT / 'sitemap.xml').findall('s:url/s:loc', ns)]
-        self.assertEqual(len(urls), 284)
-        self.assertEqual(len(set(urls)), 284)
+        self.assertEqual(len(urls), 334)
+        self.assertEqual(len(set(urls)), 334)
         for url in urls:
             self.assertTrue((ROOT / url.removeprefix(LIVE) / 'index.html').is_file(), url)
         for folder in ['panier/', 'en/cart/']:

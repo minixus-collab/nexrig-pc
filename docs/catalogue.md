@@ -13,7 +13,7 @@ NEXRIG is a fictional Moroccan PC store and SEO learning project. Continue this 
 
 ## Content and generation
 
-`data/products.json` is the shared source for CPU/GPU/RAM/storage/PSU/motherboard cards, product details, demonstration prices and cart calculations. IDs are stable URL slugs and cart identifiers. Do not rename existing IDs casually.
+`data/products.json` is the shared source for CPU/GPU/RAM/storage/PSU/motherboard/cooling cards, product details, demonstration prices and cart calculations. IDs are stable URL slugs and cart identifiers. Do not rename existing IDs casually.
 
 Run from the repository root:
 
@@ -56,3 +56,7 @@ PSU categories are `/alimentations/` and `/en/power-supplies/`, with 24 models a
 ## Motherboards
 
 Categories are `/cartes-meres/` and `/en/motherboards/`, with 24 boards from ASUS, MSI, Gigabyte and ASRock. Store socket, chipset, memory generation and physical form factor; filter by brand, socket, DDR generation and ATX/Micro-ATX size. Use exact model names to distinguish DDR4/DDR5 variants. Hardware revisions may alter features or BIOS support: check the model/revision-specific CPU list and minimum BIOS before claiming compatibility. Do not infer port counts, wireless versions, maximum RAM capacity or supported memory speeds from a chipset or family name. Manufacturer pages remain blocked in this environment. The shared cart is a selection simulator, not an automatic compatibility checker. Explain CPU support, BIOS, QVL, case mounting, power connectors, integrated graphics and storage lane sharing without claiming a verified build.
+
+## Cooling
+
+Categories are `/refroidissement/` and `/en/cooling/`, with 24 CPU coolers from six brands: 12 air coolers and 12 sealed-loop AIOs. Store `cooler_type` and nominal `radiator_mm` (null for air coolers); filter by brand, type and radiator size. Nominal radiator class is not an exact physical length. Do not infer socket support, included mounting hardware, dimensions, temperature, noise or TDP capacity without verifying the exact reference and package revision. Manufacturer documentation remains inaccessible here. Explain case and RAM clearance, mounting kits, pump/fan connections, RGB voltage differences and checking installation instructions. NH-L9a-AM5 is the AM5 variant, not a universal cooler. Use labeled original illustrations and the existing cart; selections are not automatically validated builds.

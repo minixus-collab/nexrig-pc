@@ -75,6 +75,8 @@
     function filter() {
       const query = form.elements.search.value.trim().toLocaleLowerCase();
       const brand = form.elements.brand.value;
+      const coolerType = form.elements.cooler_type?.value || '';
+      const radiator = form.elements.radiator?.value || '';
       const socket = form.elements.socket?.value || '';
       const formFactor = form.elements.form_factor?.value || '';
       const wattage = form.elements.wattage?.value || '';
@@ -87,7 +89,7 @@
       let shown = 0;
       for (const card of cards) {
         const p = products.get(card.dataset.productId);
-        const matches = (!socket || p.socket === socket) && (!formFactor || p.form_factor === formFactor) && (!wattage || String(p.wattage) === wattage) && (!modularity || p.modularity === modularity) && (!chipBrand || (p.chip_brand || p.brand) === chipBrand) && (!brand || p.brand === brand) && (!generation || p.memory_generation === generation) && (!capacity || String(p.capacity_gb) === capacity) && (!driveType || p.drive_type === driveType) && (!protocol || p.storage_protocol === protocol) && `${p.name} ${p.sku || ''}`.toLocaleLowerCase().includes(query);
+        const matches = (!coolerType || p.cooler_type === coolerType) && (!radiator || String(p.radiator_mm) === radiator) && (!socket || p.socket === socket) && (!formFactor || p.form_factor === formFactor) && (!wattage || String(p.wattage) === wattage) && (!modularity || p.modularity === modularity) && (!chipBrand || (p.chip_brand || p.brand) === chipBrand) && (!brand || p.brand === brand) && (!generation || p.memory_generation === generation) && (!capacity || String(p.capacity_gb) === capacity) && (!driveType || p.drive_type === driveType) && (!protocol || p.storage_protocol === protocol) && `${p.name} ${p.sku || ''}`.toLocaleLowerCase().includes(query);
         card.hidden = !matches; if (matches) shown++;
       }
       const order = form.elements.sort.value;
