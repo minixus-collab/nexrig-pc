@@ -21,6 +21,36 @@ WORDS = {
  'en': {'home':'Home','cpu':'Processors','gpu':'Graphics cards','cart':'Cart','add':'Add to cart','view':'View product','demo':'Demonstration price — no sales','illustration':'Generic illustration — not a photo of this model','cpu_alt':'Generic illustration of a processor','gpu_alt':'Generic illustration of a graphics card','cores':'cores','threads':'threads','socket':'Socket','supported_memory':'Supported memory','ram':'RAM','ram_alt':'Generic illustration of a RAM module','monitor':'Monitors','monitor_alt':'Generic illustration of a PC monitor','cooling':'Cooling','cooling_alt':'Generic illustration of CPU coolers','motherboard':'Motherboards','motherboard_alt':'Generic illustration of a motherboard','psu':'Power supplies','psu_alt':'Generic illustration of a PC power supply','storage':'Storage','storage_alt':'Generic illustration of storage drives','integrated':'Integrated graphics','yes':'Yes','no':'No','memory':'Video memory','architecture':'Architecture','search':'Search models','brand':'Brand','all':'All brands','sort':'Sort by','default':'Catalogue order','low':'Demo price: low to high','high':'Demo price: high to low','name':'Model name','reset':'Reset','empty':'No models match these filters.','filters_note':'Filters and cart require JavaScript. Products and their detail pages remain readable.','skip':'Skip to content','nav':'Main navigation','bread':'Breadcrumb','banner':'Fictional store · Demonstration prices · No sales','about':'The project','back':'Back to category','specs':'Model specifications','source':'Manufacturer product range','related':'More models to explore','compat':'Compatibility to check'}
 }
 
+# Additional storefront categories share translated specifications and filter definitions.
+EXPANSION_PATHS = {
+ 'case':('boitiers/','en/cases/'), 'laptop':('ordinateurs-portables/','en/laptops/'),
+ 'keyboard':('claviers/','en/keyboards/'), 'mouse':('souris/','en/mice/'), 'chair':('chaises-gaming/','en/gaming-chairs/')}
+EXPANSION_LABELS = {'fr':{'case':'Boîtiers PC','laptop':'Ordinateurs portables','keyboard':'Claviers','mouse':'Souris','chair':'Chaises gaming'},'en':{'case':'PC cases','laptop':'Laptops','keyboard':'Keyboards','mouse':'Mice','chair':'Gaming chairs'}}
+EXPANSION_FIELDS = {
+ 'case':[('case_format','Format principal','Primary form factor')],
+ 'laptop':[('screen_inches','Diagonale nominale','Nominal screen size')],
+ 'keyboard':[('switch_technology','Technologie de touches','Switch technology'),('keyboard_size','Format','Form factor')],
+ 'mouse':[('connection_type','Connexion principale','Primary connection')],
+ 'chair':[('upholstery','Revêtement','Upholstery')]}
+EXPANSION_VALUES = {
+ 'fr':{'mechanical':'Mécanique conventionnel','magnetic':'Magnétique Hall-effect','compact':'Compact','full-size':'Complet','TKL':'TKL (sans pavé numérique)','wired':'Filaire','wireless':'Sans fil','fabric':'Tissu','synthetic':'Revêtement synthétique'},
+ 'en':{'mechanical':'Conventional mechanical','magnetic':'Magnetic Hall-effect','compact':'Compact','full-size':'Full-size','TKL':'TKL (no number pad)','wired':'Wired','wireless':'Wireless','fabric':'Fabric','synthetic':'Synthetic upholstery'}}
+for language,index in [('fr',0),('en',1)]:
+ CATEGORY_PATHS[language].update({key:paths[index] for key,paths in EXPANSION_PATHS.items()})
+ WORDS[language].update(EXPANSION_LABELS[language])
+ WORDS[language].update({key+'_alt':('Illustration générique : ' if language=='fr' else 'Generic illustration: ')+label for key,label in EXPANSION_LABELS[language].items()})
+
+def expansion_value(key,value,lang):
+ if key=='screen_inches':return screen_size(value,lang)
+ return EXPANSION_VALUES[lang].get(value,str(value))
+
+EXPANSION_ADVICE = {
+ 'case':('Vérifiez les dimensions exactes et la révision : format de carte mère, longueur GPU, hauteur du ventirad, baie PSU et radiateurs avec ventilateurs. Le format principal ne décrit pas toutes les possibilités de montage.','Check exact dimensions and revision: motherboard format, GPU length, cooler height, PSU bay and radiators with fans. The primary form factor does not describe every mounting option.'),
+ 'laptop':('Cette fiche présente une famille de modèles, pas une configuration commerciale précise. CPU, GPU, RAM, SSD, écran et système peuvent varier selon le SKU et la région. Le prix est uniquement une démonstration pour cette famille.','This page describes a model family, not an exact retail configuration. CPU, GPU, RAM, SSD, display and operating system can vary by SKU and region. The price is only a demonstration for this family.'),
+ 'keyboard':('Vérifiez la disposition AZERTY/QWERTY, la variante ISO/ANSI et les touches réellement fournies. Les claviers magnétiques utilisent des capteurs Hall-effect ; leurs fonctions, zones de touches et réglages varient selon le modèle et le firmware.','Check AZERTY/QWERTY layout, ISO/ANSI variant and supplied keycaps. Magnetic keyboards use Hall-effect sensing; features, affected keys and settings vary by model and firmware.'),
+ 'mouse':('Vérifiez la taille, la forme, votre prise en main et la compatibilité système. Sans fil ne signifie pas automatiquement Bluetooth : consultez les modes exacts, le récepteur inclus et les possibilités de recharge.','Check size, shape, grip and operating-system compatibility. Wireless does not automatically mean Bluetooth: check exact connection modes, supplied receiver and charging options.'),
+ 'chair':('Comparez les dimensions de l’assise, les réglages et les limites indiquées par le fabricant pour la taille et le revêtement exacts. Un nom gaming ne garantit ni confort universel ni bénéfice médical.','Compare seat dimensions, adjustments and manufacturer limits for the exact size and upholstery variant. A gaming label guarantees neither universal comfort nor medical benefits.')}
+
 def e(value):
  return html.escape(str(value), quote=True)
 
@@ -51,6 +81,8 @@ def resolution_label(value):
 
 def label_specs(p, lang):
  w=WORDS[lang]
+ if p['category'] in EXPANSION_FIELDS:
+  return [(w['brand'],p['brand'])]+[(fr if lang=='fr' else en,expansion_value(key,p[key],lang)) for key,fr,en in EXPANSION_FIELDS[p['category']]]
  if p['category']=='monitor':
   return [(w['brand'],p['brand']), ('Diagonale' if lang=='fr' else 'Diagonal size',screen_size(p['size_inches'],lang)), ('Résolution native' if lang=='fr' else 'Native resolution',resolution_label(p['resolution'])), ('Fréquence nominale' if lang=='fr' else 'Nominal refresh rate',f"{p['refresh_hz']} Hz"), ('Dalle' if lang=='fr' else 'Panel',p['panel_type'])]
  if p['category']=='cooling':
@@ -70,6 +102,9 @@ def label_specs(p, lang):
 
 def summary(p, lang):
  w=WORDS[lang]
+ if p['category'] in EXPANSION_FIELDS:
+  values=' · '.join(expansion_value(key,p[key],lang) for key,_,_ in EXPANSION_FIELDS[p['category']])
+  return values+(' · Famille de modèles' if lang=='fr' else ' · Model family') if p['category']=='laptop' else values
  if p['category']=='monitor':return f"{screen_size(p['size_inches'],lang)} · {resolution_label(p['resolution'])} · {p['refresh_hz']} Hz · {p['panel_type']}"
  if p['category']=='cooling':return cooling_label(p['cooler_type'],lang)+(f" · {p['radiator_mm']} mm" if p['cooler_type']=='aio' else '')
  if p['category']=='motherboard':return f"{p['socket']} · {p['chipset']} · {p['memory_generation']} · {p['form_factor']}"
@@ -106,6 +141,9 @@ def addcart(doc,lang):
 def filters(products,lang):
  w=WORDS[lang];brands=sorted({p['brand'] for p in products})
  category_filters=''
+ if products and products[0]['category'] in EXPANSION_FIELDS:
+  cat=products[0]['category']
+  category_filters=''.join(f'<label for="shop-{key}">{fr if lang=="fr" else en}<select id="shop-{key}" name="{key}"><option value="">'+('Tous' if lang=='fr' else 'All')+'</option>'+''.join(f'<option value="{e(value)}">{e(expansion_value(key,value,lang))}</option>' for value in sorted({p[key] for p in products}))+'</select></label>' for key,fr,en in EXPANSION_FIELDS[cat])
  if products and all(p['category']=='gpu' for p in products):
   category_filters=f'''<label for="shop-chip-brand">{'Puce graphique' if lang=='fr' else 'GPU chip brand'}<select id="shop-chip-brand" name="chip_brand"><option value="">{'Toutes' if lang=='fr' else 'All'}</option><option value="AMD">AMD</option><option value="NVIDIA">NVIDIA</option></select></label>'''
  if products and all(p['category']=='monitor' for p in products):
@@ -144,7 +182,7 @@ def breadcrumbs(names,lang):
 
 def document(title,description,url,alternate,lang,body,bread=None,noindex=False):
  w=WORDS[lang];fr=url if lang=='fr' else alternate;en=url if lang=='en' else alternate
- nav=''.join(f'<a href="{BASE+target}">{label}</a>' for target,label in [(homedir(lang),w['home']),(CATEGORY_PATHS[lang]['gpu'],w['gpu']),(CATEGORY_PATHS[lang]['cpu'],w['cpu']),(CATEGORY_PATHS[lang]['ram'],w['ram']),(CATEGORY_PATHS[lang]['storage'],w['storage']),(CATEGORY_PATHS[lang]['psu'],w['psu']),(CATEGORY_PATHS[lang]['motherboard'],w['motherboard']),(CATEGORY_PATHS[lang]['cooling'],w['cooling']),(CATEGORY_PATHS[lang]['monitor'],w['monitor'])])
+ nav=''.join(f'<a href="{BASE+target}">{label}</a>' for target,label in [(homedir(lang),w['home'])]+[(CATEGORY_PATHS[lang][cat],w[cat]) for cat in ['gpu','cpu']+[key for key in CATEGORY_PATHS[lang] if key not in ['gpu','cpu']]])
  nav=nav.replace(f'<a href="{BASE+url}">',f'<a href="{BASE+url}" aria-current="page">')
  return f'''<!DOCTYPE html>
 <html lang="{lang}"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -165,7 +203,10 @@ def product_description(p,lang):
 
 def build_product(p,lang):
  w=WORDS[lang];category=CATEGORY_PATHS[lang][p['category']];url=path(p,lang);alt=path(p,'en' if lang=='fr' else 'fr')
- if p['category']=='cpu':
+ if p['category'] in EXPANSION_ADVICE:
+  advice=EXPANSION_ADVICE[p['category']][0 if lang=='fr' else 1]
+  extra=('Consultez la documentation de la référence exacte et les accessoires inclus. Le panier simule une sélection sans valider automatiquement la compatibilité. Aucun stock, livraison ou garantie commerciale n’est annoncé.' if lang=='fr' else 'Consult documentation for the exact model and included accessories. The cart simulates a selection without automatically validating compatibility. No stock, delivery or commercial warranty is claimed.')
+ elif p['category']=='cpu':
   advice=('Vérifiez le socket, la liste de CPU compatibles et le BIOS de votre carte mère. Le type de RAM doit correspondre à la carte mère. Pour Intel, DDR4 et DDR5 dépendent du modèle de carte mère et ne sont pas interchangeables. Vérifiez le refroidisseur, son kit de fixation et le contenu de la boîte.' if lang=='fr' else 'Check the socket, supported CPU list and motherboard BIOS. RAM must match the motherboard. For Intel, DDR4 and DDR5 depend on the motherboard model and are not interchangeable. Check the cooler, its mounting kit and box contents.')
   extra=('Ce processeur possède un circuit graphique intégré ; vérifiez les sorties vidéo de la carte mère. Une carte dédiée reste pertinente pour les jeux exigeants.' if p['integrated_graphics'] else 'Ce processeur ne possède pas de circuit graphique intégré. Une carte graphique séparée est nécessaire.') if lang=='fr' else ('This processor has integrated graphics; check the motherboard’s video outputs. A dedicated card remains relevant for demanding games.' if p['integrated_graphics'] else 'This processor has no integrated graphics. A separate graphics card is required.')
  elif p['category']=='monitor':
@@ -220,7 +261,7 @@ def main():
  for lang in ['fr','en']:
   for cat,category_path in CATEGORY_PATHS[lang].items():
    target=ROOT/category_path/'index.html';doc=target.read_text();items=[p for p in PRODUCTS if p['category']==cat]
-   heading={'fr':{'cpu':'Catalogue de processeurs AMD et Intel','gpu':'Catalogue de cartes graphiques AMD et NVIDIA','ram':'Catalogue RAM DDR4 et DDR5','storage':'Catalogue SSD et disques durs','psu':'Catalogue d’alimentations PC','motherboard':'Catalogue de cartes mères AMD et Intel','cooling':'Catalogue de ventirads et refroidisseurs liquides AIO','monitor':'Catalogue d’écrans PC Full HD, QHD et 4K'},'en':{'cpu':'AMD and Intel processor catalogue','gpu':'AMD and NVIDIA graphics card catalogue','ram':'DDR4 and DDR5 RAM catalogue','storage':'SSD and hard drive catalogue','psu':'PC power supply catalogue','motherboard':'AMD and Intel motherboard catalogue','cooling':'Air cooler and liquid AIO catalogue','monitor':'Full HD, QHD and 4K monitor catalogue'}}[lang][cat]
+   heading=(EXPANSION_LABELS[lang][cat]+(' : catalogue' if lang=='fr' else ' catalogue')) if cat in EXPANSION_PATHS else {'fr':{'cpu':'Catalogue de processeurs AMD et Intel','gpu':'Catalogue de cartes graphiques AMD et NVIDIA','ram':'Catalogue RAM DDR4 et DDR5','storage':'Catalogue SSD et disques durs','psu':'Catalogue d’alimentations PC','motherboard':'Catalogue de cartes mères AMD et Intel','cooling':'Catalogue de ventirads et refroidisseurs liquides AIO','monitor':'Catalogue d’écrans PC Full HD, QHD et 4K'},'en':{'cpu':'AMD and Intel processor catalogue','gpu':'AMD and NVIDIA graphics card catalogue','ram':'DDR4 and DDR5 RAM catalogue','storage':'SSD and hard drive catalogue','psu':'PC power supply catalogue','motherboard':'AMD and Intel motherboard catalogue','cooling':'Air cooler and liquid AIO catalogue','monitor':'Full HD, QHD and 4K monitor catalogue'}}[lang][cat]
    note=('Choisissez parmi ces modèles et simulez votre sélection avec le panier. Tous les prix sont fictifs et indiqués uniquement pour la démonstration.' if lang=='fr' else 'Browse these models and simulate your selection with the cart. All prices are fictional and shown only for demonstration.')
    block=f'<!-- catalogue:start -->\n<section id="modeles" aria-labelledby="modeles-title"><h2 id="modeles-title">{heading}</h2><p class="section-intro">{note}</p>{filters(items,lang)}<div class="shop-grid">'+''.join(card(p,lang) for p in items)+'</div></section>\n<!-- catalogue:end -->\n'
    if '<!-- catalogue:start -->' in doc:doc=re.sub(r'<!-- catalogue:start -->.*?<!-- catalogue:end -->\s*',lambda _:block,doc,flags=re.S)

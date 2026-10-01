@@ -31,10 +31,10 @@ class CatalogueTests(unittest.TestCase):
         cls.pages = [p for p in ROOT.rglob('index.html') if '.git' not in p.parts]
 
     def test_product_identity_and_demo_prices(self):
-        self.assertEqual(len(self.products), 183)
-        self.assertEqual(len({p['id'] for p in self.products}), 183)
+        self.assertEqual(len(self.products), 243)
+        self.assertEqual(len({p['id'] for p in self.products}), 243)
         self.assertEqual(collections.Counter((p['category'], p['brand']) for p in self.products),
-                         {**{('monitor', brand): 4 for brand in ['ASUS','LG','Samsung','AOC','MSI','Gigabyte']}, **{('cooling', brand): 4 for brand in ['Noctua','be quiet!','ARCTIC','DeepCool','Cooler Master','Corsair']}, **{('motherboard', brand): 6 for brand in ['ASUS','MSI','Gigabyte','ASRock']}, **{('psu', brand): 4 for brand in ['Corsair','Seasonic','be quiet!','Cooler Master','Thermaltake','EVGA']}, ('cpu', 'AMD'): 8, ('cpu', 'Intel'): 8, ('gpu', 'AMD'): 8, ('gpu', 'NVIDIA'): 8, **{('gpu', brand): 1 for brand in ['ASUS','MSI','Gigabyte','Zotac','Sapphire','PowerColor','XFX']}, **{('ram', brand): 4 for brand in ['Corsair','Kingston','G.Skill','Crucial','TeamGroup','Patriot']}, **{('storage', brand): 4 for brand in ['Samsung','Western Digital','Crucial','Kingston','Seagate','Corsair']}})
+                         {**{('case', b): 3 for b in ['Corsair','NZXT','Fractal Design','Cooler Master']}, **{('laptop', b): 3 for b in ['ASUS','Lenovo','MSI','Acer']}, **{('keyboard', b): 3 for b in ['Keychron','Logitech','Wooting','SteelSeries']}, **{('mouse', b): 3 for b in ['Logitech','Razer','SteelSeries','Corsair']}, **{('chair', b): 3 for b in ['Secretlab','Corsair','noblechairs','Cooler Master']}, **{('monitor', brand): 4 for brand in ['ASUS','LG','Samsung','AOC','MSI','Gigabyte']}, **{('cooling', brand): 4 for brand in ['Noctua','be quiet!','ARCTIC','DeepCool','Cooler Master','Corsair']}, **{('motherboard', brand): 6 for brand in ['ASUS','MSI','Gigabyte','ASRock']}, **{('psu', brand): 4 for brand in ['Corsair','Seasonic','be quiet!','Cooler Master','Thermaltake','EVGA']}, ('cpu', 'AMD'): 8, ('cpu', 'Intel'): 8, ('gpu', 'AMD'): 8, ('gpu', 'NVIDIA'): 8, **{('gpu', brand): 1 for brand in ['ASUS','MSI','Gigabyte','Zotac','Sapphire','PowerColor','XFX']}, **{('ram', brand): 4 for brand in ['Corsair','Kingston','G.Skill','Crucial','TeamGroup','Patriot']}, **{('storage', brand): 4 for brand in ['Samsung','Western Digital','Crucial','Kingston','Seagate','Corsair']}})
         for p in self.products:
             self.assertRegex(p['id'], r'^[a-z0-9-]+$')
             self.assertIs(type(p['demo_price_mad']), int)
@@ -150,6 +150,26 @@ class CatalogueTests(unittest.TestCase):
         revision=next(p for p in monitors if p['id']=='gigabyte-m27q-rev-2-0')
         self.assertEqual(revision['refresh_hz'],165)
 
+    def test_new_category_identities_and_variant_cautions(self):
+        groups = {cat:[p for p in self.products if p['category']==cat] for cat in ['case','laptop','keyboard','mouse','chair']}
+        for cat,items in groups.items():
+            self.assertEqual(len(items),12)
+            self.assertEqual(len({p['name'] for p in items}),12)
+        self.assertEqual(collections.Counter(p['switch_technology'] for p in groups['keyboard']), {'mechanical':6,'magnetic':6})
+        self.assertEqual(collections.Counter(p['keyboard_size'] for p in groups['keyboard']), {'compact':4,'TKL':4,'full-size':4})
+        for p in groups['laptop']:
+            self.assertEqual(p['catalogue_scope'],'model-family')
+            for key in ['cpu','gpu','ram','ssd','availability']:
+                self.assertNotIn(key,p)
+            text=(ROOT/'en/products'/p['id']/'index.html').read_text()
+            self.assertIn('Model family',text)
+            self.assertIn('not an exact retail configuration',text)
+        magnetic=(ROOT/'en/products/wooting-60he/index.html').read_text()
+        self.assertIn('Hall-effect',magnetic)
+        self.assertIn('AZERTY/QWERTY',magnetic)
+        chair=(ROOT/'en/products/secretlab-titan-evo-2022-softweave-plus-small/index.html').read_text()
+        self.assertIn('medical benefits',chair)
+
     def test_product_pages_and_truthful_schema(self):
         for lang, folder in [('fr', 'produits'), ('en', 'en/products')]:
             for p in self.products:
@@ -206,8 +226,8 @@ class CatalogueTests(unittest.TestCase):
     def test_sitemap_and_cart_indexing(self):
         ns = {'s': 'http://www.sitemaps.org/schemas/sitemap/0.9'}
         urls = [loc.text for loc in ET.parse(ROOT / 'sitemap.xml').findall('s:url/s:loc', ns)]
-        self.assertEqual(len(urls), 384)
-        self.assertEqual(len(set(urls)), 384)
+        self.assertEqual(len(urls), 514)
+        self.assertEqual(len(set(urls)), 514)
         for url in urls:
             self.assertTrue((ROOT / url.removeprefix(LIVE) / 'index.html').is_file(), url)
         for folder in ['panier/', 'en/cart/']:

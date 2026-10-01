@@ -2218,5 +2218,569 @@
     "panel_type": "IPS",
     "demo_price_mad": 5990,
     "source": "https://www.gigabyte.com/Monitor"
+  },
+  {
+    "id": "corsair-4000d-airflow",
+    "name": "Corsair 4000D AIRFLOW",
+    "brand": "Corsair",
+    "category": "case",
+    "source": "https://www.corsair.com/us/en/c/pc-cases",
+    "demo_price_mad": 790,
+    "case_format": "ATX"
+  },
+  {
+    "id": "corsair-5000d-airflow",
+    "name": "Corsair 5000D AIRFLOW",
+    "brand": "Corsair",
+    "category": "case",
+    "source": "https://www.corsair.com/us/en/c/pc-cases",
+    "demo_price_mad": 1290,
+    "case_format": "ATX"
+  },
+  {
+    "id": "corsair-7000d-airflow",
+    "name": "Corsair 7000D AIRFLOW",
+    "brand": "Corsair",
+    "category": "case",
+    "source": "https://www.corsair.com/us/en/c/pc-cases",
+    "demo_price_mad": 1790,
+    "case_format": "ATX"
+  },
+  {
+    "id": "nzxt-h5-flow-2022",
+    "name": "NZXT H5 Flow (2022)",
+    "brand": "NZXT",
+    "category": "case",
+    "source": "https://nzxt.com/category/cases",
+    "demo_price_mad": 790,
+    "case_format": "ATX"
+  },
+  {
+    "id": "nzxt-h7-flow-2022",
+    "name": "NZXT H7 Flow (2022)",
+    "brand": "NZXT",
+    "category": "case",
+    "source": "https://nzxt.com/category/cases",
+    "demo_price_mad": 1290,
+    "case_format": "ATX"
+  },
+  {
+    "id": "nzxt-h9-flow-2023",
+    "name": "NZXT H9 Flow (2023)",
+    "brand": "NZXT",
+    "category": "case",
+    "source": "https://nzxt.com/category/cases",
+    "demo_price_mad": 1790,
+    "case_format": "ATX"
+  },
+  {
+    "id": "fractal-design-pop-air",
+    "name": "Fractal Design Pop Air",
+    "brand": "Fractal Design",
+    "category": "case",
+    "source": "https://www.fractal-design.com/products/cases/",
+    "demo_price_mad": 790,
+    "case_format": "ATX"
+  },
+  {
+    "id": "fractal-design-meshify-2",
+    "name": "Fractal Design Meshify 2",
+    "brand": "Fractal Design",
+    "category": "case",
+    "source": "https://www.fractal-design.com/products/cases/",
+    "demo_price_mad": 1290,
+    "case_format": "ATX"
+  },
+  {
+    "id": "fractal-design-north",
+    "name": "Fractal Design North",
+    "brand": "Fractal Design",
+    "category": "case",
+    "source": "https://www.fractal-design.com/products/cases/",
+    "demo_price_mad": 1790,
+    "case_format": "ATX"
+  },
+  {
+    "id": "cooler-master-masterbox-q300l",
+    "name": "Cooler Master MasterBox Q300L",
+    "brand": "Cooler Master",
+    "category": "case",
+    "source": "https://www.coolermaster.com/",
+    "demo_price_mad": 790,
+    "case_format": "Micro-ATX"
+  },
+  {
+    "id": "cooler-master-masterbox-nr200",
+    "name": "Cooler Master MasterBox NR200",
+    "brand": "Cooler Master",
+    "category": "case",
+    "source": "https://www.coolermaster.com/",
+    "demo_price_mad": 1290,
+    "case_format": "Mini-ITX"
+  },
+  {
+    "id": "cooler-master-masterbox-td500-mesh-v2",
+    "name": "Cooler Master MasterBox TD500 Mesh V2",
+    "brand": "Cooler Master",
+    "category": "case",
+    "source": "https://www.coolermaster.com/",
+    "demo_price_mad": 1790,
+    "case_format": "ATX"
+  },
+  {
+    "id": "asus-tuf-gaming-a15-fa507nv",
+    "name": "ASUS TUF Gaming A15 FA507NV",
+    "brand": "ASUS",
+    "category": "laptop",
+    "source": "https://www.asus.com/laptops/",
+    "demo_price_mad": 10990,
+    "screen_inches": 15.6,
+    "catalogue_scope": "model-family"
+  },
+  {
+    "id": "asus-rog-strix-g16-g614jv",
+    "name": "ASUS ROG Strix G16 G614JV",
+    "brand": "ASUS",
+    "category": "laptop",
+    "source": "https://www.asus.com/laptops/",
+    "demo_price_mad": 12990,
+    "screen_inches": 16,
+    "catalogue_scope": "model-family"
+  },
+  {
+    "id": "asus-tuf-gaming-f15-fx507zc4",
+    "name": "ASUS TUF Gaming F15 FX507ZC4",
+    "brand": "ASUS",
+    "category": "laptop",
+    "source": "https://www.asus.com/laptops/",
+    "demo_price_mad": 14990,
+    "screen_inches": 15.6,
+    "catalogue_scope": "model-family"
+  },
+  {
+    "id": "lenovo-legion-pro-5-16irh8",
+    "name": "Lenovo Legion Pro 5 16IRH8",
+    "brand": "Lenovo",
+    "category": "laptop",
+    "source": "https://www.lenovo.com/",
+    "demo_price_mad": 10990,
+    "screen_inches": 16,
+    "catalogue_scope": "model-family"
+  },
+  {
+    "id": "lenovo-loq-15irh8",
+    "name": "Lenovo LOQ 15IRH8",
+    "brand": "Lenovo",
+    "category": "laptop",
+    "source": "https://www.lenovo.com/",
+    "demo_price_mad": 12990,
+    "screen_inches": 15.6,
+    "catalogue_scope": "model-family"
+  },
+  {
+    "id": "lenovo-legion-slim-5-16aph8",
+    "name": "Lenovo Legion Slim 5 16APH8",
+    "brand": "Lenovo",
+    "category": "laptop",
+    "source": "https://www.lenovo.com/",
+    "demo_price_mad": 14990,
+    "screen_inches": 16,
+    "catalogue_scope": "model-family"
+  },
+  {
+    "id": "msi-katana-15-b13vfk",
+    "name": "MSI Katana 15 B13VFK",
+    "brand": "MSI",
+    "category": "laptop",
+    "source": "https://www.msi.com/Laptops",
+    "demo_price_mad": 10990,
+    "screen_inches": 15.6,
+    "catalogue_scope": "model-family"
+  },
+  {
+    "id": "msi-bravo-15-c7ve",
+    "name": "MSI Bravo 15 C7VE",
+    "brand": "MSI",
+    "category": "laptop",
+    "source": "https://www.msi.com/Laptops",
+    "demo_price_mad": 12990,
+    "screen_inches": 15.6,
+    "catalogue_scope": "model-family"
+  },
+  {
+    "id": "msi-cyborg-15-a12vf",
+    "name": "MSI Cyborg 15 A12VF",
+    "brand": "MSI",
+    "category": "laptop",
+    "source": "https://www.msi.com/Laptops",
+    "demo_price_mad": 14990,
+    "screen_inches": 15.6,
+    "catalogue_scope": "model-family"
+  },
+  {
+    "id": "acer-nitro-5-an515-58",
+    "name": "Acer Nitro 5 AN515-58",
+    "brand": "Acer",
+    "category": "laptop",
+    "source": "https://www.acer.com/",
+    "demo_price_mad": 10990,
+    "screen_inches": 15.6,
+    "catalogue_scope": "model-family"
+  },
+  {
+    "id": "acer-nitro-v-15-anv15-51",
+    "name": "Acer Nitro V 15 ANV15-51",
+    "brand": "Acer",
+    "category": "laptop",
+    "source": "https://www.acer.com/",
+    "demo_price_mad": 12990,
+    "screen_inches": 15.6,
+    "catalogue_scope": "model-family"
+  },
+  {
+    "id": "acer-predator-helios-neo-16-phn16-71",
+    "name": "Acer Predator Helios Neo 16 PHN16-71",
+    "brand": "Acer",
+    "category": "laptop",
+    "source": "https://www.acer.com/",
+    "demo_price_mad": 14990,
+    "screen_inches": 16,
+    "catalogue_scope": "model-family"
+  },
+  {
+    "id": "keychron-k2-version-2",
+    "name": "Keychron K2 (Version 2)",
+    "brand": "Keychron",
+    "category": "keyboard",
+    "source": "https://www.keychron.com/",
+    "demo_price_mad": 590,
+    "switch_technology": "mechanical",
+    "keyboard_size": "compact"
+  },
+  {
+    "id": "keychron-k6",
+    "name": "Keychron K6",
+    "brand": "Keychron",
+    "category": "keyboard",
+    "source": "https://www.keychron.com/",
+    "demo_price_mad": 790,
+    "switch_technology": "mechanical",
+    "keyboard_size": "compact"
+  },
+  {
+    "id": "keychron-k8",
+    "name": "Keychron K8",
+    "brand": "Keychron",
+    "category": "keyboard",
+    "source": "https://www.keychron.com/",
+    "demo_price_mad": 990,
+    "switch_technology": "mechanical",
+    "keyboard_size": "TKL"
+  },
+  {
+    "id": "logitech-g413-se",
+    "name": "Logitech G413 SE",
+    "brand": "Logitech",
+    "category": "keyboard",
+    "source": "https://www.logitechg.com/",
+    "demo_price_mad": 590,
+    "switch_technology": "mechanical",
+    "keyboard_size": "full-size"
+  },
+  {
+    "id": "logitech-g512",
+    "name": "Logitech G512",
+    "brand": "Logitech",
+    "category": "keyboard",
+    "source": "https://www.logitechg.com/",
+    "demo_price_mad": 790,
+    "switch_technology": "mechanical",
+    "keyboard_size": "full-size"
+  },
+  {
+    "id": "logitech-g-pro-x-keyboard",
+    "name": "Logitech G PRO X Keyboard",
+    "brand": "Logitech",
+    "category": "keyboard",
+    "source": "https://www.logitechg.com/",
+    "demo_price_mad": 990,
+    "switch_technology": "mechanical",
+    "keyboard_size": "TKL"
+  },
+  {
+    "id": "wooting-60he",
+    "name": "Wooting 60HE+",
+    "brand": "Wooting",
+    "category": "keyboard",
+    "source": "https://wooting.io/",
+    "demo_price_mad": 1390,
+    "switch_technology": "magnetic",
+    "keyboard_size": "compact"
+  },
+  {
+    "id": "wooting-80he",
+    "name": "Wooting 80HE",
+    "brand": "Wooting",
+    "category": "keyboard",
+    "source": "https://wooting.io/",
+    "demo_price_mad": 1590,
+    "switch_technology": "magnetic",
+    "keyboard_size": "TKL"
+  },
+  {
+    "id": "wooting-two-he",
+    "name": "Wooting Two HE",
+    "brand": "Wooting",
+    "category": "keyboard",
+    "source": "https://wooting.io/",
+    "demo_price_mad": 1790,
+    "switch_technology": "magnetic",
+    "keyboard_size": "full-size"
+  },
+  {
+    "id": "steelseries-apex-pro-2019",
+    "name": "SteelSeries Apex Pro (2019)",
+    "brand": "SteelSeries",
+    "category": "keyboard",
+    "source": "https://steelseries.com/gaming-keyboards",
+    "demo_price_mad": 1390,
+    "switch_technology": "magnetic",
+    "keyboard_size": "full-size"
+  },
+  {
+    "id": "steelseries-apex-pro-tkl-2023",
+    "name": "SteelSeries Apex Pro TKL (2023)",
+    "brand": "SteelSeries",
+    "category": "keyboard",
+    "source": "https://steelseries.com/gaming-keyboards",
+    "demo_price_mad": 1590,
+    "switch_technology": "magnetic",
+    "keyboard_size": "TKL"
+  },
+  {
+    "id": "steelseries-apex-pro-mini",
+    "name": "SteelSeries Apex Pro Mini",
+    "brand": "SteelSeries",
+    "category": "keyboard",
+    "source": "https://steelseries.com/gaming-keyboards",
+    "demo_price_mad": 1790,
+    "switch_technology": "magnetic",
+    "keyboard_size": "compact"
+  },
+  {
+    "id": "logitech-g203-lightsync",
+    "name": "Logitech G203 LIGHTSYNC",
+    "brand": "Logitech",
+    "category": "mouse",
+    "source": "https://www.logitechg.com/",
+    "demo_price_mad": 290,
+    "connection_type": "wired"
+  },
+  {
+    "id": "logitech-g502-hero",
+    "name": "Logitech G502 HERO",
+    "brand": "Logitech",
+    "category": "mouse",
+    "source": "https://www.logitechg.com/",
+    "demo_price_mad": 640,
+    "connection_type": "wired"
+  },
+  {
+    "id": "logitech-g-pro-x-superlight",
+    "name": "Logitech G PRO X SUPERLIGHT",
+    "brand": "Logitech",
+    "category": "mouse",
+    "source": "https://www.logitechg.com/",
+    "demo_price_mad": 990,
+    "connection_type": "wireless"
+  },
+  {
+    "id": "razer-deathadder-v3",
+    "name": "Razer DeathAdder V3",
+    "brand": "Razer",
+    "category": "mouse",
+    "source": "https://www.razer.com/pc/gaming-mice",
+    "demo_price_mad": 290,
+    "connection_type": "wired"
+  },
+  {
+    "id": "razer-basilisk-v3",
+    "name": "Razer Basilisk V3",
+    "brand": "Razer",
+    "category": "mouse",
+    "source": "https://www.razer.com/pc/gaming-mice",
+    "demo_price_mad": 640,
+    "connection_type": "wired"
+  },
+  {
+    "id": "razer-viper-v2-pro",
+    "name": "Razer Viper V2 Pro",
+    "brand": "Razer",
+    "category": "mouse",
+    "source": "https://www.razer.com/pc/gaming-mice",
+    "demo_price_mad": 990,
+    "connection_type": "wireless"
+  },
+  {
+    "id": "steelseries-rival-3",
+    "name": "SteelSeries Rival 3",
+    "brand": "SteelSeries",
+    "category": "mouse",
+    "source": "https://steelseries.com/gaming-mice",
+    "demo_price_mad": 290,
+    "connection_type": "wired"
+  },
+  {
+    "id": "steelseries-aerox-3-2022",
+    "name": "SteelSeries Aerox 3 (2022)",
+    "brand": "SteelSeries",
+    "category": "mouse",
+    "source": "https://steelseries.com/gaming-mice",
+    "demo_price_mad": 640,
+    "connection_type": "wired"
+  },
+  {
+    "id": "steelseries-prime-wireless",
+    "name": "SteelSeries Prime Wireless",
+    "brand": "SteelSeries",
+    "category": "mouse",
+    "source": "https://steelseries.com/gaming-mice",
+    "demo_price_mad": 990,
+    "connection_type": "wireless"
+  },
+  {
+    "id": "corsair-harpoon-rgb-pro",
+    "name": "Corsair HARPOON RGB PRO",
+    "brand": "Corsair",
+    "category": "mouse",
+    "source": "https://www.corsair.com/us/en/c/gaming-mice",
+    "demo_price_mad": 290,
+    "connection_type": "wired"
+  },
+  {
+    "id": "corsair-katar-pro-xt",
+    "name": "Corsair KATAR PRO XT",
+    "brand": "Corsair",
+    "category": "mouse",
+    "source": "https://www.corsair.com/us/en/c/gaming-mice",
+    "demo_price_mad": 640,
+    "connection_type": "wired"
+  },
+  {
+    "id": "corsair-sabre-rgb-pro-wireless",
+    "name": "Corsair SABRE RGB PRO WIRELESS",
+    "brand": "Corsair",
+    "category": "mouse",
+    "source": "https://www.corsair.com/us/en/c/gaming-mice",
+    "demo_price_mad": 990,
+    "connection_type": "wireless"
+  },
+  {
+    "id": "secretlab-titan-evo-2022-softweave-plus-small",
+    "name": "Secretlab TITAN Evo (2022) SoftWeave Plus Small",
+    "brand": "Secretlab",
+    "category": "chair",
+    "source": "https://secretlab.co/",
+    "demo_price_mad": 2390,
+    "upholstery": "fabric"
+  },
+  {
+    "id": "secretlab-titan-evo-2022-softweave-plus-regular",
+    "name": "Secretlab TITAN Evo (2022) SoftWeave Plus Regular",
+    "brand": "Secretlab",
+    "category": "chair",
+    "source": "https://secretlab.co/",
+    "demo_price_mad": 2990,
+    "upholstery": "fabric"
+  },
+  {
+    "id": "secretlab-titan-evo-2022-softweave-plus-xl",
+    "name": "Secretlab TITAN Evo (2022) SoftWeave Plus XL",
+    "brand": "Secretlab",
+    "category": "chair",
+    "source": "https://secretlab.co/",
+    "demo_price_mad": 3590,
+    "upholstery": "fabric"
+  },
+  {
+    "id": "corsair-tc100-relaxed-fabric",
+    "name": "Corsair TC100 RELAXED Fabric",
+    "brand": "Corsair",
+    "category": "chair",
+    "source": "https://www.corsair.com/us/en/c/gaming-chairs",
+    "demo_price_mad": 2390,
+    "upholstery": "fabric"
+  },
+  {
+    "id": "corsair-tc200-fabric",
+    "name": "Corsair TC200 Fabric",
+    "brand": "Corsair",
+    "category": "chair",
+    "source": "https://www.corsair.com/us/en/c/gaming-chairs",
+    "demo_price_mad": 2990,
+    "upholstery": "fabric"
+  },
+  {
+    "id": "corsair-tc100-relaxed-leatherette",
+    "name": "Corsair TC100 RELAXED Leatherette",
+    "brand": "Corsair",
+    "category": "chair",
+    "source": "https://www.corsair.com/us/en/c/gaming-chairs",
+    "demo_price_mad": 3590,
+    "upholstery": "synthetic"
+  },
+  {
+    "id": "noblechairs-hero-black-edition",
+    "name": "noblechairs HERO Black Edition",
+    "brand": "noblechairs",
+    "category": "chair",
+    "source": "https://www.noblechairs.com/",
+    "demo_price_mad": 2390,
+    "upholstery": "synthetic"
+  },
+  {
+    "id": "noblechairs-epic-black-edition",
+    "name": "noblechairs EPIC Black Edition",
+    "brand": "noblechairs",
+    "category": "chair",
+    "source": "https://www.noblechairs.com/",
+    "demo_price_mad": 2990,
+    "upholstery": "synthetic"
+  },
+  {
+    "id": "noblechairs-icon-black-edition",
+    "name": "noblechairs ICON Black Edition",
+    "brand": "noblechairs",
+    "category": "chair",
+    "source": "https://www.noblechairs.com/",
+    "demo_price_mad": 3590,
+    "upholstery": "synthetic"
+  },
+  {
+    "id": "cooler-master-caliber-r1",
+    "name": "Cooler Master Caliber R1",
+    "brand": "Cooler Master",
+    "category": "chair",
+    "source": "https://www.coolermaster.com/",
+    "demo_price_mad": 2390,
+    "upholstery": "synthetic"
+  },
+  {
+    "id": "cooler-master-caliber-r2",
+    "name": "Cooler Master Caliber R2",
+    "brand": "Cooler Master",
+    "category": "chair",
+    "source": "https://www.coolermaster.com/",
+    "demo_price_mad": 2990,
+    "upholstery": "synthetic"
+  },
+  {
+    "id": "cooler-master-caliber-x1",
+    "name": "Cooler Master Caliber X1",
+    "brand": "Cooler Master",
+    "category": "chair",
+    "source": "https://www.coolermaster.com/",
+    "demo_price_mad": 3590,
+    "upholstery": "synthetic"
   }
 ]

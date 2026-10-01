@@ -64,3 +64,13 @@ Categories are `/refroidissement/` and `/en/cooling/`, with 24 CPU coolers from 
 ## Monitors
 
 Categories are `/ecrans/` and `/en/monitors/`, with 24 monitors from ASUS, LG, Samsung, AOC, MSI and Gigabyte. Store model-specific diagonal size, native resolution, nominal (non-overclock) refresh rate and panel type. Keep revision identifiers, including Gigabyte M27Q rev. 2.0; similar models may differ. Filter by brand, resolution, refresh rate and IPS/VA panel. A listed refresh rate is not a guarantee for every input or cable and does not guarantee game FPS. Manufacturer documentation remains inaccessible; verify response times, HDR, VRR, port capabilities, speakers, supplied accessories and mounting features before adding claims. Explain GPU/port/cable modes and system settings. Generic images and demo prices are labeled, and the cart does not validate display compatibility automatically.
+
+## Cases, laptops and accessories
+
+Five categories add 12 entries each: `/boitiers/` / `/en/cases/`, `/ordinateurs-portables/` / `/en/laptops/`, `/claviers/` / `/en/keyboards/`, `/souris/` / `/en/mice/`, and `/chaises-gaming/` / `/en/gaming-chairs/`. Shared expansion definitions in the renderer supply translated specifications, filters and compatibility advice. Preserve revisions and named upholstery variants. Generic original SVGs are illustrations, not model photos.
+
+Case format is the primary format, not an exhaustive mounting specification. Verify GPU/cooler/PSU/radiator clearance separately. Laptop entries explicitly describe model families (`catalogue_scope: model-family`), with nominal screen size only; do not invent CPU/GPU/RAM/storage configurations. Exact retail SKUs and regional variants need verification before adding configuration specifications.
+
+Keyboard `switch_technology` separates conventional contact-based mechanical switches from magnetic Hall-effect sensing. Compact/TKL/full-size is not AZERTY/QWERTY or ISO/ANSI layout. Hall-effect features and key coverage depend on model/firmware; some Apex Pro models combine technologies. Do not imply universal hot-swap or Rapid Trigger support. Mice use primary wired/wireless connection; wireless does not automatically imply Bluetooth. Chair upholstery is fabric or synthetic, not a medical or comfort claim. Consult manufacturer dimensions and limits for the exact size and material variant.
+
+No new categories change the saved cart key. Always regenerate content-hashed assets and every affected page together after changing shared data/runtime. Test filters, all category entry points, mixed-category totals, persistence, language switches and no-JavaScript access before publication.
