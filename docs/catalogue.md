@@ -13,7 +13,7 @@ NEXRIG is a fictional Moroccan PC store and SEO learning project. Continue this 
 
 ## Content and generation
 
-`data/products.json` is the shared source for CPU/GPU/RAM cards, product details, demonstration prices and cart calculations. IDs are stable URL slugs and cart identifiers. Do not rename existing IDs casually.
+`data/products.json` is the shared source for CPU/GPU/RAM/storage cards, product details, demonstration prices and cart calculations. IDs are stable URL slugs and cart identifiers. Do not rename existing IDs casually.
 
 Run from the repository root:
 
@@ -40,3 +40,7 @@ RAM pages are `/ram/` and `/en/ram/`. Entries carry an exact manufacturer part n
 ## Cached deployments
 
 The renderer embeds content-hashed URLs for `shop.js` and `products.json`. Regenerate pages after changing either file, and publish those files and generated pages together. The runtime revalidates catalogue responses and checks their product count before initializing filters or reading the saved cart; an incomplete response leaves the existing saved selection untouched. Browser regression tests simulate returning visitors with old unversioned assets.
+
+## Storage catalogue
+
+Storage pages are `/stockage/` and `/en/storage/`. The 24 entries cover NVMe SSDs, 2.5-inch SATA SSDs and 3.5-inch SATA hard drives from six brands. Each entry includes an exact SKU, advertised capacity in GB, drive type, protocol, interface and form factor. Preserve manufacturer capacity labels: 1024 GB should not be rewritten as 1 TB. Storage-specific type, protocol and capacity filters reuse the shared search, brand, sort and cart controls. Explain M.2 protocol/length compatibility, PCIe generation, SATA cabling, drive bays and cooling without promising measured performance or endurance. Product photography remains postponed.

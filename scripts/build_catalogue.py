@@ -15,10 +15,10 @@ PRODUCTS = json.loads((ROOT / 'data/products.json').read_text())
 CATALOGUE_VERSION = hashlib.sha256((ROOT / 'data/products.json').read_bytes()).hexdigest()[:12]
 SCRIPT_VERSION = hashlib.sha256((ROOT / 'assets/js/shop.js').read_bytes()).hexdigest()[:12]
 SHOP_SCRIPT = f'<script src="{BASE}assets/js/shop.js?v={SCRIPT_VERSION}" data-catalogue-url="{BASE}data/products.json?v={CATALOGUE_VERSION}" data-catalogue-count="{len(PRODUCTS)}" defer></script>'
-CATEGORY_PATHS = {'fr': {'cpu': 'processeurs/', 'gpu': 'cartes-graphiques/', 'ram': 'ram/'}, 'en': {'cpu': 'en/processors/', 'gpu': 'en/graphics-cards/', 'ram': 'en/ram/'}}
+CATEGORY_PATHS = {'fr': {'cpu': 'processeurs/', 'gpu': 'cartes-graphiques/', 'ram': 'ram/', 'storage': 'stockage/'}, 'en': {'cpu': 'en/processors/', 'gpu': 'en/graphics-cards/', 'ram': 'en/ram/', 'storage': 'en/storage/'}}
 WORDS = {
- 'fr': {'home':'Accueil','cpu':'Processeurs','gpu':'Cartes graphiques','cart':'Panier','add':'Ajouter au panier','view':'Voir le produit','demo':'Prix de démonstration — aucune vente','illustration':'Illustration générique — pas une photo du modèle','cpu_alt':'Illustration générique d’un processeur','gpu_alt':'Illustration générique d’une carte graphique','cores':'cœurs','threads':'threads','socket':'Socket','supported_memory':'Mémoire compatible','ram':'Mémoire RAM','ram_alt':'Illustration générique d’une barrette mémoire RAM','integrated':'Graphique intégré','yes':'Oui','no':'Non','memory':'Mémoire vidéo','architecture':'Architecture','search':'Rechercher un modèle','brand':'Marque','all':'Toutes les marques','sort':'Trier par','default':'Ordre du catalogue','low':'Prix démo croissant','high':'Prix démo décroissant','name':'Nom du modèle','reset':'Réinitialiser','empty':'Aucun modèle ne correspond à ces critères.','filters_note':'Les filtres et le panier nécessitent JavaScript. Les produits et leurs fiches restent consultables.','skip':'Aller au contenu','nav':'Navigation principale','bread':'Fil d’Ariane','banner':'Boutique fictive · Prix de démonstration · Aucune vente','about':'Le projet','back':'Retour à la catégorie','specs':'Caractéristiques du modèle','source':'Gamme du fabricant','related':'Autres modèles à découvrir','compat':'Compatibilité à vérifier'},
- 'en': {'home':'Home','cpu':'Processors','gpu':'Graphics cards','cart':'Cart','add':'Add to cart','view':'View product','demo':'Demonstration price — no sales','illustration':'Generic illustration — not a photo of this model','cpu_alt':'Generic illustration of a processor','gpu_alt':'Generic illustration of a graphics card','cores':'cores','threads':'threads','socket':'Socket','supported_memory':'Supported memory','ram':'RAM','ram_alt':'Generic illustration of a RAM module','integrated':'Integrated graphics','yes':'Yes','no':'No','memory':'Video memory','architecture':'Architecture','search':'Search models','brand':'Brand','all':'All brands','sort':'Sort by','default':'Catalogue order','low':'Demo price: low to high','high':'Demo price: high to low','name':'Model name','reset':'Reset','empty':'No models match these filters.','filters_note':'Filters and cart require JavaScript. Products and their detail pages remain readable.','skip':'Skip to content','nav':'Main navigation','bread':'Breadcrumb','banner':'Fictional store · Demonstration prices · No sales','about':'The project','back':'Back to category','specs':'Model specifications','source':'Manufacturer product range','related':'More models to explore','compat':'Compatibility to check'}
+ 'fr': {'home':'Accueil','cpu':'Processeurs','gpu':'Cartes graphiques','cart':'Panier','add':'Ajouter au panier','view':'Voir le produit','demo':'Prix de démonstration — aucune vente','illustration':'Illustration générique — pas une photo du modèle','cpu_alt':'Illustration générique d’un processeur','gpu_alt':'Illustration générique d’une carte graphique','cores':'cœurs','threads':'threads','socket':'Socket','supported_memory':'Mémoire compatible','ram':'Mémoire RAM','ram_alt':'Illustration générique d’une barrette mémoire RAM','storage':'Stockage','storage_alt':'Illustration générique de supports de stockage','integrated':'Graphique intégré','yes':'Oui','no':'Non','memory':'Mémoire vidéo','architecture':'Architecture','search':'Rechercher un modèle','brand':'Marque','all':'Toutes les marques','sort':'Trier par','default':'Ordre du catalogue','low':'Prix démo croissant','high':'Prix démo décroissant','name':'Nom du modèle','reset':'Réinitialiser','empty':'Aucun modèle ne correspond à ces critères.','filters_note':'Les filtres et le panier nécessitent JavaScript. Les produits et leurs fiches restent consultables.','skip':'Aller au contenu','nav':'Navigation principale','bread':'Fil d’Ariane','banner':'Boutique fictive · Prix de démonstration · Aucune vente','about':'Le projet','back':'Retour à la catégorie','specs':'Caractéristiques du modèle','source':'Gamme du fabricant','related':'Autres modèles à découvrir','compat':'Compatibilité à vérifier'},
+ 'en': {'home':'Home','cpu':'Processors','gpu':'Graphics cards','cart':'Cart','add':'Add to cart','view':'View product','demo':'Demonstration price — no sales','illustration':'Generic illustration — not a photo of this model','cpu_alt':'Generic illustration of a processor','gpu_alt':'Generic illustration of a graphics card','cores':'cores','threads':'threads','socket':'Socket','supported_memory':'Supported memory','ram':'RAM','ram_alt':'Generic illustration of a RAM module','storage':'Storage','storage_alt':'Generic illustration of storage drives','integrated':'Integrated graphics','yes':'Yes','no':'No','memory':'Video memory','architecture':'Architecture','search':'Search models','brand':'Brand','all':'All brands','sort':'Sort by','default':'Catalogue order','low':'Demo price: low to high','high':'Demo price: high to low','name':'Model name','reset':'Reset','empty':'No models match these filters.','filters_note':'Filters and cart require JavaScript. Products and their detail pages remain readable.','skip':'Skip to content','nav':'Main navigation','bread':'Breadcrumb','banner':'Fictional store · Demonstration prices · No sales','about':'The project','back':'Back to category','specs':'Model specifications','source':'Manufacturer product range','related':'More models to explore','compat':'Compatibility to check'}
 }
 
 def e(value):
@@ -30,6 +30,13 @@ def path(p, lang):
 def money(price, lang):
  return (f'{price:,}'.replace(',', ' ') if lang == 'fr' else f'{price:,}') + ' DH'
 
+def storage_capacity(capacity, lang):
+ if capacity >= 1000 and capacity % 1000 == 0:return f"{capacity//1000} {'To' if lang=='fr' else 'TB'}"
+ return f"{capacity} {'Go' if lang=='fr' else 'GB'}"
+
+def storage_form(form,lang):
+ return form.replace('2.5-inch','2,5 pouces').replace('3.5-inch','3,5 pouces') if lang=='fr' else form
+
 def label_specs(p, lang):
  w=WORDS[lang]
  if p['category']=='cpu':
@@ -37,12 +44,15 @@ def label_specs(p, lang):
  if p['category']=='ram':
   unit='Go' if lang=='fr' else 'GB'
   return [('Référence fabricant' if lang=='fr' else 'Manufacturer part number',p['sku']), ('Capacité totale' if lang=='fr' else 'Total capacity',f"{p['capacity_gb']} {unit}"), ('Composition' if lang=='fr' else 'Kit configuration',f"{p['modules']} × {p['capacity_gb']//p['modules']} {unit}"), ('Génération' if lang=='fr' else 'Generation',p['memory_generation']), ('Débit annoncé' if lang=='fr' else 'Advertised data rate',f"{p['speed_mts']} MT/s"), ('Format' if lang=='fr' else 'Form factor',p['form_factor'])]
+ if p['category']=='storage':
+  return [('Référence fabricant' if lang=='fr' else 'Manufacturer part number',p['sku']), ('Capacité annoncée' if lang=='fr' else 'Advertised capacity',storage_capacity(p['capacity_gb'],lang)), ('Type',p['drive_type']), ('Protocole' if lang=='fr' else 'Protocol',p['storage_protocol']), ('Interface',p['interface']), ('Format' if lang=='fr' else 'Form factor',storage_form(p['form_factor'],lang))]
  return [(w['memory'],f"{p['vram_gb']} {'Go' if lang=='fr' else 'GB'} {p['memory_type']}"), (w['architecture'],p['architecture'])]
 
 def summary(p, lang):
  w=WORDS[lang]
  if p['category']=='cpu':return f"{p['cores']} {w['cores']} · {p['threads']} {w['threads']} · {p['socket']} · {p['ram']}"
  if p['category']=='ram':return f"{p['capacity_gb']} {'Go' if lang=='fr' else 'GB'} · {p['modules']} × {p['capacity_gb']//p['modules']} {'Go' if lang=='fr' else 'GB'} · {p['memory_generation']} · {p['speed_mts']} MT/s"
+ if p['category']=='storage':return f"{storage_capacity(p['capacity_gb'],lang)} · {p['drive_type']} · {p['storage_protocol']} · {storage_form(p['form_factor'],lang)}"
  return f"{p['vram_gb']} {'Go' if lang=='fr' else 'GB'} · {p['memory_type']} · {p['architecture']}"
 
 def card(p, lang):
@@ -71,14 +81,18 @@ def addcart(doc,lang):
 
 def filters(products,lang):
  w=WORDS[lang];brands=sorted({p['brand'] for p in products})
- ram_filters=''
+ category_filters=''
  if products and all(p['category']=='ram' for p in products):
-  ram_filters=f'''<label for="shop-generation">{'Génération' if lang=='fr' else 'Generation'}<select id="shop-generation" name="generation"><option value="">{'Toutes' if lang=='fr' else 'All'}</option>{''.join(f'<option value="{g}">{g}</option>' for g in sorted({p['memory_generation'] for p in products}))}</select></label>
+  category_filters=f'''<label for="shop-generation">{'Génération' if lang=='fr' else 'Generation'}<select id="shop-generation" name="generation"><option value="">{'Toutes' if lang=='fr' else 'All'}</option>{''.join(f'<option value="{g}">{g}</option>' for g in sorted({p['memory_generation'] for p in products}))}</select></label>
   <label for="shop-capacity">{'Capacité totale' if lang=='fr' else 'Total capacity'}<select id="shop-capacity" name="capacity"><option value="">{'Toutes' if lang=='fr' else 'All'}</option>{''.join(f'<option value="{c}">{c} {"Go" if lang=="fr" else "GB"}</option>' for c in sorted({p['capacity_gb'] for p in products}))}</select></label>'''
+ if products and all(p['category']=='storage' for p in products):
+  category_filters=f'''<label for="shop-drive-type">{'Type de disque' if lang=='fr' else 'Drive type'}<select id="shop-drive-type" name="drive_type"><option value="">{'Tous' if lang=='fr' else 'All'}</option>{''.join(f'<option value="{kind}">{kind}</option>' for kind in sorted({p['drive_type'] for p in products}))}</select></label>
+  <label for="shop-protocol">{'Protocole' if lang=='fr' else 'Protocol'}<select id="shop-protocol" name="storage_protocol"><option value="">{'Tous' if lang=='fr' else 'All'}</option>{''.join(f'<option value="{protocol}">{protocol}</option>' for protocol in sorted({p['storage_protocol'] for p in products}))}</select></label>
+  <label for="shop-capacity">{'Capacité annoncée' if lang=='fr' else 'Advertised capacity'}<select id="shop-capacity" name="capacity"><option value="">{'Toutes' if lang=='fr' else 'All'}</option>{''.join(f'<option value="{cap}">{storage_capacity(cap,lang)}</option>' for cap in sorted({p['capacity_gb'] for p in products}))}</select></label>'''
  return f'''<form class="shop-filters" data-shop-filters hidden>
   <label for="shop-search">{w['search']}<input id="shop-search" type="search" name="search" autocomplete="off"></label>
   <label for="shop-brand">{w['brand']}<select id="shop-brand" name="brand"><option value="">{w['all']}</option>{''.join(f'<option value="{b}">{b}</option>' for b in brands)}</select></label>
-{ram_filters}
+{category_filters}
   <label for="shop-sort">{w['sort']}<select id="shop-sort" name="sort"><option value="default">{w['default']}</option><option value="price-low">{w['low']}</option><option value="price-high">{w['high']}</option><option value="name">{w['name']}</option></select></label>
   <button class="shop-button secondary" type="reset">{w['reset']}</button></form>
   <p class="shop-result" id="shop-result" role="status" aria-live="polite">{len(products)} {'modèles' if lang=='fr' else 'models'}</p>
@@ -90,7 +104,7 @@ def breadcrumbs(names,lang):
 
 def document(title,description,url,alternate,lang,body,bread=None,noindex=False):
  w=WORDS[lang];fr=url if lang=='fr' else alternate;en=url if lang=='en' else alternate
- nav=''.join(f'<a href="{BASE+target}">{label}</a>' for target,label in [(homedir(lang),w['home']),(CATEGORY_PATHS[lang]['gpu'],w['gpu']),(CATEGORY_PATHS[lang]['cpu'],w['cpu']),(CATEGORY_PATHS[lang]['ram'],w['ram'])])
+ nav=''.join(f'<a href="{BASE+target}">{label}</a>' for target,label in [(homedir(lang),w['home']),(CATEGORY_PATHS[lang]['gpu'],w['gpu']),(CATEGORY_PATHS[lang]['cpu'],w['cpu']),(CATEGORY_PATHS[lang]['ram'],w['ram']),(CATEGORY_PATHS[lang]['storage'],w['storage'])])
  nav=nav.replace(f'<a href="{BASE+url}">',f'<a href="{BASE+url}" aria-current="page">')
  return f'''<!DOCTYPE html>
 <html lang="{lang}"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -114,6 +128,12 @@ def build_product(p,lang):
  if p['category']=='cpu':
   advice=('Vérifiez le socket, la liste de CPU compatibles et le BIOS de votre carte mère. Le type de RAM doit correspondre à la carte mère. Pour Intel, DDR4 et DDR5 dépendent du modèle de carte mère et ne sont pas interchangeables. Vérifiez le refroidisseur, son kit de fixation et le contenu de la boîte.' if lang=='fr' else 'Check the socket, supported CPU list and motherboard BIOS. RAM must match the motherboard. For Intel, DDR4 and DDR5 depend on the motherboard model and are not interchangeable. Check the cooler, its mounting kit and box contents.')
   extra=('Ce processeur possède un circuit graphique intégré ; vérifiez les sorties vidéo de la carte mère. Une carte dédiée reste pertinente pour les jeux exigeants.' if p['integrated_graphics'] else 'Ce processeur ne possède pas de circuit graphique intégré. Une carte graphique séparée est nécessaire.') if lang=='fr' else ('This processor has integrated graphics; check the motherboard’s video outputs. A dedicated card remains relevant for demanding games.' if p['integrated_graphics'] else 'This processor has no integrated graphics. A separate graphics card is required.')
+ elif p['category']=='storage':
+  if p['storage_protocol']=='NVMe':
+   advice=('Ce SSD NVMe nécessite un emplacement M.2 acceptant le protocole NVMe et la longueur 2280 (22 × 80 mm). Vérifiez la génération et le nombre de lignes PCIe du port. Un emplacement M.2 limité au SATA ne convient pas. Une liaison PCIe plus ancienne peut limiter le débit ; consultez le manuel et la prise en charge du démarrage NVMe.' if lang=='fr' else 'This NVMe SSD needs an M.2 slot supporting NVMe and the 2280 length (22 × 80 mm). Check the slot’s PCIe generation and lane count. A SATA-only M.2 slot is not suitable. An older PCIe connection can limit throughput; consult the manual and NVMe boot support.')
+  else:
+   advice=('Ce disque SATA nécessite un câble de données vers un port SATA, un connecteur d’alimentation SATA et une baie adaptée à son format. Vérifiez les fixations et l’espace dans le boîtier. Certains emplacements M.2 partagent des ressources avec des ports SATA : consultez le manuel de la carte mère.' if lang=='fr' else 'This SATA drive needs a data cable to a SATA port, a SATA power connector and a bay matching its form factor. Check mounting and case space. Some M.2 slots share resources with SATA ports: consult the motherboard manual.')
+  extra=('La capacité annoncée par le fabricant et celle affichée par le système peuvent différer en raison des unités et du formatage. Vérifiez le dissipateur ou le refroidissement requis pour la référence exacte. Ce catalogue n’annonce pas de débits mesurés ni d’endurance garantie. Gardez une sauvegarde indépendante de vos fichiers importants.' if lang=='fr' else 'Manufacturer-advertised and system-reported capacity can differ because of units and formatting. Check heatsink or cooling requirements for the exact model. This catalogue makes no measured speed or guaranteed endurance claims. Keep an independent backup of important files.')
  elif p['category']=='ram':
   advice=('Vérifiez que votre carte mère et votre processeur acceptent cette génération de mémoire. Ces modules UDIMM sont destinés aux PC de bureau : ils ne remplacent pas des SO-DIMM pour ordinateur portable. Vérifiez la capacité maximale, le nombre d’emplacements, la liste QVL et la hauteur sous le refroidisseur.' if lang=='fr' else 'Check that your motherboard and processor support this memory generation. These UDIMM modules are for desktop PCs: they do not replace laptop SO-DIMMs. Check maximum capacity, slot count, the QVL and cooler clearance.')
   extra=('Le débit annoncé est une caractéristique de la référence, pas une vitesse garantie dans chaque PC. Selon le kit, le BIOS et la plateforme, un profil XMP ou EXPO peut être nécessaire pour atteindre ce débit. Vérifiez le profil proposé par le fabricant pour cette référence exacte. Utilisez de préférence les barrettes du même kit et les emplacements recommandés par la carte mère.' if lang=='fr' else 'The advertised data rate is a model specification, not a guaranteed speed in every PC. Depending on the kit, BIOS and platform, an XMP or EXPO profile may be needed to reach it. Check the profile offered for this exact part number. Prefer modules from the same kit and the motherboard’s recommended slots.')
@@ -148,7 +168,7 @@ def main():
  for lang in ['fr','en']:
   for cat,category_path in CATEGORY_PATHS[lang].items():
    target=ROOT/category_path/'index.html';doc=target.read_text();items=[p for p in PRODUCTS if p['category']==cat]
-   heading={'fr':{'cpu':'Catalogue de processeurs AMD et Intel','gpu':'Catalogue de cartes graphiques AMD et NVIDIA','ram':'Catalogue RAM DDR4 et DDR5'},'en':{'cpu':'AMD and Intel processor catalogue','gpu':'AMD and NVIDIA graphics card catalogue','ram':'DDR4 and DDR5 RAM catalogue'}}[lang][cat]
+   heading={'fr':{'cpu':'Catalogue de processeurs AMD et Intel','gpu':'Catalogue de cartes graphiques AMD et NVIDIA','ram':'Catalogue RAM DDR4 et DDR5','storage':'Catalogue SSD et disques durs'},'en':{'cpu':'AMD and Intel processor catalogue','gpu':'AMD and NVIDIA graphics card catalogue','ram':'DDR4 and DDR5 RAM catalogue','storage':'SSD and hard drive catalogue'}}[lang][cat]
    note=('Choisissez parmi ces modèles et simulez votre sélection avec le panier. Tous les prix sont fictifs et indiqués uniquement pour la démonstration.' if lang=='fr' else 'Browse these models and simulate your selection with the cart. All prices are fictional and shown only for demonstration.')
    block=f'<!-- catalogue:start -->\n<section id="modeles" aria-labelledby="modeles-title"><h2 id="modeles-title">{heading}</h2><p class="section-intro">{note}</p>{filters(items,lang)}<div class="shop-grid">'+''.join(card(p,lang) for p in items)+'</div></section>\n<!-- catalogue:end -->\n'
    if '<!-- catalogue:start -->' in doc:doc=re.sub(r'<!-- catalogue:start -->.*?<!-- catalogue:end -->\s*',lambda _:block,doc,flags=re.S)

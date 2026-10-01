@@ -31,10 +31,10 @@ class CatalogueTests(unittest.TestCase):
         cls.pages = [p for p in ROOT.rglob('index.html') if '.git' not in p.parts]
 
     def test_product_identity_and_demo_prices(self):
-        self.assertEqual(len(self.products), 56)
-        self.assertEqual(len({p['id'] for p in self.products}), 56)
+        self.assertEqual(len(self.products), 80)
+        self.assertEqual(len({p['id'] for p in self.products}), 80)
         self.assertEqual(collections.Counter((p['category'], p['brand']) for p in self.products),
-                         {('cpu', 'AMD'): 8, ('cpu', 'Intel'): 8, ('gpu', 'AMD'): 8, ('gpu', 'NVIDIA'): 8, **{('ram', brand): 4 for brand in ['Corsair','Kingston','G.Skill','Crucial','TeamGroup','Patriot']}})
+                         {('cpu', 'AMD'): 8, ('cpu', 'Intel'): 8, ('gpu', 'AMD'): 8, ('gpu', 'NVIDIA'): 8, **{('ram', brand): 4 for brand in ['Corsair','Kingston','G.Skill','Crucial','TeamGroup','Patriot']}, **{('storage', brand): 4 for brand in ['Samsung','Western Digital','Crucial','Kingston','Seagate','Corsair']}})
         for p in self.products:
             self.assertRegex(p['id'], r'^[a-z0-9-]+$')
             self.assertIs(type(p['demo_price_mad']), int)
@@ -62,6 +62,24 @@ class CatalogueTests(unittest.TestCase):
         self.assertEqual(single['capacity_gb'], kit['capacity_gb'])
         self.assertNotEqual(single['modules'], kit['modules'])
         self.assertNotEqual(single['sku'], kit['sku'])
+
+    def test_storage_identity_and_interfaces(self):
+        drives = [p for p in self.products if p['category'] == 'storage']
+        self.assertEqual(len(drives), 24)
+        self.assertEqual(len({p['sku'] for p in drives}), 24)
+        self.assertEqual(collections.Counter(p['drive_type'] for p in drives), {'SSD': 19, 'HDD': 5})
+        for p in drives:
+            self.assertIn(p['capacity_gb'], [480, 500, 1000, 1024, 2000, 4000])
+            if p['storage_protocol'] == 'NVMe':
+                self.assertEqual(p['form_factor'], 'M.2 2280')
+                self.assertEqual(p['drive_type'], 'SSD')
+                self.assertIn('PCIe', p['interface'])
+            else:
+                self.assertEqual(p['storage_protocol'], 'SATA')
+                self.assertIn('SATA', p['interface'])
+                self.assertEqual(p['form_factor'], '3.5-inch' if p['drive_type'] == 'HDD' else '2.5-inch')
+        page = (ROOT / 'en/products/kingston-kc3000-1024gb/index.html').read_text()
+        self.assertIn('1024 GB', page)
 
     def test_product_pages_and_truthful_schema(self):
         for lang, folder in [('fr', 'produits'), ('en', 'en/products')]:
@@ -119,8 +137,8 @@ class CatalogueTests(unittest.TestCase):
     def test_sitemap_and_cart_indexing(self):
         ns = {'s': 'http://www.sitemaps.org/schemas/sitemap/0.9'}
         urls = [loc.text for loc in ET.parse(ROOT / 'sitemap.xml').findall('s:url/s:loc', ns)]
-        self.assertEqual(len(urls), 120)
-        self.assertEqual(len(set(urls)), 120)
+        self.assertEqual(len(urls), 170)
+        self.assertEqual(len(set(urls)), 170)
         for url in urls:
             self.assertTrue((ROOT / url.removeprefix(LIVE) / 'index.html').is_file(), url)
         for folder in ['panier/', 'en/cart/']:
