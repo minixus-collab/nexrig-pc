@@ -72,10 +72,12 @@
     function filter() {
       const query = form.elements.search.value.trim().toLocaleLowerCase();
       const brand = form.elements.brand.value;
+      const generation = form.elements.generation?.value || '';
+      const capacity = form.elements.capacity?.value || '';
       let shown = 0;
       for (const card of cards) {
         const p = products.get(card.dataset.productId);
-        const matches = (!brand || p.brand === brand) && p.name.toLocaleLowerCase().includes(query);
+        const matches = (!brand || p.brand === brand) && (!generation || p.memory_generation === generation) && (!capacity || String(p.capacity_gb) === capacity) && `${p.name} ${p.sku || ''}`.toLocaleLowerCase().includes(query);
         card.hidden = !matches; if (matches) shown++;
       }
       const order = form.elements.sort.value;

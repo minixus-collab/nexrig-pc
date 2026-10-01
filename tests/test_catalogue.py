@@ -31,10 +31,10 @@ class CatalogueTests(unittest.TestCase):
         cls.pages = [p for p in ROOT.rglob('index.html') if '.git' not in p.parts]
 
     def test_product_identity_and_demo_prices(self):
-        self.assertEqual(len(self.products), 32)
-        self.assertEqual(len({p['id'] for p in self.products}), 32)
+        self.assertEqual(len(self.products), 56)
+        self.assertEqual(len({p['id'] for p in self.products}), 56)
         self.assertEqual(collections.Counter((p['category'], p['brand']) for p in self.products),
-                         {('cpu', 'AMD'): 8, ('cpu', 'Intel'): 8, ('gpu', 'AMD'): 8, ('gpu', 'NVIDIA'): 8})
+                         {('cpu', 'AMD'): 8, ('cpu', 'Intel'): 8, ('gpu', 'AMD'): 8, ('gpu', 'NVIDIA'): 8, **{('ram', brand): 4 for brand in ['Corsair','Kingston','G.Skill','Crucial','TeamGroup','Patriot']}})
         for p in self.products:
             self.assertRegex(p['id'], r'^[a-z0-9-]+$')
             self.assertIs(type(p['demo_price_mad']), int)
@@ -45,6 +45,23 @@ class CatalogueTests(unittest.TestCase):
                 self.assertGreaterEqual(p['threads'], p['cores'])
                 if p['socket'] == 'AM5':
                     self.assertEqual(p['ram'], 'DDR5')
+
+    def test_ram_kit_identity_and_capacity(self):
+        ram = [p for p in self.products if p['category'] == 'ram']
+        self.assertEqual(len(ram), 24)
+        self.assertEqual(len({p['sku'] for p in ram}), 24)
+        for p in ram:
+            self.assertIn(p['memory_generation'], ['DDR4', 'DDR5'])
+            self.assertEqual(p['form_factor'], 'UDIMM')
+            self.assertIn(p['modules'], [1, 2])
+            self.assertEqual(p['capacity_gb'] % p['modules'], 0)
+            self.assertIn(p['capacity_gb'], [16, 32])
+            self.assertGreater(p['speed_mts'], 0)
+        single = next(p for p in ram if p['id'].endswith('3200-module'))
+        kit = next(p for p in ram if p['id'] == 'kingston-fury-beast-16gb-ddr4-3200-kit')
+        self.assertEqual(single['capacity_gb'], kit['capacity_gb'])
+        self.assertNotEqual(single['modules'], kit['modules'])
+        self.assertNotEqual(single['sku'], kit['sku'])
 
     def test_product_pages_and_truthful_schema(self):
         for lang, folder in [('fr', 'produits'), ('en', 'en/products')]:
@@ -90,8 +107,8 @@ class CatalogueTests(unittest.TestCase):
     def test_sitemap_and_cart_indexing(self):
         ns = {'s': 'http://www.sitemaps.org/schemas/sitemap/0.9'}
         urls = [loc.text for loc in ET.parse(ROOT / 'sitemap.xml').findall('s:url/s:loc', ns)]
-        self.assertEqual(len(urls), 70)
-        self.assertEqual(len(set(urls)), 70)
+        self.assertEqual(len(urls), 120)
+        self.assertEqual(len(set(urls)), 120)
         for url in urls:
             self.assertTrue((ROOT / url.removeprefix(LIVE) / 'index.html').is_file(), url)
         for folder in ['panier/', 'en/cart/']:

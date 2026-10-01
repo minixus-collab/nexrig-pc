@@ -8,3 +8,5 @@
 /* Keep the catalogue prominent; buying guides follow the product grid. */
 .shop-category .hero{padding:8px 0 24px}.shop-category .hero h1{font-size:clamp(2rem,4vw,3.1rem);margin:12px 0 16px}.shop-category .hero .intro{font-size:1rem;margin-bottom:10px}.shop-category .jump-links{margin-top:16px}.shop-category .breadcrumbs{padding:16px 0}.shop-category #modeles{padding-top:28px}.shop-category #modeles .section-intro{margin-bottom:8px}
 @media(max-width:480px){.shop-category .shop-filters{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px}.shop-category .shop-filters label:first-child{grid-column:1/-1}.shop-category .shop-filters .shop-button{grid-column:1/-1}.shop-category .shop-filters label{min-width:0}}
+
+.product-purchase dd{overflow-wrap:anywhere}.product-purchase dl div{min-width:0}

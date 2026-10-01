@@ -13,7 +13,7 @@ NEXRIG is a fictional Moroccan PC store and SEO learning project. Continue this 
 
 ## Content and generation
 
-`data/products.json` is the shared source for CPU/GPU cards, product details, demonstration prices and cart calculations. IDs are stable URL slugs and cart identifiers. Do not rename existing IDs casually.
+`data/products.json` is the shared source for CPU/GPU/RAM cards, product details, demonstration prices and cart calculations. IDs are stable URL slugs and cart identifiers. Do not rename existing IDs casually.
 
 Run from the repository root:
 
@@ -32,3 +32,7 @@ Test filters, product links, language switches, cart additions from every entry 
 Run the catalogue integrity checks with `python3 -m unittest discover -s tests -v`.
 
 Run `node tests/browser-smoke.cjs` for cart and responsive-browser checks in an environment with the Playwright Node package and Chromium installed. This test starts and stops its own Python HTTP server on port 8765, uses temporary files, and exercises filtering, quantities, computed totals, persistence, failure states and both languages. In the current cloud environment it uses system Chromium at `/usr/lib/chromium/chromium`; adjust that executable path for another machine. No browser test dependencies are shipped to the website.
+
+## RAM catalogue
+
+RAM pages are `/ram/` and `/en/ram/`. Entries carry an exact manufacturer part number (`sku`), total kit capacity, module count, DDR generation, UDIMM form factor and advertised data rate in MT/s. A kit of 2 × 16 GB is 32 GB in total. Do not claim the rated speed is automatic or universally guaranteed: profiles, BIOS, CPU and motherboard compatibility matter. Search includes the part number; RAM-only generation and capacity filters extend the shared brand/search/sort controls. The existing cart and storage key are unchanged, so older CPU/GPU selections survive.
