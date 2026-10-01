@@ -22,6 +22,9 @@
     <loc>https://minixus-collab.github.io/nexrig-pc/alimentations/</loc>
   </url>
   <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/cartes-meres/</loc>
+  </url>
+  <url>
     <loc>https://minixus-collab.github.io/nexrig-pc/en/processors/</loc>
   </url>
   <url>
@@ -35,6 +38,9 @@
   </url>
   <url>
     <loc>https://minixus-collab.github.io/nexrig-pc/en/power-supplies/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/en/motherboards/</loc>
   </url>
   <url>
     <loc>https://minixus-collab.github.io/nexrig-pc/produits/amd-ryzen-5-5600/</loc>
@@ -370,6 +376,78 @@
     <loc>https://minixus-collab.github.io/nexrig-pc/produits/evga-supernova-1000-g6/</loc>
   </url>
   <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/produits/asus-tuf-gaming-b550-plus/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/produits/asus-prime-b550m-a-wifi-ii/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/produits/asus-tuf-gaming-b650-plus-wifi/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/produits/asus-tuf-gaming-b650m-plus-wifi/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/produits/asus-prime-b660m-a-d4/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/produits/asus-tuf-gaming-z790-plus-wifi/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/produits/msi-mag-b550-tomahawk/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/produits/msi-b550m-pro-vdh-wifi/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/produits/msi-mag-b650-tomahawk-wifi/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/produits/msi-pro-b650m-a-wifi/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/produits/msi-pro-b760m-a-ddr4/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/produits/msi-mag-z790-tomahawk-wifi/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/produits/gigabyte-b550-aorus-elite-v2/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/produits/gigabyte-b550m-ds3h/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/produits/gigabyte-b650-aorus-elite-ax/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/produits/gigabyte-b650m-ds3h/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/produits/gigabyte-b760m-ds3h-ddr4/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/produits/gigabyte-z790-aorus-elite-ax/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/produits/asrock-b550-steel-legend/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/produits/asrock-b550m-pro4/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/produits/asrock-b650-steel-legend-wifi/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/produits/asrock-b650m-pro-rs/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/produits/asrock-b760m-pro-rs-d4/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/produits/asrock-z790-pro-rs/</loc>
+  </url>
+  <url>
     <loc>https://minixus-collab.github.io/nexrig-pc/en/products/amd-ryzen-5-5600/</loc>
   </url>
   <url>
@@ -701,5 +779,77 @@
   </url>
   <url>
     <loc>https://minixus-collab.github.io/nexrig-pc/en/products/evga-supernova-1000-g6/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/en/products/asus-tuf-gaming-b550-plus/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/en/products/asus-prime-b550m-a-wifi-ii/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/en/products/asus-tuf-gaming-b650-plus-wifi/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/en/products/asus-tuf-gaming-b650m-plus-wifi/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/en/products/asus-prime-b660m-a-d4/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/en/products/asus-tuf-gaming-z790-plus-wifi/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/en/products/msi-mag-b550-tomahawk/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/en/products/msi-b550m-pro-vdh-wifi/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/en/products/msi-mag-b650-tomahawk-wifi/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/en/products/msi-pro-b650m-a-wifi/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/en/products/msi-pro-b760m-a-ddr4/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/en/products/msi-mag-z790-tomahawk-wifi/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/en/products/gigabyte-b550-aorus-elite-v2/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/en/products/gigabyte-b550m-ds3h/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/en/products/gigabyte-b650-aorus-elite-ax/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/en/products/gigabyte-b650m-ds3h/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/en/products/gigabyte-b760m-ds3h-ddr4/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/en/products/gigabyte-z790-aorus-elite-ax/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/en/products/asrock-b550-steel-legend/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/en/products/asrock-b550m-pro4/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/en/products/asrock-b650-steel-legend-wifi/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/en/products/asrock-b650m-pro-rs/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/en/products/asrock-b760m-pro-rs-d4/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/en/products/asrock-z790-pro-rs/</loc>
   </url>
 </urlset>

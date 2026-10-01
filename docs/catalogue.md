@@ -13,7 +13,7 @@ NEXRIG is a fictional Moroccan PC store and SEO learning project. Continue this 
 
 ## Content and generation
 
-`data/products.json` is the shared source for CPU/GPU/RAM/storage/PSU cards, product details, demonstration prices and cart calculations. IDs are stable URL slugs and cart identifiers. Do not rename existing IDs casually.
+`data/products.json` is the shared source for CPU/GPU/RAM/storage/PSU/motherboard cards, product details, demonstration prices and cart calculations. IDs are stable URL slugs and cart identifiers. Do not rename existing IDs casually.
 
 Run from the repository root:
 
@@ -52,3 +52,7 @@ CPU manufacturers are AMD and Intel. GPU cards distinguish the card brand (`bran
 ## Power supplies
 
 PSU categories are `/alimentations/` and `/en/power-supplies/`, with 24 models across six brands. Store rated wattage, physical ATX form factor and cable modularity; filters use exact wattage and modularity alongside brand/search/sort. Year labels distinguish selected product revisions. Do not infer ATX electrical revision, GPU connectors, supplied cable counts, efficiency certification, dimensions or warranties from wattage or range names. Manufacturer pages remain inaccessible in the cloud environment; detailed specifications need verification before expansion. Explain whole-system sizing, case clearance, connector checks and why modular PSU cables are not universally interchangeable. Reuse stable cart IDs and the versioned catalogue deployment.
+
+## Motherboards
+
+Categories are `/cartes-meres/` and `/en/motherboards/`, with 24 boards from ASUS, MSI, Gigabyte and ASRock. Store socket, chipset, memory generation and physical form factor; filter by brand, socket, DDR generation and ATX/Micro-ATX size. Use exact model names to distinguish DDR4/DDR5 variants. Hardware revisions may alter features or BIOS support: check the model/revision-specific CPU list and minimum BIOS before claiming compatibility. Do not infer port counts, wireless versions, maximum RAM capacity or supported memory speeds from a chipset or family name. Manufacturer pages remain blocked in this environment. The shared cart is a selection simulator, not an automatic compatibility checker. Explain CPU support, BIOS, QVL, case mounting, power connectors, integrated graphics and storage lane sharing without claiming a verified build.

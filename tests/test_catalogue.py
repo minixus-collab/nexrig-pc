@@ -31,10 +31,10 @@ class CatalogueTests(unittest.TestCase):
         cls.pages = [p for p in ROOT.rglob('index.html') if '.git' not in p.parts]
 
     def test_product_identity_and_demo_prices(self):
-        self.assertEqual(len(self.products), 111)
-        self.assertEqual(len({p['id'] for p in self.products}), 111)
+        self.assertEqual(len(self.products), 135)
+        self.assertEqual(len({p['id'] for p in self.products}), 135)
         self.assertEqual(collections.Counter((p['category'], p['brand']) for p in self.products),
-                         {**{('psu', brand): 4 for brand in ['Corsair','Seasonic','be quiet!','Cooler Master','Thermaltake','EVGA']}, ('cpu', 'AMD'): 8, ('cpu', 'Intel'): 8, ('gpu', 'AMD'): 8, ('gpu', 'NVIDIA'): 8, **{('gpu', brand): 1 for brand in ['ASUS','MSI','Gigabyte','Zotac','Sapphire','PowerColor','XFX']}, **{('ram', brand): 4 for brand in ['Corsair','Kingston','G.Skill','Crucial','TeamGroup','Patriot']}, **{('storage', brand): 4 for brand in ['Samsung','Western Digital','Crucial','Kingston','Seagate','Corsair']}})
+                         {**{('motherboard', brand): 6 for brand in ['ASUS','MSI','Gigabyte','ASRock']}, **{('psu', brand): 4 for brand in ['Corsair','Seasonic','be quiet!','Cooler Master','Thermaltake','EVGA']}, ('cpu', 'AMD'): 8, ('cpu', 'Intel'): 8, ('gpu', 'AMD'): 8, ('gpu', 'NVIDIA'): 8, **{('gpu', brand): 1 for brand in ['ASUS','MSI','Gigabyte','Zotac','Sapphire','PowerColor','XFX']}, **{('ram', brand): 4 for brand in ['Corsair','Kingston','G.Skill','Crucial','TeamGroup','Patriot']}, **{('storage', brand): 4 for brand in ['Samsung','Western Digital','Crucial','Kingston','Seagate','Corsair']}})
         for p in self.products:
             self.assertRegex(p['id'], r'^[a-z0-9-]+$')
             self.assertIs(type(p['demo_price_mad']), int)
@@ -95,6 +95,25 @@ class CatalogueTests(unittest.TestCase):
             self.assertIn('Never mix modular cables', text)
             self.assertIn(str(p['wattage']) + ' W', text)
 
+    def test_motherboard_platforms_and_memory(self):
+        boards = [p for p in self.products if p['category'] == 'motherboard']
+        self.assertEqual(len(boards), 24)
+        self.assertEqual(len({p['name'] for p in boards}), 24)
+        self.assertEqual(collections.Counter(p['socket'] for p in boards), {'AM4': 8, 'AM5': 8, 'LGA1700': 8})
+        self.assertEqual(collections.Counter(p['form_factor'] for p in boards), {'ATX': 12, 'Micro-ATX': 12})
+        for p in boards:
+            self.assertIn(p['chipset'], ['B550','B650','B660','B760','Z790'])
+            if p['socket'] == 'AM4':
+                self.assertEqual((p['chipset'],p['memory_generation']), ('B550','DDR4'))
+            elif p['socket'] == 'AM5':
+                self.assertEqual((p['chipset'],p['memory_generation']), ('B650','DDR5'))
+            else:
+                self.assertEqual(p['memory_generation'], 'DDR5' if p['chipset']=='Z790' else 'DDR4')
+            text = (ROOT / 'en/products' / p['id'] / 'index.html').read_text()
+            self.assertIn('The socket alone does not guarantee CPU compatibility', text)
+            self.assertIn('minimum BIOS version', text)
+            self.assertIn('does not automatically validate a build', text)
+
     def test_product_pages_and_truthful_schema(self):
         for lang, folder in [('fr', 'produits'), ('en', 'en/products')]:
             for p in self.products:
@@ -151,8 +170,8 @@ class CatalogueTests(unittest.TestCase):
     def test_sitemap_and_cart_indexing(self):
         ns = {'s': 'http://www.sitemaps.org/schemas/sitemap/0.9'}
         urls = [loc.text for loc in ET.parse(ROOT / 'sitemap.xml').findall('s:url/s:loc', ns)]
-        self.assertEqual(len(urls), 234)
-        self.assertEqual(len(set(urls)), 234)
+        self.assertEqual(len(urls), 284)
+        self.assertEqual(len(set(urls)), 284)
         for url in urls:
             self.assertTrue((ROOT / url.removeprefix(LIVE) / 'index.html').is_file(), url)
         for folder in ['panier/', 'en/cart/']:
