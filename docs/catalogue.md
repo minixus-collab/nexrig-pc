@@ -21,7 +21,7 @@ Run from the repository root:
 python3 scripts/build_catalogue.py
 ```
 
-This uses only Python's standard library. It generates product pages and cart pages, refreshes catalogue blocks and homepage selections, and updates the sitemap. The surrounding category buying guides remain hand-written and are preserved by the marked catalogue blocks. Product and cart HTML is generated: edit the data or renderer, then regenerate rather than editing these generated pages directly.
+This uses only Python's standard library. It generates product pages and cart pages, refreshes catalogue blocks and homepage selections, and updates the sitemap. The surrounding category buying guides remain hand-written and are preserved by the marked catalogue blocks. Category openings use a short browsing introduction; original introductory paragraphs and guide jump links are preserved in `#category-overview` after the catalogue and guides. The renderer applies this migration once and preserves it on subsequent runs. Shared compact catalogue styles also apply to the unified shop. Product and cart HTML is generated: edit the data or renderer, then regenerate rather than editing these generated pages directly.
 
 For a new category, extend `CATEGORY_PATHS`, translated labels, specification rendering and product templates in the renderer; create its bilingual guide pages with a catalogue section; add its data; update navigation and the sitemap's category list. The cart uses stable product IDs and the existing shared data automatically. Add a clearly labeled original illustration or licensed model image and extend the image rendering if needed.
 

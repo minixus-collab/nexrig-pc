@@ -275,6 +275,22 @@ def build_cart(lang):
  url=cartpath(lang);doc=document(title+' | NEXRIG',title,url,cartpath('en' if lang=='fr' else 'fr'),lang,body,[(w['home'],homedir(lang)),(w['cart'],url)],noindex=True)
  target=ROOT/url/'index.html';target.parent.mkdir(parents=True,exist_ok=True);target.write_text(doc)
 
+def compact_category_intro(doc, cat, lang, count):
+ # Keep the original introduction and guide navigation below the product grid.
+ if 'id="category-overview"' in doc:return doc
+ start=doc.index('<div class="hero">')
+ end=doc.index('<!-- catalogue:start -->',start)
+ original=doc[start:end]
+ heading=re.search(r'<h1>.*?</h1>',original,re.S).group(0)
+ paragraphs=re.findall(r'<p\b[^>]*>.*?</p>',original,re.S)
+ navigation=re.search(r'<(?:nav|div) class="jump-links".*?</(?:nav|div)>',original,re.S)
+ intro=(f'Comparez {count} modèles, consultez leurs fiches et ajoutez votre sélection au panier de démonstration.' if lang=='fr' else f'Compare {count} models, view their details and add your selection to the demonstration cart.')
+ if cat=='pc':intro=('Comparez six configurations proposées avec leur composition détaillée et des prix de démonstration.' if lang=='fr' else 'Compare six proposed configurations with full component lists and demonstration prices.')
+ compact=f'<div class="hero">{heading}<p class="intro">{intro}</p></div>\n'
+ overview='<section id="category-overview"><h2>'+('À propos de ce catalogue' if lang=='fr' else 'About this catalogue')+'</h2>'+''.join(paragraphs)+(navigation.group(0) if navigation else '')+'</section>\n'
+ doc=doc[:start]+compact+doc[end:]
+ return doc.replace('</main>',overview+'</main>',1)
+
 def main():
  assert len({p['id'] for p in PRODUCTS})==len(PRODUCTS),'Duplicate product IDs'
  for p in PRODUCTS:
@@ -285,7 +301,7 @@ def main():
   for cat,category_path in CATEGORY_PATHS[lang].items():
    target=ROOT/category_path/'index.html';doc=target.read_text();items=[p for p in PRODUCTS if p['category']==cat]
    heading=(EXPANSION_LABELS[lang][cat]+(' : catalogue' if lang=='fr' else ' catalogue')) if cat in EXPANSION_PATHS else {'fr':{'cpu':'Catalogue de processeurs AMD et Intel','gpu':'Catalogue de cartes graphiques AMD et NVIDIA','ram':'Catalogue RAM DDR4 et DDR5','storage':'Catalogue SSD et disques durs','psu':'Catalogue d’alimentations PC','motherboard':'Catalogue de cartes mères AMD et Intel','cooling':'Catalogue de ventirads et refroidisseurs liquides AIO','monitor':'Catalogue d’écrans PC Full HD, QHD et 4K'},'en':{'cpu':'AMD and Intel processor catalogue','gpu':'AMD and NVIDIA graphics card catalogue','ram':'DDR4 and DDR5 RAM catalogue','storage':'SSD and hard drive catalogue','psu':'PC power supply catalogue','motherboard':'AMD and Intel motherboard catalogue','cooling':'Air cooler and liquid AIO catalogue','monitor':'Full HD, QHD and 4K monitor catalogue'}}[lang][cat]
-   note=('Choisissez parmi ces modèles et simulez votre sélection avec le panier. Tous les prix sont fictifs et indiqués uniquement pour la démonstration.' if lang=='fr' else 'Browse these models and simulate your selection with the cart. All prices are fictional and shown only for demonstration.')
+   note=('Prix fictifs · panier de démonstration · aucune vente réelle.' if lang=='fr' else 'Fictional prices · demonstration cart · no real sales.')
    block=f'<!-- catalogue:start -->\n<section id="modeles" aria-labelledby="modeles-title"><h2 id="modeles-title">{heading}</h2><p class="section-intro">{note}</p>{filters(items,lang)}<div class="shop-grid">'+''.join(card(p,lang) for p in items)+'</div></section>\n<!-- catalogue:end -->\n'
    if '<!-- catalogue:start -->' in doc:doc=re.sub(r'<!-- catalogue:start -->.*?<!-- catalogue:end -->\s*',lambda _:block,doc,flags=re.S)
    else:
@@ -293,6 +309,7 @@ def main():
    doc=doc.replace('Découvrez deux exemples de GPU NVIDIA GeForce et AMD Radeon','Explorez les modèles NVIDIA GeForce et AMD Radeon').replace('Découvrez trois exemples de CPU AMD Ryzen et Intel Core','Explorez les modèles AMD Ryzen et Intel Core').replace('Explore two NVIDIA GeForce and AMD Radeon GPU examples','Explore NVIDIA GeForce and AMD Radeon models').replace('Explore three AMD Ryzen and Intel Core CPU examples','Explore AMD Ryzen and Intel Core models')
    doc=doc.replace('Il ne propose ni commande, ni stock, ni prix de vente.','Les prix sont des montants de démonstration ; aucune vente ni disponibilité en stock n’est annoncée.').replace('sans commande, stock ni prix de vente.','avec des prix de démonstration, sans commande réelle ni disponibilité en stock annoncée.').replace('It offers no ordering, stock availability or selling prices.','Prices are demonstration amounts; no real ordering or stock availability is offered.').replace('without ordering, stock availability or selling prices.','with demonstration prices, without real ordering or stock availability.')
    doc=doc.replace('Exemples de GPU</a>','Catalogue GPU</a>').replace('Exemples de CPU</a>','Catalogue CPU</a>').replace('GPU examples</a>','GPU catalogue</a>').replace('CPU examples</a>','CPU catalogue</a>')
+   doc=compact_category_intro(doc,cat,lang,len(items))
    doc=addcart(doc,lang)
    if 'class="shop-category"' not in doc:doc=doc.replace('<body>','<body class="shop-category">',1)
    listing={'@context':'https://schema.org','@type':'ItemList','itemListElement':[{'@type':'ListItem','position':i+1,'name':p['name'],'url':LIVE+path(p,lang)} for i,p in enumerate(items)]}
@@ -305,6 +322,7 @@ def main():
   body=f'<div class="hero"><h1>{title}</h1><p class="intro">{description}</p></div><section id="modeles"><h2>'+('Tous les produits' if lang=='fr' else 'All products')+'</h2><p>'+('Prix fictifs et panier de démonstration. Les PC sont des configurations proposées, pas des machines assemblées ou testées.' if lang=='fr' else 'Fictional prices and a demonstration cart. PCs are proposed configurations, not assembled or tested machines.')+f'</p>{filters(PRODUCTS,lang)}<div class="shop-grid">'+''.join(card(p,lang) for p in PRODUCTS)+'</div></section>'
   shop=document(title+' | NEXRIG',description,shopurl,shopalt,lang,body,[(WORDS[lang]['home'],homedir(lang)),(title,shopurl)])
   listing={'@context':'https://schema.org','@type':'ItemList','itemListElement':[{'@type':'ListItem','position':i+1,'name':p['name'],'url':LIVE+path(p,lang)} for i,p in enumerate(PRODUCTS)]}
+  shop=shop.replace('<body>','<body class="shop-category">',1)
   shop=shop.replace('</head>','<script type="application/ld+json">'+schema_text(listing)+'</script></head>',1)
   target=ROOT/shopurl/'index.html';target.parent.mkdir(parents=True,exist_ok=True);target.write_text(shop)
   for p in PRODUCTS:build_product(p,lang)
