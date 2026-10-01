@@ -13,7 +13,7 @@ NEXRIG is a fictional Moroccan PC store and SEO learning project. Continue this 
 
 ## Content and generation
 
-`data/products.json` is the shared source for CPU/GPU/RAM/storage cards, product details, demonstration prices and cart calculations. IDs are stable URL slugs and cart identifiers. Do not rename existing IDs casually.
+`data/products.json` is the shared source for CPU/GPU/RAM/storage/PSU cards, product details, demonstration prices and cart calculations. IDs are stable URL slugs and cart identifiers. Do not rename existing IDs casually.
 
 Run from the repository root:
 
@@ -48,3 +48,7 @@ Storage pages are `/stockage/` and `/en/storage/`. The 24 entries cover NVMe SSD
 ## CPU and GPU brands
 
 CPU manufacturers are AMD and Intel. GPU cards distinguish the card brand (`brand`) from the chip designer (`chip_brand`, falling back to the original AMD/NVIDIA brand). Seven specific partner models supplement the original generic GPU entries; preserve the original IDs and cart selections. Chip and card-brand filters can be combined. Partner cards use only chip-level memory and architecture information; do not infer clocks, dimensions, connectors or cooling specifications from a generic GPU. Manufacturer range links are references, not confirmed model-page verification.
+
+## Power supplies
+
+PSU categories are `/alimentations/` and `/en/power-supplies/`, with 24 models across six brands. Store rated wattage, physical ATX form factor and cable modularity; filters use exact wattage and modularity alongside brand/search/sort. Year labels distinguish selected product revisions. Do not infer ATX electrical revision, GPU connectors, supplied cable counts, efficiency certification, dimensions or warranties from wattage or range names. Manufacturer pages remain inaccessible in the cloud environment; detailed specifications need verification before expansion. Explain whole-system sizing, case clearance, connector checks and why modular PSU cables are not universally interchangeable. Reuse stable cart IDs and the versioned catalogue deployment.

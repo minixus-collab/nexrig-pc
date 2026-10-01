@@ -31,10 +31,10 @@ class CatalogueTests(unittest.TestCase):
         cls.pages = [p for p in ROOT.rglob('index.html') if '.git' not in p.parts]
 
     def test_product_identity_and_demo_prices(self):
-        self.assertEqual(len(self.products), 87)
-        self.assertEqual(len({p['id'] for p in self.products}), 87)
+        self.assertEqual(len(self.products), 111)
+        self.assertEqual(len({p['id'] for p in self.products}), 111)
         self.assertEqual(collections.Counter((p['category'], p['brand']) for p in self.products),
-                         {('cpu', 'AMD'): 8, ('cpu', 'Intel'): 8, ('gpu', 'AMD'): 8, ('gpu', 'NVIDIA'): 8, **{('gpu', brand): 1 for brand in ['ASUS','MSI','Gigabyte','Zotac','Sapphire','PowerColor','XFX']}, **{('ram', brand): 4 for brand in ['Corsair','Kingston','G.Skill','Crucial','TeamGroup','Patriot']}, **{('storage', brand): 4 for brand in ['Samsung','Western Digital','Crucial','Kingston','Seagate','Corsair']}})
+                         {**{('psu', brand): 4 for brand in ['Corsair','Seasonic','be quiet!','Cooler Master','Thermaltake','EVGA']}, ('cpu', 'AMD'): 8, ('cpu', 'Intel'): 8, ('gpu', 'AMD'): 8, ('gpu', 'NVIDIA'): 8, **{('gpu', brand): 1 for brand in ['ASUS','MSI','Gigabyte','Zotac','Sapphire','PowerColor','XFX']}, **{('ram', brand): 4 for brand in ['Corsair','Kingston','G.Skill','Crucial','TeamGroup','Patriot']}, **{('storage', brand): 4 for brand in ['Samsung','Western Digital','Crucial','Kingston','Seagate','Corsair']}})
         for p in self.products:
             self.assertRegex(p['id'], r'^[a-z0-9-]+$')
             self.assertIs(type(p['demo_price_mad']), int)
@@ -80,6 +80,20 @@ class CatalogueTests(unittest.TestCase):
                 self.assertEqual(p['form_factor'], '3.5-inch' if p['drive_type'] == 'HDD' else '2.5-inch')
         page = (ROOT / 'en/products/kingston-kc3000-1024gb/index.html').read_text()
         self.assertIn('1024 GB', page)
+
+    def test_psu_identity_and_ratings(self):
+        supplies = [p for p in self.products if p['category'] == 'psu']
+        self.assertEqual(len(supplies), 24)
+        self.assertEqual(len({p['name'] for p in supplies}), 24)
+        self.assertEqual(collections.Counter(p['modularity'] for p in supplies), {'non-modular': 9, 'fully-modular': 15})
+        for p in supplies:
+            self.assertEqual(p['form_factor'], 'ATX')
+            self.assertIn(p['wattage'], [450, 500, 550, 600, 650, 700, 750, 850, 1000])
+            self.assertNotIn('efficiency', p)
+            self.assertNotIn('atx_version', p)
+            text = (ROOT / 'en/products' / p['id'] / 'index.html').read_text()
+            self.assertIn('Never mix modular cables', text)
+            self.assertIn(str(p['wattage']) + ' W', text)
 
     def test_product_pages_and_truthful_schema(self):
         for lang, folder in [('fr', 'produits'), ('en', 'en/products')]:
@@ -137,8 +151,8 @@ class CatalogueTests(unittest.TestCase):
     def test_sitemap_and_cart_indexing(self):
         ns = {'s': 'http://www.sitemaps.org/schemas/sitemap/0.9'}
         urls = [loc.text for loc in ET.parse(ROOT / 'sitemap.xml').findall('s:url/s:loc', ns)]
-        self.assertEqual(len(urls), 184)
-        self.assertEqual(len(set(urls)), 184)
+        self.assertEqual(len(urls), 234)
+        self.assertEqual(len(set(urls)), 234)
         for url in urls:
             self.assertTrue((ROOT / url.removeprefix(LIVE) / 'index.html').is_file(), url)
         for folder in ['panier/', 'en/cart/']:
