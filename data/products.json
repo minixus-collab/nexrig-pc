@@ -1054,5 +1054,89 @@
     "form_factor": "M.2 2280",
     "demo_price_mad": 1790,
     "source": "https://www.corsair.com/us/en/c/data-storage"
+  },
+  {
+    "id": "asus-dual-rtx-4060-oc",
+    "name": "ASUS Dual GeForce RTX 4060 OC Edition 8 GB",
+    "brand": "ASUS",
+    "category": "gpu",
+    "demo_price_mad": 4199,
+    "architecture": "Ada Lovelace",
+    "vram_gb": 8,
+    "memory_type": "GDDR6",
+    "source": "https://www.asus.com/motherboards-components/graphics-cards/",
+    "chip_brand": "NVIDIA"
+  },
+  {
+    "id": "msi-rtx-4060-ventus-2x-black-oc",
+    "name": "MSI GeForce RTX 4060 VENTUS 2X BLACK 8G OC",
+    "brand": "MSI",
+    "category": "gpu",
+    "demo_price_mad": 4199,
+    "architecture": "Ada Lovelace",
+    "vram_gb": 8,
+    "memory_type": "GDDR6",
+    "source": "https://www.msi.com/Graphics-Cards",
+    "chip_brand": "NVIDIA"
+  },
+  {
+    "id": "gigabyte-rtx-4060-windforce-oc",
+    "name": "Gigabyte GeForce RTX 4060 WINDFORCE OC 8G",
+    "brand": "Gigabyte",
+    "category": "gpu",
+    "demo_price_mad": 4199,
+    "architecture": "Ada Lovelace",
+    "vram_gb": 8,
+    "memory_type": "GDDR6",
+    "source": "https://www.gigabyte.com/Graphics-Card",
+    "chip_brand": "NVIDIA"
+  },
+  {
+    "id": "zotac-rtx-4060-twin-edge",
+    "name": "Zotac Gaming GeForce RTX 4060 8 GB Twin Edge",
+    "brand": "Zotac",
+    "category": "gpu",
+    "demo_price_mad": 4199,
+    "architecture": "Ada Lovelace",
+    "vram_gb": 8,
+    "memory_type": "GDDR6",
+    "source": "https://www.zotac.com/product/graphics_card",
+    "chip_brand": "NVIDIA"
+  },
+  {
+    "id": "sapphire-pulse-rx-7600",
+    "name": "Sapphire PULSE AMD Radeon RX 7600 8 GB",
+    "brand": "Sapphire",
+    "category": "gpu",
+    "demo_price_mad": 3490,
+    "architecture": "RDNA 3",
+    "vram_gb": 8,
+    "memory_type": "GDDR6",
+    "source": "https://www.sapphiretech.com/en/consumer",
+    "chip_brand": "AMD"
+  },
+  {
+    "id": "powercolor-fighter-rx-6600",
+    "name": "PowerColor Fighter AMD Radeon RX 6600 8 GB",
+    "brand": "PowerColor",
+    "category": "gpu",
+    "demo_price_mad": 2490,
+    "architecture": "RDNA 2",
+    "vram_gb": 8,
+    "memory_type": "GDDR6",
+    "source": "https://www.powercolor.com/",
+    "chip_brand": "AMD"
+  },
+  {
+    "id": "xfx-speedster-swft-210-rx-6600",
+    "name": "XFX Speedster SWFT 210 Radeon RX 6600 8 GB",
+    "brand": "XFX",
+    "category": "gpu",
+    "demo_price_mad": 2490,
+    "architecture": "RDNA 2",
+    "vram_gb": 8,
+    "memory_type": "GDDR6",
+    "source": "https://www.xfxforce.com/",
+    "chip_brand": "AMD"
   }
 ]

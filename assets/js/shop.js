@@ -75,6 +75,7 @@
     function filter() {
       const query = form.elements.search.value.trim().toLocaleLowerCase();
       const brand = form.elements.brand.value;
+      const chipBrand = form.elements.chip_brand?.value || '';
       const generation = form.elements.generation?.value || '';
       const capacity = form.elements.capacity?.value || '';
       const driveType = form.elements.drive_type?.value || '';
@@ -82,7 +83,7 @@
       let shown = 0;
       for (const card of cards) {
         const p = products.get(card.dataset.productId);
-        const matches = (!brand || p.brand === brand) && (!generation || p.memory_generation === generation) && (!capacity || String(p.capacity_gb) === capacity) && (!driveType || p.drive_type === driveType) && (!protocol || p.storage_protocol === protocol) && `${p.name} ${p.sku || ''}`.toLocaleLowerCase().includes(query);
+        const matches = (!chipBrand || (p.chip_brand || p.brand) === chipBrand) && (!brand || p.brand === brand) && (!generation || p.memory_generation === generation) && (!capacity || String(p.capacity_gb) === capacity) && (!driveType || p.drive_type === driveType) && (!protocol || p.storage_protocol === protocol) && `${p.name} ${p.sku || ''}`.toLocaleLowerCase().includes(query);
         card.hidden = !matches; if (matches) shown++;
       }
       const order = form.elements.sort.value;

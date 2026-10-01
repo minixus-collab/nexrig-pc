@@ -40,13 +40,13 @@ def storage_form(form,lang):
 def label_specs(p, lang):
  w=WORDS[lang]
  if p['category']=='cpu':
-  return [(w['socket'],p['socket']), ('Cœurs / threads' if lang=='fr' else 'Cores / threads',f"{p['cores']} / {p['threads']}"), (w['supported_memory'],p['ram']), (w['integrated'],w['yes'] if p['integrated_graphics'] else w['no'])]
+  return [(w['brand'],p['brand']), (w['socket'],p['socket']), ('Cœurs / threads' if lang=='fr' else 'Cores / threads',f"{p['cores']} / {p['threads']}"), (w['supported_memory'],p['ram']), (w['integrated'],w['yes'] if p['integrated_graphics'] else w['no'])]
  if p['category']=='ram':
   unit='Go' if lang=='fr' else 'GB'
   return [('Référence fabricant' if lang=='fr' else 'Manufacturer part number',p['sku']), ('Capacité totale' if lang=='fr' else 'Total capacity',f"{p['capacity_gb']} {unit}"), ('Composition' if lang=='fr' else 'Kit configuration',f"{p['modules']} × {p['capacity_gb']//p['modules']} {unit}"), ('Génération' if lang=='fr' else 'Generation',p['memory_generation']), ('Débit annoncé' if lang=='fr' else 'Advertised data rate',f"{p['speed_mts']} MT/s"), ('Format' if lang=='fr' else 'Form factor',p['form_factor'])]
  if p['category']=='storage':
   return [('Référence fabricant' if lang=='fr' else 'Manufacturer part number',p['sku']), ('Capacité annoncée' if lang=='fr' else 'Advertised capacity',storage_capacity(p['capacity_gb'],lang)), ('Type',p['drive_type']), ('Protocole' if lang=='fr' else 'Protocol',p['storage_protocol']), ('Interface',p['interface']), ('Format' if lang=='fr' else 'Form factor',storage_form(p['form_factor'],lang))]
- return [(w['memory'],f"{p['vram_gb']} {'Go' if lang=='fr' else 'GB'} {p['memory_type']}"), (w['architecture'],p['architecture'])]
+ return [(w['brand'],p['brand']), ('Puce graphique' if lang=='fr' else 'GPU chip brand',p.get('chip_brand',p['brand'])), (w['memory'],f"{p['vram_gb']} {'Go' if lang=='fr' else 'GB'} {p['memory_type']}"), (w['architecture'],p['architecture'])]
 
 def summary(p, lang):
  w=WORDS[lang]
@@ -82,6 +82,8 @@ def addcart(doc,lang):
 def filters(products,lang):
  w=WORDS[lang];brands=sorted({p['brand'] for p in products})
  category_filters=''
+ if products and all(p['category']=='gpu' for p in products):
+  category_filters=f'''<label for="shop-chip-brand">{'Puce graphique' if lang=='fr' else 'GPU chip brand'}<select id="shop-chip-brand" name="chip_brand"><option value="">{'Toutes' if lang=='fr' else 'All'}</option><option value="AMD">AMD</option><option value="NVIDIA">NVIDIA</option></select></label>'''
  if products and all(p['category']=='ram' for p in products):
   category_filters=f'''<label for="shop-generation">{'Génération' if lang=='fr' else 'Generation'}<select id="shop-generation" name="generation"><option value="">{'Toutes' if lang=='fr' else 'All'}</option>{''.join(f'<option value="{g}">{g}</option>' for g in sorted({p['memory_generation'] for p in products}))}</select></label>
   <label for="shop-capacity">{'Capacité totale' if lang=='fr' else 'Total capacity'}<select id="shop-capacity" name="capacity"><option value="">{'Toutes' if lang=='fr' else 'All'}</option>{''.join(f'<option value="{c}">{c} {"Go" if lang=="fr" else "GB"}</option>' for c in sorted({p['capacity_gb'] for p in products}))}</select></label>'''

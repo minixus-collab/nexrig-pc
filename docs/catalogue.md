@@ -44,3 +44,7 @@ The renderer embeds content-hashed URLs for `shop.js` and `products.json`. Regen
 ## Storage catalogue
 
 Storage pages are `/stockage/` and `/en/storage/`. The 24 entries cover NVMe SSDs, 2.5-inch SATA SSDs and 3.5-inch SATA hard drives from six brands. Each entry includes an exact SKU, advertised capacity in GB, drive type, protocol, interface and form factor. Preserve manufacturer capacity labels: 1024 GB should not be rewritten as 1 TB. Storage-specific type, protocol and capacity filters reuse the shared search, brand, sort and cart controls. Explain M.2 protocol/length compatibility, PCIe generation, SATA cabling, drive bays and cooling without promising measured performance or endurance. Product photography remains postponed.
+
+## CPU and GPU brands
+
+CPU manufacturers are AMD and Intel. GPU cards distinguish the card brand (`brand`) from the chip designer (`chip_brand`, falling back to the original AMD/NVIDIA brand). Seven specific partner models supplement the original generic GPU entries; preserve the original IDs and cart selections. Chip and card-brand filters can be combined. Partner cards use only chip-level memory and architecture information; do not infer clocks, dimensions, connectors or cooling specifications from a generic GPU. Manufacturer range links are references, not confirmed model-page verification.
