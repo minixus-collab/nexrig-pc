@@ -4,19 +4,25 @@
     <loc>https://minixus-collab.github.io/nexrig-pc/</loc>
   </url>
   <url>
-    <loc>https://minixus-collab.github.io/nexrig-pc/cartes-graphiques/</loc>
+    <loc>https://minixus-collab.github.io/nexrig-pc/en/</loc>
   </url>
   <url>
     <loc>https://minixus-collab.github.io/nexrig-pc/processeurs/</loc>
   </url>
   <url>
-    <loc>https://minixus-collab.github.io/nexrig-pc/en/</loc>
+    <loc>https://minixus-collab.github.io/nexrig-pc/cartes-graphiques/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/ram/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/en/processors/</loc>
   </url>
   <url>
     <loc>https://minixus-collab.github.io/nexrig-pc/en/graphics-cards/</loc>
   </url>
   <url>
-    <loc>https://minixus-collab.github.io/nexrig-pc/en/processors/</loc>
+    <loc>https://minixus-collab.github.io/nexrig-pc/en/ram/</loc>
   </url>
   <url>
     <loc>https://minixus-collab.github.io/nexrig-pc/produits/amd-ryzen-5-5600/</loc>
@@ -115,6 +121,78 @@
     <loc>https://minixus-collab.github.io/nexrig-pc/produits/nvidia-geforce-rtx-4080-super/</loc>
   </url>
   <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/produits/corsair-vengeance-lpx-16gb-ddr4-3200/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/produits/corsair-vengeance-lpx-32gb-ddr4-3200/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/produits/corsair-vengeance-32gb-ddr5-5600/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/produits/corsair-vengeance-32gb-ddr5-6000/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/produits/kingston-fury-beast-16gb-ddr4-3200-kit/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/produits/kingston-fury-beast-32gb-ddr4-3200-kit/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/produits/kingston-fury-beast-16gb-ddr4-3200-module/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/produits/kingston-fury-beast-32gb-ddr5-6000-kit/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/produits/gskill-ripjaws-v-16gb-ddr4-3200/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/produits/gskill-ripjaws-v-32gb-ddr4-3600/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/produits/gskill-trident-z5-neo-rgb-32gb-ddr5-6000/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/produits/gskill-ripjaws-s5-32gb-ddr5-6000/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/produits/crucial-16gb-ddr4-3200-kit/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/produits/crucial-32gb-ddr4-3200-kit/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/produits/crucial-32gb-ddr5-4800-kit/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/produits/crucial-pro-overclocking-32gb-ddr5-6000/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/produits/teamgroup-tforce-vulcan-z-16gb-ddr4-3200/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/produits/teamgroup-tforce-vulcan-z-32gb-ddr4-3600/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/produits/teamgroup-tforce-vulcan-32gb-ddr5-6000/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/produits/teamgroup-tforce-delta-rgb-32gb-ddr5-6000/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/produits/patriot-viper-steel-16gb-ddr4-3200/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/produits/patriot-viper-steel-32gb-ddr4-3600/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/produits/patriot-viper-venom-32gb-ddr5-6000/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/produits/patriot-signature-32gb-ddr5-4800/</loc>
+  </url>
+  <url>
     <loc>https://minixus-collab.github.io/nexrig-pc/en/products/amd-ryzen-5-5600/</loc>
   </url>
   <url>
@@ -209,5 +287,77 @@
   </url>
   <url>
     <loc>https://minixus-collab.github.io/nexrig-pc/en/products/nvidia-geforce-rtx-4080-super/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/en/products/corsair-vengeance-lpx-16gb-ddr4-3200/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/en/products/corsair-vengeance-lpx-32gb-ddr4-3200/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/en/products/corsair-vengeance-32gb-ddr5-5600/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/en/products/corsair-vengeance-32gb-ddr5-6000/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/en/products/kingston-fury-beast-16gb-ddr4-3200-kit/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/en/products/kingston-fury-beast-32gb-ddr4-3200-kit/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/en/products/kingston-fury-beast-16gb-ddr4-3200-module/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/en/products/kingston-fury-beast-32gb-ddr5-6000-kit/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/en/products/gskill-ripjaws-v-16gb-ddr4-3200/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/en/products/gskill-ripjaws-v-32gb-ddr4-3600/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/en/products/gskill-trident-z5-neo-rgb-32gb-ddr5-6000/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/en/products/gskill-ripjaws-s5-32gb-ddr5-6000/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/en/products/crucial-16gb-ddr4-3200-kit/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/en/products/crucial-32gb-ddr4-3200-kit/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/en/products/crucial-32gb-ddr5-4800-kit/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/en/products/crucial-pro-overclocking-32gb-ddr5-6000/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/en/products/teamgroup-tforce-vulcan-z-16gb-ddr4-3200/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/en/products/teamgroup-tforce-vulcan-z-32gb-ddr4-3600/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/en/products/teamgroup-tforce-vulcan-32gb-ddr5-6000/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/en/products/teamgroup-tforce-delta-rgb-32gb-ddr5-6000/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/en/products/patriot-viper-steel-16gb-ddr4-3200/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/en/products/patriot-viper-steel-32gb-ddr4-3600/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/en/products/patriot-viper-venom-32gb-ddr5-6000/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/en/products/patriot-signature-32gb-ddr5-4800/</loc>
   </url>
 </urlset>
