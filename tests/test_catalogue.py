@@ -208,6 +208,21 @@ class CatalogueTests(unittest.TestCase):
             self.assertIn('id="shop-category"',text)
             self.assertEqual(text.count('class="shop-card"'),279)
 
+    def test_homepage_heading_structure_and_pc_priority(self):
+        for lang,relative in [('fr',''),('en','en/')]:
+            text=(ROOT/relative/'index.html').read_text()
+            page=Page(text)
+            self.assertEqual(sum(tag=='h1' for tag,_ in page.tags),1)
+            self.assertLess(text.index('id="builder"'),text.index('id="components"'))
+            self.assertIn('id="budget"',text)
+            self.assertIn('id="choisir-pc"',text)
+            self.assertIn(f'rel="canonical" href="{LIVE+relative}"',text)
+            self.assertIn('not market prices' if lang=='en' else 'pas des prix du marché',text)
+            self.assertIn('no real orders' if lang=='en' else 'aucune commande réelle',text)
+            title=re.search(r'<title>(.*?)</title>',text).group(1)
+            self.assertTrue(title.startswith('PC gamer Maroc' if lang=='fr' else 'Gaming PC Morocco'))
+            self.assertEqual(text.count('data-product-id="nexrig-atlas"'),1)
+
     def test_product_pages_and_truthful_schema(self):
         for lang, folder in [('fr', 'produits'), ('en', 'en/products')]:
             for p in self.products:
