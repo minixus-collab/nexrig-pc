@@ -3088,5 +3088,131 @@
     "demo_price_mad": 2290,
     "source": "https://ifi-audio.com/",
     "conversion_role": "dac-and-amp"
+  },
+  {
+    "id": "nexrig-atlas",
+    "name": "NEXRIG Atlas",
+    "brand": "NEXRIG",
+    "category": "pc",
+    "components": {
+      "cpu": "amd-ryzen-5-5600",
+      "gpu": "amd-radeon-rx-6600",
+      "ram": "corsair-vengeance-lpx-16gb-ddr4-3200",
+      "storage": "crucial-p3-plus-1tb",
+      "motherboard": "msi-b550m-pro-vdh-wifi",
+      "case": "corsair-4000d-airflow",
+      "psu": "corsair-cv650",
+      "cooling": "deepcool-ak400"
+    },
+    "cpu_platform": "AMD",
+    "memory_generation": "DDR4",
+    "demo_price_mad": 9248,
+    "search_terms": "AMD Ryzen 5 5600 AMD Radeon RX 6600 Corsair Vengeance LPX 16 GB (2 × 8 GB) DDR4-3200 Crucial P3 Plus 1 TB MSI B550M PRO-VDH WIFI Corsair 4000D AIRFLOW Corsair CV650 DeepCool AK400",
+    "source": "/nexrig-pc/pc-gamer/"
+  },
+  {
+    "id": "nexrig-pulse",
+    "name": "NEXRIG Pulse",
+    "brand": "NEXRIG",
+    "category": "pc",
+    "components": {
+      "cpu": "intel-core-i5-12400f",
+      "gpu": "nvidia-geforce-rtx-4060",
+      "ram": "corsair-vengeance-lpx-16gb-ddr4-3200",
+      "storage": "crucial-p3-plus-1tb",
+      "motherboard": "msi-pro-b760m-a-ddr4",
+      "case": "corsair-4000d-airflow",
+      "psu": "corsair-cv650",
+      "cooling": "deepcool-ak400"
+    },
+    "cpu_platform": "Intel",
+    "memory_generation": "DDR4",
+    "demo_price_mad": 11198,
+    "search_terms": "Intel Core i5-12400F NVIDIA GeForce RTX 4060 Corsair Vengeance LPX 16 GB (2 × 8 GB) DDR4-3200 Crucial P3 Plus 1 TB MSI PRO B760M-A DDR4 Corsair 4000D AIRFLOW Corsair CV650 DeepCool AK400",
+    "source": "/nexrig-pc/pc-gamer/"
+  },
+  {
+    "id": "nexrig-vector",
+    "name": "NEXRIG Vector",
+    "brand": "NEXRIG",
+    "category": "pc",
+    "components": {
+      "cpu": "amd-ryzen-5-7600",
+      "gpu": "amd-radeon-rx-7600",
+      "ram": "corsair-vengeance-32gb-ddr5-5600",
+      "storage": "crucial-p3-plus-1tb",
+      "motherboard": "msi-pro-b650m-a-wifi",
+      "case": "corsair-4000d-airflow",
+      "psu": "seasonic-focus-gx-650-2020",
+      "cooling": "deepcool-ak400"
+    },
+    "cpu_platform": "AMD",
+    "memory_generation": "DDR5",
+    "demo_price_mad": 13289,
+    "search_terms": "AMD Ryzen 5 7600 AMD Radeon RX 7600 Corsair Vengeance 32 GB (2 × 16 GB) DDR5-5600 Crucial P3 Plus 1 TB MSI PRO B650M-A WIFI Corsair 4000D AIRFLOW Seasonic FOCUS GX-650 (2020) DeepCool AK400",
+    "source": "/nexrig-pc/pc-gamer/"
+  },
+  {
+    "id": "nexrig-horizon",
+    "name": "NEXRIG Horizon",
+    "brand": "NEXRIG",
+    "category": "pc",
+    "components": {
+      "cpu": "amd-ryzen-7-7700",
+      "gpu": "amd-radeon-rx-7800-xt",
+      "ram": "corsair-vengeance-32gb-ddr5-6000",
+      "storage": "crucial-p3-plus-1tb",
+      "motherboard": "msi-mag-b650-tomahawk-wifi",
+      "case": "corsair-4000d-airflow",
+      "psu": "corsair-rm750x-2021",
+      "cooling": "deepcool-ak620"
+    },
+    "cpu_platform": "AMD",
+    "memory_generation": "DDR5",
+    "demo_price_mad": 17489,
+    "search_terms": "AMD Ryzen 7 7700 AMD Radeon RX 7800 XT Corsair Vengeance 32 GB (2 × 16 GB) DDR5-6000 Crucial P3 Plus 1 TB MSI MAG B650 TOMAHAWK WIFI Corsair 4000D AIRFLOW Corsair RM750x (2021) DeepCool AK620",
+    "source": "/nexrig-pc/pc-gamer/"
+  },
+  {
+    "id": "nexrig-orbit",
+    "name": "NEXRIG Orbit",
+    "brand": "NEXRIG",
+    "category": "pc",
+    "components": {
+      "cpu": "intel-core-i5-13600k",
+      "gpu": "nvidia-geforce-rtx-4070-super",
+      "ram": "corsair-vengeance-32gb-ddr5-6000",
+      "storage": "samsung-990-pro-2tb",
+      "motherboard": "msi-mag-z790-tomahawk-wifi",
+      "case": "corsair-4000d-airflow",
+      "psu": "seasonic-focus-gx-850-2020",
+      "cooling": "deepcool-ak620"
+    },
+    "cpu_platform": "Intel",
+    "memory_generation": "DDR5",
+    "demo_price_mad": 21730,
+    "search_terms": "Intel Core i5-13600K NVIDIA GeForce RTX 4070 SUPER Corsair Vengeance 32 GB (2 × 16 GB) DDR5-6000 Samsung 990 PRO 2 TB MSI MAG Z790 TOMAHAWK WIFI Corsair 4000D AIRFLOW Seasonic FOCUS GX-850 (2020) DeepCool AK620",
+    "source": "/nexrig-pc/pc-gamer/"
+  },
+  {
+    "id": "nexrig-apex",
+    "name": "NEXRIG Apex",
+    "brand": "NEXRIG",
+    "category": "pc",
+    "components": {
+      "cpu": "amd-ryzen-7-7800x3d",
+      "gpu": "nvidia-geforce-rtx-4080-super",
+      "ram": "corsair-vengeance-32gb-ddr5-6000",
+      "storage": "samsung-990-pro-2tb",
+      "motherboard": "msi-mag-b650-tomahawk-wifi",
+      "case": "corsair-4000d-airflow",
+      "psu": "seasonic-focus-gx-850-2020",
+      "cooling": "deepcool-ak620"
+    },
+    "cpu_platform": "AMD",
+    "memory_generation": "DDR5",
+    "demo_price_mad": 29030,
+    "search_terms": "AMD Ryzen 7 7800X3D NVIDIA GeForce RTX 4080 SUPER Corsair Vengeance 32 GB (2 × 16 GB) DDR5-6000 Samsung 990 PRO 2 TB MSI MAG B650 TOMAHAWK WIFI Corsair 4000D AIRFLOW Seasonic FOCUS GX-850 (2020) DeepCool AK620",
+    "source": "/nexrig-pc/pc-gamer/"
   }
 ]

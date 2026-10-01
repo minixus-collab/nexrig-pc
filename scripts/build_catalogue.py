@@ -24,9 +24,10 @@ WORDS = {
 # Additional storefront categories share translated specifications and filter definitions.
 EXPANSION_PATHS = {
  'case':('boitiers/','en/cases/'), 'laptop':('ordinateurs-portables/','en/laptops/'),
- 'keyboard':('claviers/','en/keyboards/'), 'mouse':('souris/','en/mice/'), 'chair':('chaises-gaming/','en/gaming-chairs/'), 'audio':('audio/','en/audio/')}
-EXPANSION_LABELS = {'fr':{'audio':'Audio','case':'Boîtiers PC','laptop':'Ordinateurs portables','keyboard':'Claviers','mouse':'Souris','chair':'Chaises gaming'},'en':{'audio':'Audio','case':'PC cases','laptop':'Laptops','keyboard':'Keyboards','mouse':'Mice','chair':'Gaming chairs'}}
+ 'keyboard':('claviers/','en/keyboards/'), 'mouse':('souris/','en/mice/'), 'chair':('chaises-gaming/','en/gaming-chairs/'), 'audio':('audio/','en/audio/'), 'pc':('pc-gamer/','en/gaming-pcs/')}
+EXPANSION_LABELS = {'fr':{'pc':'PC gamer assemblés','audio':'Audio','case':'Boîtiers PC','laptop':'Ordinateurs portables','keyboard':'Claviers','mouse':'Souris','chair':'Chaises gaming'},'en':{'pc':'Gaming PCs','audio':'Audio','case':'PC cases','laptop':'Laptops','keyboard':'Keyboards','mouse':'Mice','chair':'Gaming chairs'}}
 EXPANSION_FIELDS = {
+ 'pc':[('cpu_platform','Plateforme CPU','CPU platform'),('memory_generation','Mémoire','Memory')],
  'audio':[('audio_type','Type audio','Audio type'),('signal_path','Signal principal','Primary signal')],
  'case':[('case_format','Format principal','Primary form factor')],
  'laptop':[('screen_inches','Diagonale nominale','Nominal screen size')],
@@ -46,6 +47,7 @@ def expansion_value(key,value,lang):
  return EXPANSION_VALUES[lang].get(value,str(value))
 
 EXPANSION_ADVICE = {
+ 'pc':('Configuration complète proposée pour la démonstration, pas un PC physiquement assemblé ou testé. Le socket et la génération mémoire correspondent dans les données, mais il reste à vérifier BIOS, liste CPU, profil RAM, dimensions GPU/ventirad, câblage et kit de montage exacts.','A complete proposed demonstration configuration, not a physically assembled or tested PC. Socket and memory generation match in the data, but BIOS, CPU support, memory profiles, GPU/cooler clearance, cables and exact mounting kits still need verification.'),
  'audio':('Vérifiez le signal audio, les connecteurs et les câbles de la référence exacte. USB peut alimenter un appareil sans transporter le son : les Creative Pebble V2 utilisent une entrée audio analogique. Un microphone XLR nécessite une interface ou un préampli adapté ; un adaptateur passif XLR-vers-USB ne suffit pas. Un DAC seul ne remplace pas un amplificateur de casque.','Check audio signal, connectors and cables for the exact model. USB can provide power without carrying sound: Creative Pebble V2 uses an analog audio input. An XLR microphone needs a suitable interface or preamp; a passive XLR-to-USB adapter is not enough. A standalone DAC does not replace a headphone amplifier.'),
  'case':('Vérifiez les dimensions exactes et la révision : format de carte mère, longueur GPU, hauteur du ventirad, baie PSU et radiateurs avec ventilateurs. Le format principal ne décrit pas toutes les possibilités de montage.','Check exact dimensions and revision: motherboard format, GPU length, cooler height, PSU bay and radiators with fans. The primary form factor does not describe every mounting option.'),
  'laptop':('Cette fiche présente une famille de modèles, pas une configuration commerciale précise. CPU, GPU, RAM, SSD, écran et système peuvent varier selon le SKU et la région. Le prix est uniquement une démonstration pour cette famille.','This page describes a model family, not an exact retail configuration. CPU, GPU, RAM, SSD, display and operating system can vary by SKU and region. The price is only a demonstration for this family.'),
@@ -104,6 +106,9 @@ def label_specs(p, lang):
 
 def summary(p, lang):
  w=WORDS[lang]
+ if p['category']=='pc':
+  parts={key:next(x for x in PRODUCTS if x['id']==value) for key,value in p['components'].items()}
+  return f"{parts['cpu']['name']} · {parts['gpu']['name']} · {parts['ram']['capacity_gb']} {'Go' if lang=='fr' else 'GB'} {p['memory_generation']}"
  if p['category'] in EXPANSION_FIELDS:
   values=' · '.join(expansion_value(key,p[key],lang) for key,_,_ in EXPANSION_FIELDS[p['category']])
   if 'conversion_role' in p:values+=' · '+expansion_value('conversion_role',p['conversion_role'],lang)
@@ -144,7 +149,9 @@ def addcart(doc,lang):
 def filters(products,lang):
  w=WORDS[lang];brands=sorted({p['brand'] for p in products})
  category_filters=''
- if products and products[0]['category'] in EXPANSION_FIELDS:
+ if len({p['category'] for p in products})>1:
+  category_filters=f'<label for="shop-category">'+('Catégorie' if lang=='fr' else 'Category')+'<select id="shop-category" name="category"><option value="">'+('Toutes' if lang=='fr' else 'All')+'</option>'+''.join(f'<option value="{cat}">{e(w[cat])}</option>' for cat in CATEGORY_PATHS[lang] if any(p['category']==cat for p in products))+'</select></label>'
+ if products and products[0]['category'] in EXPANSION_FIELDS and all(p['category']==products[0]['category'] for p in products):
   cat=products[0]['category']
   category_filters=''.join(f'<label for="shop-{key}">{fr if lang=="fr" else en}<select id="shop-{key}" name="{key}"><option value="">'+('Tous' if lang=='fr' else 'All')+'</option>'+''.join(f'<option value="{e(value)}">{e(expansion_value(key,value,lang))}</option>' for value in sorted({p[key] for p in products}))+'</select></label>' for key,fr,en in EXPANSION_FIELDS[cat])
  if products and all(p['category']=='gpu' for p in products):
@@ -185,7 +192,7 @@ def breadcrumbs(names,lang):
 
 def document(title,description,url,alternate,lang,body,bread=None,noindex=False):
  w=WORDS[lang];fr=url if lang=='fr' else alternate;en=url if lang=='en' else alternate
- nav=''.join(f'<a href="{BASE+target}">{label}</a>' for target,label in [(homedir(lang),w['home'])]+[(CATEGORY_PATHS[lang][cat],w[cat]) for cat in ['gpu','cpu']+[key for key in CATEGORY_PATHS[lang] if key not in ['gpu','cpu']]])
+ nav=''.join(f'<a href="{BASE+target}">{label}</a>' for target,label in [(homedir(lang),w['home']),('boutique/' if lang=='fr' else 'en/shop/','Boutique' if lang=='fr' else 'Shop')]+[(CATEGORY_PATHS[lang][cat],w[cat]) for cat in ['gpu','cpu']+[key for key in CATEGORY_PATHS[lang] if key not in ['gpu','cpu']]])
  nav=nav.replace(f'<a href="{BASE+url}">',f'<a href="{BASE+url}" aria-current="page">')
  return f'''<!DOCTYPE html>
 <html lang="{lang}"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -240,8 +247,12 @@ def build_product(p,lang):
  dl=''.join(f'<div><dt>{e(k)}</dt><dd>{e(v)}</dd></div>' for k,v in label_specs(p,lang))
  body=f'''<div class="product-layout"><figure><img src="{BASE}assets/images/{p['category']}-illustration.svg" alt="{w[p['category']+'_alt']}" width="480" height="320"><figcaption class="illustration-label">{w['illustration']}</figcaption></figure>
 <div class="product-purchase"><span class="eyebrow">{e(p['brand'])} · {w[p['category']]}</span><h1>{e(p['name'])}</h1><p>{e(product_description(p,lang))}</p><div class="shop-price">{money(p['demo_price_mad'],lang)}<small class="shop-disclaimer">{w['demo']}</small></div><dl aria-label="{w['specs']}">{dl}</dl><button class="shop-button" type="button" data-add-to-cart="{p['id']}" disabled>{w['add']}</button><noscript><p class="shop-noscript">{w['filters_note']}</p></noscript><p class="shop-disclaimer">{'Le panier sert uniquement à simuler une sélection. Aucun paiement ni commande réelle.' if lang=='fr' else 'The cart only simulates a selection. No payment or real order.'}</p><a href="{BASE+category}">{w['back']}</a></div></div>
-<section><h2>{w['compat']}</h2><p>{advice}</p><p>{extra}</p><p><a href="{e(p['source'])}">{('Référence externe' if lang=='fr' else 'External reference') if p['category']=='audio' else w['source']} : {e(p['brand'])}</a></p></section>
+<section><h2>{w['compat']}</h2><p>{advice}</p><p>{extra}</p><p><a href="{e(p['source'])}">{('Référence externe' if lang=='fr' else 'External reference') if p['category'] in ['audio','pc'] else w['source']} : {e(p['brand'])}</a></p></section>
 <section><h2>{w['related']}</h2><div class="shop-grid">{''.join(card(x,lang) for x in related)}</div></section>'''
+ if p['category']=='pc':
+  components={key:next(x for x in PRODUCTS if x['id']==id) for key,id in p['components'].items()}
+  rows=''.join(f'<div><dt>{w[key]}</dt><dd><a href="{BASE+path(item,lang)}">{e(item["name"])}</a></dd></div>' for key,item in components.items())
+  body+=f'<section class="product-purchase"><h2>'+('Composition complète' if lang=='fr' else 'Complete component list')+f'</h2><dl>{rows}</dl><p>'+('Le prix de démonstration est la somme de ces huit composants, sans frais d’assemblage, système d’exploitation, périphériques, livraison ni taxes supplémentaires. Aucun service réel ni licence Windows n’est inclus.' if lang=='fr' else 'The demonstration price is the sum of these eight components, with no assembly fee, operating system, peripherals, delivery or additional taxes. No real service or Windows licence is included.')+'</p></section>'
  doc=document(p['name']+(' – Caractéristiques | NEXRIG' if lang=='fr' else ' – Specifications | NEXRIG'),product_description(p,lang),url,alt,lang,body,[(w['home'],homedir(lang)),(w[p['category']],category),(p['name'],url)])
  product={'@context':'https://schema.org','@type':'Product','name':p['name'],'brand':{'@type':'Brand','name':p['brand']},'category':w[p['category']],'description':product_description(p,lang),'url':LIVE+url,'additionalProperty':[{'@type':'PropertyValue','name':k,'value':v} for k,v in label_specs(p,lang)]}
  doc=doc.replace('</head>','<script type="application/ld+json">'+schema_text(product)+'</script>\n</head>',1)
@@ -278,6 +289,15 @@ def main():
    listing={'@context':'https://schema.org','@type':'ItemList','itemListElement':[{'@type':'ListItem','position':i+1,'name':p['name'],'url':LIVE+path(p,lang)} for i,p in enumerate(items)]}
    doc=re.sub(r'<script type="application/ld\+json" id="catalogue-schema">.*?</script>\s*','',doc,flags=re.S)
    doc=doc.replace('</head>','<script type="application/ld+json" id="catalogue-schema">'+schema_text(listing)+'</script>\n</head>',1);target.write_text(doc)
+  shopurl='boutique/' if lang=='fr' else 'en/shop/'
+  shopalt='en/shop/' if lang=='fr' else 'boutique/'
+  title='Boutique PC au Maroc' if lang=='fr' else 'PC shop in Morocco'
+  description='Comparez les composants, périphériques et PC gamer de démonstration NEXRIG.' if lang=='fr' else 'Browse NEXRIG demonstration components, peripherals and gaming PCs.'
+  body=f'<div class="hero"><h1>{title}</h1><p class="intro">{description}</p></div><section id="modeles"><h2>'+('Tous les produits' if lang=='fr' else 'All products')+'</h2><p>'+('Prix fictifs et panier de démonstration. Les PC sont des configurations proposées, pas des machines assemblées ou testées.' if lang=='fr' else 'Fictional prices and a demonstration cart. PCs are proposed configurations, not assembled or tested machines.')+f'</p>{filters(PRODUCTS,lang)}<div class="shop-grid">'+''.join(card(p,lang) for p in PRODUCTS)+'</div></section>'
+  shop=document(title+' | NEXRIG',description,shopurl,shopalt,lang,body,[(WORDS[lang]['home'],homedir(lang)),(title,shopurl)])
+  listing={'@context':'https://schema.org','@type':'ItemList','itemListElement':[{'@type':'ListItem','position':i+1,'name':p['name'],'url':LIVE+path(p,lang)} for i,p in enumerate(PRODUCTS)]}
+  shop=shop.replace('</head>','<script type="application/ld+json">'+schema_text(listing)+'</script></head>',1)
+  target=ROOT/shopurl/'index.html';target.parent.mkdir(parents=True,exist_ok=True);target.write_text(shop)
   for p in PRODUCTS:build_product(p,lang)
   build_cart(lang)
   target=ROOT/homedir(lang)/'index.html';doc=target.read_text();featured_ids=['nvidia-geforce-rtx-4060','amd-radeon-rx-7800-xt','amd-ryzen-5-5600','intel-core-i5-12400f'];featured=[next(p for p in PRODUCTS if p['id']==id) for id in featured_ids]
@@ -285,10 +305,14 @@ def main():
   if '<!-- featured:start -->' in doc:doc=re.sub(r'<!-- featured:start -->.*?<!-- featured:end -->',lambda _:block,doc,flags=re.S)
   else:
    start=doc.index('        <div class="product-grid">');end=doc.index('\n      </div>\n    </section>',start);doc=doc[:start]+block+doc[end:]
+  pcs=[p for p in PRODUCTS if p['category']=='pc']
+  pcurl=CATEGORY_PATHS[lang]['pc']
+  builder=f'<section class="section builder" id="builder"><div class="container"><div class="section-head"><div><span class="eyebrow">NEXRIG</span><h2>'+('PC gamer : choisissez votre configuration' if lang=='fr' else 'Gaming PCs: choose your configuration')+f'</h2></div><a class="text-link" href="{BASE+pcurl}">'+('Voir les 6 PC →' if lang=='fr' else 'View all 6 PCs →')+'</a></div><p class="intro">'+('Configurations complètes de démonstration avec liste de composants. Aucune machine assemblée ou testée ni performance garantie.' if lang=='fr' else 'Complete demonstration configurations with component lists. No assembled or tested machines or guaranteed performance.')+'</p><div class="shop-grid">'+''.join(card(p,lang) for p in pcs[:3])+'</div></div></section>'
+  doc=re.sub(r'<section class="section builder" id="builder">.*?</section>',lambda _:builder,doc,flags=re.S)
   doc=doc.replace('<h2>Exemples de composants</h2>','<h2>Notre sélection de composants</h2>').replace('<h2>Component examples</h2>','<h2>Our component selection</h2>');target.write_text(addcart(doc,lang))
  # Cart is intentionally excluded from the sitemap and marked noindex.
  ET.register_namespace('','http://www.sitemaps.org/schemas/sitemap/0.9');namespace='{http://www.sitemaps.org/schemas/sitemap/0.9}';sitemap=ET.Element(namespace+'urlset')
- urls=[homedir(lang) for lang in ['fr','en']]+[url for lang in ['fr','en'] for url in CATEGORY_PATHS[lang].values()]+[path(p,lang) for lang in ['fr','en'] for p in PRODUCTS]
+ urls=['boutique/','en/shop/']+[homedir(lang) for lang in ['fr','en']]+[url for lang in ['fr','en'] for url in CATEGORY_PATHS[lang].values()]+[path(p,lang) for lang in ['fr','en'] for p in PRODUCTS]
  for url in urls:ET.SubElement(ET.SubElement(sitemap,namespace+'url'),namespace+'loc').text=LIVE+url
  ET.indent(sitemap);ET.ElementTree(sitemap).write(ROOT/'sitemap.xml',encoding='UTF-8',xml_declaration=True)
  print(f'Rendered {len(PRODUCTS)} products in 2 languages, {2*len(CATEGORY_PATHS['fr'])} catalogues, 2 carts and {len(urls)} sitemap URLs.')

@@ -1,6 +1,12 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/boutique/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/en/shop/</loc>
+  </url>
+  <url>
     <loc>https://minixus-collab.github.io/nexrig-pc/</loc>
   </url>
   <url>
@@ -49,6 +55,9 @@
     <loc>https://minixus-collab.github.io/nexrig-pc/audio/</loc>
   </url>
   <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/pc-gamer/</loc>
+  </url>
+  <url>
     <loc>https://minixus-collab.github.io/nexrig-pc/en/processors/</loc>
   </url>
   <url>
@@ -89,6 +98,9 @@
   </url>
   <url>
     <loc>https://minixus-collab.github.io/nexrig-pc/en/audio/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/en/gaming-pcs/</loc>
   </url>
   <url>
     <loc>https://minixus-collab.github.io/nexrig-pc/produits/amd-ryzen-5-5600/</loc>
@@ -910,6 +922,24 @@
     <loc>https://minixus-collab.github.io/nexrig-pc/produits/ifi-zen-dac-v2/</loc>
   </url>
   <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/produits/nexrig-atlas/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/produits/nexrig-pulse/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/produits/nexrig-vector/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/produits/nexrig-horizon/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/produits/nexrig-orbit/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/produits/nexrig-apex/</loc>
+  </url>
+  <url>
     <loc>https://minixus-collab.github.io/nexrig-pc/en/products/amd-ryzen-5-5600/</loc>
   </url>
   <url>
@@ -1727,5 +1757,23 @@
   </url>
   <url>
     <loc>https://minixus-collab.github.io/nexrig-pc/en/products/ifi-zen-dac-v2/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/en/products/nexrig-atlas/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/en/products/nexrig-pulse/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/en/products/nexrig-vector/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/en/products/nexrig-horizon/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/en/products/nexrig-orbit/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/en/products/nexrig-apex/</loc>
   </url>
 </urlset>

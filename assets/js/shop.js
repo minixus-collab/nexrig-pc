@@ -75,6 +75,7 @@
     function filter() {
       const query = form.elements.search.value.trim().toLocaleLowerCase();
       const brand = form.elements.brand.value;
+      const category = form.elements.category?.value || '';
       const resolution = form.elements.resolution?.value || '';
       const refresh = form.elements.refresh?.value || '';
       const panel = form.elements.panel?.value || '';
@@ -92,8 +93,8 @@
       let shown = 0;
       for (const card of cards) {
         const p = products.get(card.dataset.productId);
-        const expansionMatches = ['case_format','screen_inches','switch_technology','keyboard_size','connection_type','upholstery','audio_type','signal_path'].every(key => !form.elements[key]?.value || String(p[key]) === form.elements[key].value);
-        const matches = expansionMatches && (!resolution || p.resolution === resolution) && (!refresh || String(p.refresh_hz) === refresh) && (!panel || p.panel_type === panel) && (!coolerType || p.cooler_type === coolerType) && (!radiator || String(p.radiator_mm) === radiator) && (!socket || p.socket === socket) && (!formFactor || p.form_factor === formFactor) && (!wattage || String(p.wattage) === wattage) && (!modularity || p.modularity === modularity) && (!chipBrand || (p.chip_brand || p.brand) === chipBrand) && (!brand || p.brand === brand) && (!generation || p.memory_generation === generation) && (!capacity || String(p.capacity_gb) === capacity) && (!driveType || p.drive_type === driveType) && (!protocol || p.storage_protocol === protocol) && `${p.name} ${p.sku || ''}`.toLocaleLowerCase().includes(query);
+        const expansionMatches = ['case_format','screen_inches','switch_technology','keyboard_size','connection_type','upholstery','audio_type','signal_path','cpu_platform','memory_generation'].every(key => !form.elements[key]?.value || String(p[key]) === form.elements[key].value);
+        const matches = (!category || p.category === category) && expansionMatches && (!resolution || p.resolution === resolution) && (!refresh || String(p.refresh_hz) === refresh) && (!panel || p.panel_type === panel) && (!coolerType || p.cooler_type === coolerType) && (!radiator || String(p.radiator_mm) === radiator) && (!socket || p.socket === socket) && (!formFactor || p.form_factor === formFactor) && (!wattage || String(p.wattage) === wattage) && (!modularity || p.modularity === modularity) && (!chipBrand || (p.chip_brand || p.brand) === chipBrand) && (!brand || p.brand === brand) && (!generation || p.memory_generation === generation) && (!capacity || String(p.capacity_gb) === capacity) && (!driveType || p.drive_type === driveType) && (!protocol || p.storage_protocol === protocol) && `${p.name} ${p.sku || ''} ${p.search_terms || ''}`.toLocaleLowerCase().includes(query);
         card.hidden = !matches; if (matches) shown++;
       }
       const order = form.elements.sort.value;
