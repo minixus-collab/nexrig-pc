@@ -17,6 +17,9 @@
     failed: 'Le catalogue n’a pas pu être chargé. Actualisez la page pour réessayer.', updated: 'Quantité mise à jour.',
     limit: 'Quantité maximale : 99 par produit.', invalid: 'Saisissez une quantité entière de 1 à 99.'
   };
+  const runtime = document.currentScript;
+  const catalogueURL = runtime?.dataset.catalogueUrl || '/nexrig-pc/data/products.json';
+  const catalogueCount = Number(runtime?.dataset.catalogueCount || 0);
   const key = 'nexrig.demo-cart.v1';
   const money = value => new Intl.NumberFormat(en ? 'en-MA' : 'fr-MA', { style: 'currency', currency: 'MAD', maximumFractionDigits: 0 }).format(value);
   const esc = value => String(value).replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
@@ -115,7 +118,10 @@
     item.quantity=value;save();document.getElementById(input.id)?.focus();announce(t.updated);
   });
   window.addEventListener('storage', event => { if (event.key===key || event.key===null) {cart=read();render();} });
-  fetch('/nexrig-pc/data/products.json').then(response=>{if(!response.ok)throw Error('catalogue');return response.json();}).then(data=>{
+  fetch(catalogueURL, {cache: 'no-cache'}).then(response=>{if(!response.ok)throw Error('catalogue');return response.json();}).then(data=>{
+    if (!Array.isArray(data) || (catalogueCount && data.length !== catalogueCount)) throw Error('incomplete catalogue');
+    const ids = new Set(data.map(p => p.id));
+    if ([...document.querySelectorAll('[data-add-to-cart]')].some(button => !ids.has(button.dataset.addToCart))) throw Error('missing products');
     products=new Map(data.map(p=>[p.id,p]));cart=read();render();initFilters();
     document.querySelectorAll('[data-add-to-cart]').forEach(button=>{button.disabled=false;});
     const loading=document.getElementById('cart-loading');if(loading)loading.hidden=true;

@@ -104,6 +104,18 @@ class CatalogueTests(unittest.TestCase):
                     if attrs['hreflang'] in ['en', 'fr']:
                         self.assertIn(f'lang="{attrs["hreflang"]}"', target.read_text())
 
+    def test_runtime_and_catalogue_versions(self):
+        import hashlib
+        script_hash = hashlib.sha256((ROOT / 'assets/js/shop.js').read_bytes()).hexdigest()[:12]
+        catalogue_hash = hashlib.sha256((ROOT / 'data/products.json').read_bytes()).hexdigest()[:12]
+        for file in self.pages:
+            page = Page(file.read_text())
+            runtimes = [attrs for tag, attrs in page.tags if tag == 'script' and 'shop.js' in attrs.get('src', '')]
+            self.assertEqual(len(runtimes), 1, str(file))
+            self.assertEqual(runtimes[0]['src'], PREFIX + 'assets/js/shop.js?v=' + script_hash)
+            self.assertEqual(runtimes[0]['data-catalogue-url'], PREFIX + 'data/products.json?v=' + catalogue_hash)
+            self.assertEqual(int(runtimes[0]['data-catalogue-count']), len(self.products))
+
     def test_sitemap_and_cart_indexing(self):
         ns = {'s': 'http://www.sitemaps.org/schemas/sitemap/0.9'}
         urls = [loc.text for loc in ET.parse(ROOT / 'sitemap.xml').findall('s:url/s:loc', ns)]

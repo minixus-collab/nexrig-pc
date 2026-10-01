@@ -2,6 +2,7 @@
 """Render the static bilingual catalogue from data/products.json. No third-party dependencies."""
 from pathlib import Path
 import html
+import hashlib
 import json
 import re
 import xml.etree.ElementTree as ET
@@ -10,6 +11,10 @@ ROOT = Path(__file__).resolve().parents[1]
 BASE = '/nexrig-pc/'
 LIVE = 'https://minixus-collab.github.io' + BASE
 PRODUCTS = json.loads((ROOT / 'data/products.json').read_text())
+# Content hashes change URLs when the runtime or catalogue changes, avoiding stale Pages caches.
+CATALOGUE_VERSION = hashlib.sha256((ROOT / 'data/products.json').read_bytes()).hexdigest()[:12]
+SCRIPT_VERSION = hashlib.sha256((ROOT / 'assets/js/shop.js').read_bytes()).hexdigest()[:12]
+SHOP_SCRIPT = f'<script src="{BASE}assets/js/shop.js?v={SCRIPT_VERSION}" data-catalogue-url="{BASE}data/products.json?v={CATALOGUE_VERSION}" data-catalogue-count="{len(PRODUCTS)}" defer></script>'
 CATEGORY_PATHS = {'fr': {'cpu': 'processeurs/', 'gpu': 'cartes-graphiques/', 'ram': 'ram/'}, 'en': {'cpu': 'en/processors/', 'gpu': 'en/graphics-cards/', 'ram': 'en/ram/'}}
 WORDS = {
  'fr': {'home':'Accueil','cpu':'Processeurs','gpu':'Cartes graphiques','cart':'Panier','add':'Ajouter au panier','view':'Voir le produit','demo':'Prix de démonstration — aucune vente','illustration':'Illustration générique — pas une photo du modèle','cpu_alt':'Illustration générique d’un processeur','gpu_alt':'Illustration générique d’une carte graphique','cores':'cœurs','threads':'threads','socket':'Socket','supported_memory':'Mémoire compatible','ram':'Mémoire RAM','ram_alt':'Illustration générique d’une barrette mémoire RAM','integrated':'Graphique intégré','yes':'Oui','no':'Non','memory':'Mémoire vidéo','architecture':'Architecture','search':'Rechercher un modèle','brand':'Marque','all':'Toutes les marques','sort':'Trier par','default':'Ordre du catalogue','low':'Prix démo croissant','high':'Prix démo décroissant','name':'Nom du modèle','reset':'Réinitialiser','empty':'Aucun modèle ne correspond à ces critères.','filters_note':'Les filtres et le panier nécessitent JavaScript. Les produits et leurs fiches restent consultables.','skip':'Aller au contenu','nav':'Navigation principale','bread':'Fil d’Ariane','banner':'Boutique fictive · Prix de démonstration · Aucune vente','about':'Le projet','back':'Retour à la catégorie','specs':'Caractéristiques du modèle','source':'Gamme du fabricant','related':'Autres modèles à découvrir','compat':'Compatibilité à vérifier'},
@@ -54,9 +59,10 @@ def homedir(lang):return 'en/' if lang=='en' else ''
 def cartlink(lang):
  return f'<a class="cart-link" href="{BASE+cartpath(lang)}" data-cart-link>{WORDS[lang]["cart"]} <span class="cart-count" data-cart-count>0</span></a>'
 def assets(doc):
- for tag in [f'<link rel="stylesheet" href="{BASE}assets/css/shop.css">',f'<script src="{BASE}assets/js/shop.js" defer></script>']:
-  if tag not in doc:doc=doc.replace('</head>',tag+'\n</head>',1)
- return doc
+ css=f'<link rel="stylesheet" href="{BASE}assets/css/shop.css">'
+ if css not in doc:doc=doc.replace('</head>',css+'\n</head>',1)
+ doc=re.sub(r'<script\s+[^>]*src="'+re.escape(BASE)+r'assets/js/shop\.js(?:\?[^"]*)?"[^>]*></script>\s*','',doc)
+ return doc.replace('</head>',SHOP_SCRIPT+'\n</head>',1)
 
 def addcart(doc,lang):
  if 'data-cart-link' not in doc:
@@ -91,7 +97,7 @@ def document(title,description,url,alternate,lang,body,bread=None,noindex=False)
 <title>{e(title)}</title><meta name="description" content="{e(description)}"><link rel="canonical" href="{LIVE+url}">
 {'<meta name="robots" content="noindex,follow">' if noindex else ''}
 <link rel="alternate" hreflang="fr" href="{LIVE+fr}"><link rel="alternate" hreflang="en" href="{LIVE+en}"><link rel="alternate" hreflang="x-default" href="{LIVE+fr}">
-<link rel="stylesheet" href="{BASE}assets/css/category.css"><link rel="stylesheet" href="{BASE}assets/css/language.css"><link rel="stylesheet" href="{BASE}assets/css/shop.css"><script src="{BASE}assets/js/shop.js" defer></script>
+<link rel="stylesheet" href="{BASE}assets/css/category.css"><link rel="stylesheet" href="{BASE}assets/css/language.css"><link rel="stylesheet" href="{BASE}assets/css/shop.css">{SHOP_SCRIPT}
 {'<script type="application/ld+json">'+schema_text(breadcrumbs(bread,lang))+'</script>' if bread else ''}
 </head><body><a class="skip-link" href="#main">{w['skip']}</a><div class="demo-banner">{w['banner']}</div>
 <header class="header"><div class="container header-inner"><a class="logo" href="{BASE+homedir(lang)}" aria-label="NEXRIG - {w['home']}">NEX<span>RIG</span></a><a class="language-switch" href="{BASE+alternate}" lang="{'en' if lang=='fr' else 'fr'}" hreflang="{'en' if lang=='fr' else 'fr'}">{'English' if lang=='fr' else 'Français'}</a><nav aria-label="{w['nav']}">{nav}{cartlink(lang)}</nav></div></header>

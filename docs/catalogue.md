@@ -36,3 +36,7 @@ Run `node tests/browser-smoke.cjs` for cart and responsive-browser checks in an 
 ## RAM catalogue
 
 RAM pages are `/ram/` and `/en/ram/`. Entries carry an exact manufacturer part number (`sku`), total kit capacity, module count, DDR generation, UDIMM form factor and advertised data rate in MT/s. A kit of 2 × 16 GB is 32 GB in total. Do not claim the rated speed is automatic or universally guaranteed: profiles, BIOS, CPU and motherboard compatibility matter. Search includes the part number; RAM-only generation and capacity filters extend the shared brand/search/sort controls. The existing cart and storage key are unchanged, so older CPU/GPU selections survive.
+
+## Cached deployments
+
+The renderer embeds content-hashed URLs for `shop.js` and `products.json`. Regenerate pages after changing either file, and publish those files and generated pages together. The runtime revalidates catalogue responses and checks their product count before initializing filters or reading the saved cart; an incomplete response leaves the existing saved selection untouched. Browser regression tests simulate returning visitors with old unversioned assets.
