@@ -22,8 +22,112 @@
   <link rel="alternate" hreflang="en" href="https://minixus-collab.github.io/nexrig-pc/en/processors/">
   <link rel="alternate" hreflang="x-default" href="https://minixus-collab.github.io/nexrig-pc/processeurs/">
   <link rel="stylesheet" href="/nexrig-pc/assets/css/language.css">
+<link rel="stylesheet" href="/nexrig-pc/assets/css/shop.css">
+<script src="/nexrig-pc/assets/js/shop.js" defer></script>
+<script type="application/ld+json" id="catalogue-schema">{
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "AMD Ryzen 5 5600",
+      "url": "https://minixus-collab.github.io/nexrig-pc/produits/amd-ryzen-5-5600/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "AMD Ryzen 7 5700X",
+      "url": "https://minixus-collab.github.io/nexrig-pc/produits/amd-ryzen-7-5700x/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "AMD Ryzen 7 5800X3D",
+      "url": "https://minixus-collab.github.io/nexrig-pc/produits/amd-ryzen-7-5800x3d/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 4,
+      "name": "AMD Ryzen 9 5900X",
+      "url": "https://minixus-collab.github.io/nexrig-pc/produits/amd-ryzen-9-5900x/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 5,
+      "name": "AMD Ryzen 5 7600",
+      "url": "https://minixus-collab.github.io/nexrig-pc/produits/amd-ryzen-5-7600/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 6,
+      "name": "AMD Ryzen 7 7700",
+      "url": "https://minixus-collab.github.io/nexrig-pc/produits/amd-ryzen-7-7700/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 7,
+      "name": "AMD Ryzen 7 7800X3D",
+      "url": "https://minixus-collab.github.io/nexrig-pc/produits/amd-ryzen-7-7800x3d/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 8,
+      "name": "AMD Ryzen 9 7950X",
+      "url": "https://minixus-collab.github.io/nexrig-pc/produits/amd-ryzen-9-7950x/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 9,
+      "name": "Intel Core i5-12400F",
+      "url": "https://minixus-collab.github.io/nexrig-pc/produits/intel-core-i5-12400f/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 10,
+      "name": "Intel Core i5-13400F",
+      "url": "https://minixus-collab.github.io/nexrig-pc/produits/intel-core-i5-13400f/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 11,
+      "name": "Intel Core i5-14400F",
+      "url": "https://minixus-collab.github.io/nexrig-pc/produits/intel-core-i5-14400f/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 12,
+      "name": "Intel Core i5-12600K",
+      "url": "https://minixus-collab.github.io/nexrig-pc/produits/intel-core-i5-12600k/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 13,
+      "name": "Intel Core i5-13600K",
+      "url": "https://minixus-collab.github.io/nexrig-pc/produits/intel-core-i5-13600k/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 14,
+      "name": "Intel Core i5-14600K",
+      "url": "https://minixus-collab.github.io/nexrig-pc/produits/intel-core-i5-14600k/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 15,
+      "name": "Intel Core i7-13700K",
+      "url": "https://minixus-collab.github.io/nexrig-pc/produits/intel-core-i7-13700k/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 16,
+      "name": "Intel Core i7-14700K",
+      "url": "https://minixus-collab.github.io/nexrig-pc/produits/intel-core-i7-14700k/"
+    }
+  ]
+}</script>
 </head>
-<body>
+<body class="shop-category">
   <a class="skip-link" href="#main">Aller au contenu</a>
   <div class="demo-banner">NEXRIG est un projet fictif de boutique PC au Maroc — aucune vente.</div>
   <header class="header">
@@ -37,6 +141,7 @@
         <a href="/nexrig-pc/cartes-graphiques/">Cartes graphiques</a>
         <a href="/nexrig-pc/processeurs/" aria-current="page">Processeurs</a>
         <a href="/nexrig-pc/#about">Le projet</a>
+      <a class="cart-link" href="/nexrig-pc/panier/" data-cart-link>Panier <span class="cart-count" data-cart-count>0</span></a>
       </nav>
     </div>
   </header>
@@ -47,44 +152,103 @@
     <div class="hero">
       <span class="eyebrow">Composants PC · AMD et Intel</span>
       <h1>Processeurs PC au Maroc – AMD Ryzen et Intel Core</h1>
-      <p class="intro">Vous recherchez un processeur pour un PC gamer ou un ordinateur de travail au Maroc ? Découvrez trois exemples de CPU AMD Ryzen et Intel Core, leurs plateformes et les points à vérifier avant de choisir votre configuration.</p>
-      <p class="intro">Le processeur exécute les instructions des logiciels et travaille avec la mémoire et la carte graphique. Ce catalogue pédagogique présente du matériel réel, sans commande, stock ni prix de vente.</p>
+      <p class="intro">Vous recherchez un processeur pour un PC gamer ou un ordinateur de travail au Maroc ? Explorez les modèles AMD Ryzen et Intel Core, leurs plateformes et les points à vérifier avant de choisir votre configuration.</p>
+      <p class="intro">Le processeur exécute les instructions des logiciels et travaille avec la mémoire et la carte graphique. Ce catalogue pédagogique présente du matériel réel, avec des prix de démonstration, sans commande réelle ni disponibilité en stock annoncée.</p>
       <nav class="jump-links" aria-label="Sommaire de la page">
-        <a href="#modeles">Exemples de CPU</a><a href="#comparaison">Comparer les plateformes</a><a href="#choisir">Bien choisir</a><a href="#compatibilite">Vérifier la compatibilité</a>
+        <a href="#modeles">Catalogue CPU</a><a href="#comparaison">Comparer les plateformes</a><a href="#choisir">Bien choisir</a><a href="#compatibilite">Vérifier la compatibilité</a>
       </nav>
     </div>
 
-    <section id="modeles" aria-labelledby="modeles-title">
-      <h2 id="modeles-title">Découvrez les processeurs AMD Ryzen et Intel Core</h2>
-      <p class="section-intro">Ces modèles illustrent trois plateformes de bureau. Ils ne représentent pas toute l’offre actuelle et ne constituent pas un classement des meilleurs processeurs ni une recommandation fondée sur les prix au Maroc.</p>
-      <div class="model-grid model-grid--three">
-        <article class="model-card">
-          <span class="model-brand">AMD RYZEN · AM4</span>
-          <h3>Ryzen 5 5600</h3>
-          <dl><div><dt>Cœurs / threads</dt><dd>6 / 12</dd></div><div><dt>Socket</dt><dd>AM4</dd></div><div><dt>Mémoire prise en charge</dt><dd>DDR4</dd></div><div><dt>Graphique intégré</dt><dd>Non</dd></div></dl>
-          <p>Un exemple pour étudier une configuration DDR4 ou une mise à niveau AM4. Une carte mère AM4 doit explicitement prendre en charge ce modèle avec la version de BIOS installée. Une carte graphique séparée est nécessaire.</p>
-          <a href="https://www.amd.com/en/products/processors/desktops/ryzen/5000-series/amd-ryzen-5-5600.html">Documentation AMD : Ryzen 5 5600</a>
-        </article>
-        <article class="model-card">
-          <span class="model-brand">AMD RYZEN · AM5</span>
-          <h3>Ryzen 5 7600</h3>
-          <dl><div><dt>Cœurs / threads</dt><dd>6 / 12</dd></div><div><dt>Socket</dt><dd>AM5</dd></div><div><dt>Mémoire prise en charge</dt><dd>DDR5</dd></div><div><dt>Graphique intégré</dt><dd>Oui</dd></div></dl>
-          <p>Un exemple de plateforme AM5 avec mémoire DDR5, également présent dans la configuration illustrative de NEXRIG. Son circuit graphique intégré permet des usages d’affichage de base ; pour les jeux exigeants, étudiez une carte graphique dédiée.</p>
-          <a href="https://www.amd.com/en/products/processors/desktops/ryzen/7000-series/amd-ryzen-5-7600.html">Documentation AMD : Ryzen 5 7600</a>
-        </article>
-        <article class="model-card">
-          <span class="model-brand">INTEL CORE · LGA1700</span>
-          <h3>Core i5-12400F</h3>
-          <dl><div><dt>Cœurs / threads</dt><dd>6 / 12</dd></div><div><dt>Socket</dt><dd>LGA1700</dd></div><div><dt>Mémoire prise en charge</dt><dd>DDR4 ou DDR5*</dd></div><div><dt>Graphique intégré</dt><dd>Non</dd></div></dl>
-          <p>Un exemple de processeur Intel Core de 12e génération. Le suffixe « F » indique l’absence de circuit graphique intégré sur ce modèle : une carte graphique séparée est nécessaire.</p>
-          <p>* Le type de RAM dépend de la carte mère choisie. DDR4 et DDR5 ne sont pas interchangeables.</p>
-          <a href="https://www.intel.com/content/www/us/en/products/sku/134587/intel-core-i512400f-processor-18m-cache-up-to-4-40-ghz/specifications.html">Documentation Intel : Core i5-12400F</a>
-        </article>
-      </div>
-      <p class="note">Une référence proche peut désigner un processeur différent : Ryzen 5 5600 et 5600G, Ryzen 5 7600 et 7600X, Core i5-12400 et 12400F ne sont pas identiques. Vérifiez le nom complet avant de comparer les caractéristiques.</p>
-    </section>
-
-    <section id="comparaison" aria-labelledby="comparaison-title">
+<!-- catalogue:start -->
+<section id="modeles" aria-labelledby="modeles-title"><h2 id="modeles-title">Catalogue de processeurs AMD et Intel</h2><p class="section-intro">Choisissez parmi ces modèles et simulez votre sélection avec le panier. Tous les prix sont fictifs et indiqués uniquement pour la démonstration.</p><form class="shop-filters" data-shop-filters hidden>
+  <label for="shop-search">Rechercher un modèle<input id="shop-search" type="search" name="search" autocomplete="off"></label>
+  <label for="shop-brand">Marque<select id="shop-brand" name="brand"><option value="">Toutes les marques</option><option value="AMD">AMD</option><option value="Intel">Intel</option></select></label>
+  <label for="shop-sort">Trier par<select id="shop-sort" name="sort"><option value="default">Ordre du catalogue</option><option value="price-low">Prix démo croissant</option><option value="price-high">Prix démo décroissant</option><option value="name">Nom du modèle</option></select></label>
+  <button class="shop-button secondary" type="reset">Réinitialiser</button></form>
+  <p class="shop-result" id="shop-result" role="status" aria-live="polite">16 modèles</p>
+  <p id="shop-empty" hidden>Aucun modèle ne correspond à ces critères.</p><noscript><p class="shop-noscript">Les filtres et le panier nécessitent JavaScript. Les produits et leurs fiches restent consultables.</p></noscript><div class="shop-grid"><article class="shop-card" data-product-id="amd-ryzen-5-5600">
+  <figure><a href="/nexrig-pc/produits/amd-ryzen-5-5600/" tabindex="-1" aria-hidden="true"><img src="/nexrig-pc/assets/images/cpu-illustration.svg" width="480" height="320" loading="lazy" alt=""></a><figcaption class="illustration-label">Illustration générique — pas une photo du modèle</figcaption></figure>
+  <div class="shop-card-body"><span class="shop-brand">AMD</span><h3><a href="/nexrig-pc/produits/amd-ryzen-5-5600/">AMD Ryzen 5 5600</a></h3><p class="shop-specs">6 cœurs · 12 threads · AM4 · DDR4</p>
+    <div class="shop-price">1 349 DH<small class="shop-disclaimer">Prix de démonstration — aucune vente</small></div>
+    <div class="shop-actions"><button class="shop-button" type="button" data-add-to-cart="amd-ryzen-5-5600" aria-label="Ajouter au panier : AMD Ryzen 5 5600" disabled>Ajouter au panier</button><a class="detail-link" href="/nexrig-pc/produits/amd-ryzen-5-5600/">Voir le produit</a></div>
+  </div></article><article class="shop-card" data-product-id="amd-ryzen-7-5700x">
+  <figure><a href="/nexrig-pc/produits/amd-ryzen-7-5700x/" tabindex="-1" aria-hidden="true"><img src="/nexrig-pc/assets/images/cpu-illustration.svg" width="480" height="320" loading="lazy" alt=""></a><figcaption class="illustration-label">Illustration générique — pas une photo du modèle</figcaption></figure>
+  <div class="shop-card-body"><span class="shop-brand">AMD</span><h3><a href="/nexrig-pc/produits/amd-ryzen-7-5700x/">AMD Ryzen 7 5700X</a></h3><p class="shop-specs">8 cœurs · 16 threads · AM4 · DDR4</p>
+    <div class="shop-price">1 990 DH<small class="shop-disclaimer">Prix de démonstration — aucune vente</small></div>
+    <div class="shop-actions"><button class="shop-button" type="button" data-add-to-cart="amd-ryzen-7-5700x" aria-label="Ajouter au panier : AMD Ryzen 7 5700X" disabled>Ajouter au panier</button><a class="detail-link" href="/nexrig-pc/produits/amd-ryzen-7-5700x/">Voir le produit</a></div>
+  </div></article><article class="shop-card" data-product-id="amd-ryzen-7-5800x3d">
+  <figure><a href="/nexrig-pc/produits/amd-ryzen-7-5800x3d/" tabindex="-1" aria-hidden="true"><img src="/nexrig-pc/assets/images/cpu-illustration.svg" width="480" height="320" loading="lazy" alt=""></a><figcaption class="illustration-label">Illustration générique — pas une photo du modèle</figcaption></figure>
+  <div class="shop-card-body"><span class="shop-brand">AMD</span><h3><a href="/nexrig-pc/produits/amd-ryzen-7-5800x3d/">AMD Ryzen 7 5800X3D</a></h3><p class="shop-specs">8 cœurs · 16 threads · AM4 · DDR4</p>
+    <div class="shop-price">3 490 DH<small class="shop-disclaimer">Prix de démonstration — aucune vente</small></div>
+    <div class="shop-actions"><button class="shop-button" type="button" data-add-to-cart="amd-ryzen-7-5800x3d" aria-label="Ajouter au panier : AMD Ryzen 7 5800X3D" disabled>Ajouter au panier</button><a class="detail-link" href="/nexrig-pc/produits/amd-ryzen-7-5800x3d/">Voir le produit</a></div>
+  </div></article><article class="shop-card" data-product-id="amd-ryzen-9-5900x">
+  <figure><a href="/nexrig-pc/produits/amd-ryzen-9-5900x/" tabindex="-1" aria-hidden="true"><img src="/nexrig-pc/assets/images/cpu-illustration.svg" width="480" height="320" loading="lazy" alt=""></a><figcaption class="illustration-label">Illustration générique — pas une photo du modèle</figcaption></figure>
+  <div class="shop-card-body"><span class="shop-brand">AMD</span><h3><a href="/nexrig-pc/produits/amd-ryzen-9-5900x/">AMD Ryzen 9 5900X</a></h3><p class="shop-specs">12 cœurs · 24 threads · AM4 · DDR4</p>
+    <div class="shop-price">3 290 DH<small class="shop-disclaimer">Prix de démonstration — aucune vente</small></div>
+    <div class="shop-actions"><button class="shop-button" type="button" data-add-to-cart="amd-ryzen-9-5900x" aria-label="Ajouter au panier : AMD Ryzen 9 5900X" disabled>Ajouter au panier</button><a class="detail-link" href="/nexrig-pc/produits/amd-ryzen-9-5900x/">Voir le produit</a></div>
+  </div></article><article class="shop-card" data-product-id="amd-ryzen-5-7600">
+  <figure><a href="/nexrig-pc/produits/amd-ryzen-5-7600/" tabindex="-1" aria-hidden="true"><img src="/nexrig-pc/assets/images/cpu-illustration.svg" width="480" height="320" loading="lazy" alt=""></a><figcaption class="illustration-label">Illustration générique — pas une photo du modèle</figcaption></figure>
+  <div class="shop-card-body"><span class="shop-brand">AMD</span><h3><a href="/nexrig-pc/produits/amd-ryzen-5-7600/">AMD Ryzen 5 7600</a></h3><p class="shop-specs">6 cœurs · 12 threads · AM5 · DDR5</p>
+    <div class="shop-price">2 390 DH<small class="shop-disclaimer">Prix de démonstration — aucune vente</small></div>
+    <div class="shop-actions"><button class="shop-button" type="button" data-add-to-cart="amd-ryzen-5-7600" aria-label="Ajouter au panier : AMD Ryzen 5 7600" disabled>Ajouter au panier</button><a class="detail-link" href="/nexrig-pc/produits/amd-ryzen-5-7600/">Voir le produit</a></div>
+  </div></article><article class="shop-card" data-product-id="amd-ryzen-7-7700">
+  <figure><a href="/nexrig-pc/produits/amd-ryzen-7-7700/" tabindex="-1" aria-hidden="true"><img src="/nexrig-pc/assets/images/cpu-illustration.svg" width="480" height="320" loading="lazy" alt=""></a><figcaption class="illustration-label">Illustration générique — pas une photo du modèle</figcaption></figure>
+  <div class="shop-card-body"><span class="shop-brand">AMD</span><h3><a href="/nexrig-pc/produits/amd-ryzen-7-7700/">AMD Ryzen 7 7700</a></h3><p class="shop-specs">8 cœurs · 16 threads · AM5 · DDR5</p>
+    <div class="shop-price">3 290 DH<small class="shop-disclaimer">Prix de démonstration — aucune vente</small></div>
+    <div class="shop-actions"><button class="shop-button" type="button" data-add-to-cart="amd-ryzen-7-7700" aria-label="Ajouter au panier : AMD Ryzen 7 7700" disabled>Ajouter au panier</button><a class="detail-link" href="/nexrig-pc/produits/amd-ryzen-7-7700/">Voir le produit</a></div>
+  </div></article><article class="shop-card" data-product-id="amd-ryzen-7-7800x3d">
+  <figure><a href="/nexrig-pc/produits/amd-ryzen-7-7800x3d/" tabindex="-1" aria-hidden="true"><img src="/nexrig-pc/assets/images/cpu-illustration.svg" width="480" height="320" loading="lazy" alt=""></a><figcaption class="illustration-label">Illustration générique — pas une photo du modèle</figcaption></figure>
+  <div class="shop-card-body"><span class="shop-brand">AMD</span><h3><a href="/nexrig-pc/produits/amd-ryzen-7-7800x3d/">AMD Ryzen 7 7800X3D</a></h3><p class="shop-specs">8 cœurs · 16 threads · AM5 · DDR5</p>
+    <div class="shop-price">4 690 DH<small class="shop-disclaimer">Prix de démonstration — aucune vente</small></div>
+    <div class="shop-actions"><button class="shop-button" type="button" data-add-to-cart="amd-ryzen-7-7800x3d" aria-label="Ajouter au panier : AMD Ryzen 7 7800X3D" disabled>Ajouter au panier</button><a class="detail-link" href="/nexrig-pc/produits/amd-ryzen-7-7800x3d/">Voir le produit</a></div>
+  </div></article><article class="shop-card" data-product-id="amd-ryzen-9-7950x">
+  <figure><a href="/nexrig-pc/produits/amd-ryzen-9-7950x/" tabindex="-1" aria-hidden="true"><img src="/nexrig-pc/assets/images/cpu-illustration.svg" width="480" height="320" loading="lazy" alt=""></a><figcaption class="illustration-label">Illustration générique — pas une photo du modèle</figcaption></figure>
+  <div class="shop-card-body"><span class="shop-brand">AMD</span><h3><a href="/nexrig-pc/produits/amd-ryzen-9-7950x/">AMD Ryzen 9 7950X</a></h3><p class="shop-specs">16 cœurs · 32 threads · AM5 · DDR5</p>
+    <div class="shop-price">6 490 DH<small class="shop-disclaimer">Prix de démonstration — aucune vente</small></div>
+    <div class="shop-actions"><button class="shop-button" type="button" data-add-to-cart="amd-ryzen-9-7950x" aria-label="Ajouter au panier : AMD Ryzen 9 7950X" disabled>Ajouter au panier</button><a class="detail-link" href="/nexrig-pc/produits/amd-ryzen-9-7950x/">Voir le produit</a></div>
+  </div></article><article class="shop-card" data-product-id="intel-core-i5-12400f">
+  <figure><a href="/nexrig-pc/produits/intel-core-i5-12400f/" tabindex="-1" aria-hidden="true"><img src="/nexrig-pc/assets/images/cpu-illustration.svg" width="480" height="320" loading="lazy" alt=""></a><figcaption class="illustration-label">Illustration générique — pas une photo du modèle</figcaption></figure>
+  <div class="shop-card-body"><span class="shop-brand">Intel</span><h3><a href="/nexrig-pc/produits/intel-core-i5-12400f/">Intel Core i5-12400F</a></h3><p class="shop-specs">6 cœurs · 12 threads · LGA1700 · DDR4 / DDR5</p>
+    <div class="shop-price">1 490 DH<small class="shop-disclaimer">Prix de démonstration — aucune vente</small></div>
+    <div class="shop-actions"><button class="shop-button" type="button" data-add-to-cart="intel-core-i5-12400f" aria-label="Ajouter au panier : Intel Core i5-12400F" disabled>Ajouter au panier</button><a class="detail-link" href="/nexrig-pc/produits/intel-core-i5-12400f/">Voir le produit</a></div>
+  </div></article><article class="shop-card" data-product-id="intel-core-i5-13400f">
+  <figure><a href="/nexrig-pc/produits/intel-core-i5-13400f/" tabindex="-1" aria-hidden="true"><img src="/nexrig-pc/assets/images/cpu-illustration.svg" width="480" height="320" loading="lazy" alt=""></a><figcaption class="illustration-label">Illustration générique — pas une photo du modèle</figcaption></figure>
+  <div class="shop-card-body"><span class="shop-brand">Intel</span><h3><a href="/nexrig-pc/produits/intel-core-i5-13400f/">Intel Core i5-13400F</a></h3><p class="shop-specs">10 cœurs · 16 threads · LGA1700 · DDR4 / DDR5</p>
+    <div class="shop-price">2 190 DH<small class="shop-disclaimer">Prix de démonstration — aucune vente</small></div>
+    <div class="shop-actions"><button class="shop-button" type="button" data-add-to-cart="intel-core-i5-13400f" aria-label="Ajouter au panier : Intel Core i5-13400F" disabled>Ajouter au panier</button><a class="detail-link" href="/nexrig-pc/produits/intel-core-i5-13400f/">Voir le produit</a></div>
+  </div></article><article class="shop-card" data-product-id="intel-core-i5-14400f">
+  <figure><a href="/nexrig-pc/produits/intel-core-i5-14400f/" tabindex="-1" aria-hidden="true"><img src="/nexrig-pc/assets/images/cpu-illustration.svg" width="480" height="320" loading="lazy" alt=""></a><figcaption class="illustration-label">Illustration générique — pas une photo du modèle</figcaption></figure>
+  <div class="shop-card-body"><span class="shop-brand">Intel</span><h3><a href="/nexrig-pc/produits/intel-core-i5-14400f/">Intel Core i5-14400F</a></h3><p class="shop-specs">10 cœurs · 16 threads · LGA1700 · DDR4 / DDR5</p>
+    <div class="shop-price">2 490 DH<small class="shop-disclaimer">Prix de démonstration — aucune vente</small></div>
+    <div class="shop-actions"><button class="shop-button" type="button" data-add-to-cart="intel-core-i5-14400f" aria-label="Ajouter au panier : Intel Core i5-14400F" disabled>Ajouter au panier</button><a class="detail-link" href="/nexrig-pc/produits/intel-core-i5-14400f/">Voir le produit</a></div>
+  </div></article><article class="shop-card" data-product-id="intel-core-i5-12600k">
+  <figure><a href="/nexrig-pc/produits/intel-core-i5-12600k/" tabindex="-1" aria-hidden="true"><img src="/nexrig-pc/assets/images/cpu-illustration.svg" width="480" height="320" loading="lazy" alt=""></a><figcaption class="illustration-label">Illustration générique — pas une photo du modèle</figcaption></figure>
+  <div class="shop-card-body"><span class="shop-brand">Intel</span><h3><a href="/nexrig-pc/produits/intel-core-i5-12600k/">Intel Core i5-12600K</a></h3><p class="shop-specs">10 cœurs · 16 threads · LGA1700 · DDR4 / DDR5</p>
+    <div class="shop-price">2 290 DH<small class="shop-disclaimer">Prix de démonstration — aucune vente</small></div>
+    <div class="shop-actions"><button class="shop-button" type="button" data-add-to-cart="intel-core-i5-12600k" aria-label="Ajouter au panier : Intel Core i5-12600K" disabled>Ajouter au panier</button><a class="detail-link" href="/nexrig-pc/produits/intel-core-i5-12600k/">Voir le produit</a></div>
+  </div></article><article class="shop-card" data-product-id="intel-core-i5-13600k">
+  <figure><a href="/nexrig-pc/produits/intel-core-i5-13600k/" tabindex="-1" aria-hidden="true"><img src="/nexrig-pc/assets/images/cpu-illustration.svg" width="480" height="320" loading="lazy" alt=""></a><figcaption class="illustration-label">Illustration générique — pas une photo du modèle</figcaption></figure>
+  <div class="shop-card-body"><span class="shop-brand">Intel</span><h3><a href="/nexrig-pc/produits/intel-core-i5-13600k/">Intel Core i5-13600K</a></h3><p class="shop-specs">14 cœurs · 20 threads · LGA1700 · DDR4 / DDR5</p>
+    <div class="shop-price">3 290 DH<small class="shop-disclaimer">Prix de démonstration — aucune vente</small></div>
+    <div class="shop-actions"><button class="shop-button" type="button" data-add-to-cart="intel-core-i5-13600k" aria-label="Ajouter au panier : Intel Core i5-13600K" disabled>Ajouter au panier</button><a class="detail-link" href="/nexrig-pc/produits/intel-core-i5-13600k/">Voir le produit</a></div>
+  </div></article><article class="shop-card" data-product-id="intel-core-i5-14600k">
+  <figure><a href="/nexrig-pc/produits/intel-core-i5-14600k/" tabindex="-1" aria-hidden="true"><img src="/nexrig-pc/assets/images/cpu-illustration.svg" width="480" height="320" loading="lazy" alt=""></a><figcaption class="illustration-label">Illustration générique — pas une photo du modèle</figcaption></figure>
+  <div class="shop-card-body"><span class="shop-brand">Intel</span><h3><a href="/nexrig-pc/produits/intel-core-i5-14600k/">Intel Core i5-14600K</a></h3><p class="shop-specs">14 cœurs · 20 threads · LGA1700 · DDR4 / DDR5</p>
+    <div class="shop-price">3 690 DH<small class="shop-disclaimer">Prix de démonstration — aucune vente</small></div>
+    <div class="shop-actions"><button class="shop-button" type="button" data-add-to-cart="intel-core-i5-14600k" aria-label="Ajouter au panier : Intel Core i5-14600K" disabled>Ajouter au panier</button><a class="detail-link" href="/nexrig-pc/produits/intel-core-i5-14600k/">Voir le produit</a></div>
+  </div></article><article class="shop-card" data-product-id="intel-core-i7-13700k">
+  <figure><a href="/nexrig-pc/produits/intel-core-i7-13700k/" tabindex="-1" aria-hidden="true"><img src="/nexrig-pc/assets/images/cpu-illustration.svg" width="480" height="320" loading="lazy" alt=""></a><figcaption class="illustration-label">Illustration générique — pas une photo du modèle</figcaption></figure>
+  <div class="shop-card-body"><span class="shop-brand">Intel</span><h3><a href="/nexrig-pc/produits/intel-core-i7-13700k/">Intel Core i7-13700K</a></h3><p class="shop-specs">16 cœurs · 24 threads · LGA1700 · DDR4 / DDR5</p>
+    <div class="shop-price">4 590 DH<small class="shop-disclaimer">Prix de démonstration — aucune vente</small></div>
+    <div class="shop-actions"><button class="shop-button" type="button" data-add-to-cart="intel-core-i7-13700k" aria-label="Ajouter au panier : Intel Core i7-13700K" disabled>Ajouter au panier</button><a class="detail-link" href="/nexrig-pc/produits/intel-core-i7-13700k/">Voir le produit</a></div>
+  </div></article><article class="shop-card" data-product-id="intel-core-i7-14700k">
+  <figure><a href="/nexrig-pc/produits/intel-core-i7-14700k/" tabindex="-1" aria-hidden="true"><img src="/nexrig-pc/assets/images/cpu-illustration.svg" width="480" height="320" loading="lazy" alt=""></a><figcaption class="illustration-label">Illustration générique — pas une photo du modèle</figcaption></figure>
+  <div class="shop-card-body"><span class="shop-brand">Intel</span><h3><a href="/nexrig-pc/produits/intel-core-i7-14700k/">Intel Core i7-14700K</a></h3><p class="shop-specs">20 cœurs · 28 threads · LGA1700 · DDR4 / DDR5</p>
+    <div class="shop-price">4 990 DH<small class="shop-disclaimer">Prix de démonstration — aucune vente</small></div>
+    <div class="shop-actions"><button class="shop-button" type="button" data-add-to-cart="intel-core-i7-14700k" aria-label="Ajouter au panier : Intel Core i7-14700K" disabled>Ajouter au panier</button><a class="detail-link" href="/nexrig-pc/produits/intel-core-i7-14700k/">Voir le produit</a></div>
+  </div></article></div></section>
+<!-- catalogue:end -->
+<section id="comparaison" aria-labelledby="comparaison-title">
       <h2 id="comparaison-title">Comparer les sockets et la mémoire des processeurs</h2>
       <p class="section-intro">Ces trois CPU possèdent six cœurs et douze threads, mais leurs performances ne sont pas identiques. L’architecture, le logiciel utilisé et la configuration complète comptent aussi.</p>
       <p class="sources">Sur un petit écran, faites défiler le tableau horizontalement pour voir tous les modèles.</p>

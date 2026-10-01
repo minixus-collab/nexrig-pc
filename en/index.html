@@ -163,6 +163,8 @@
   <link rel="alternate" hreflang="en" href="https://minixus-collab.github.io/nexrig-pc/en/">
   <link rel="alternate" hreflang="x-default" href="https://minixus-collab.github.io/nexrig-pc/">
   <link rel="stylesheet" href="/nexrig-pc/assets/css/language.css">
+<link rel="stylesheet" href="/nexrig-pc/assets/css/shop.css">
+<script src="/nexrig-pc/assets/js/shop.js" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
@@ -185,6 +187,7 @@
         <a href="/nexrig-pc/en/graphics-cards/">Graphics cards</a><a href="/nexrig-pc/en/processors/">Processors</a>
         <a href="#builder">PC configuration</a>
         <a href="#about">The project</a>
+      <a class="cart-link" href="/nexrig-pc/en/cart/" data-cart-link>Cart <span class="cart-count" data-cart-count>0</span></a>
       </nav>
     </div>
   </header>
@@ -269,56 +272,34 @@
         <div class="section-head">
           <div>
             <span class="eyebrow">Demonstration catalogue</span>
-            <h2>Component examples</h2>
+            <h2>Our component selection</h2>
           </div>
           <p>Examples of hardware presentation. The amounts below are fictional and are not offers for sale.</p>
         </div>
 
-        <div class="product-grid">
-          <article class="product-card reveal">
-            <div class="product-image" aria-hidden="true">🎮</div>
-            <div class="product-info">
-              <small>Graphics card</small>
-              <h3>GeForce RTX 4060 8 GB</h3>
-              <div class="price"><b>4 199 DH</b></div>
-              <small class="demo-note">Demonstration price — no sales</small>
-
-            </div>
-          </article>
-
-          <article class="product-card reveal">
-            <div class="product-image" aria-hidden="true">⚙️</div>
-            <div class="product-info">
-              <small>Processor</small>
-              <h3>AMD Ryzen 5 5600</h3>
-              <div class="price"><b>1 349 DH</b></div>
-              <small class="demo-note">Demonstration price — no sales</small>
-
-            </div>
-          </article>
-
-          <article class="product-card reveal">
-            <div class="product-image" aria-hidden="true">🧠</div>
-            <div class="product-info">
-              <small>RAM</small>
-              <h3>16 GB DDR4 RAM — 3,200 MHz</h3>
-              <div class="price"><b>499 DH</b></div>
-              <small class="demo-note">Demonstration price — no sales</small>
-
-            </div>
-          </article>
-
-          <article class="product-card reveal">
-            <div class="product-image" aria-hidden="true">💾</div>
-            <div class="product-info">
-              <small>Storage</small>
-              <h3>M.2 NVMe SSD — 1 TB</h3>
-              <div class="price"><b>749 DH</b></div>
-              <small class="demo-note">Demonstration price — no sales</small>
-
-            </div>
-          </article>
-        </div>
+<!-- featured:start -->
+<div class="shop-grid"><article class="shop-card" data-product-id="nvidia-geforce-rtx-4060">
+  <figure><a href="/nexrig-pc/en/products/nvidia-geforce-rtx-4060/" tabindex="-1" aria-hidden="true"><img src="/nexrig-pc/assets/images/gpu-illustration.svg" width="480" height="320" loading="lazy" alt=""></a><figcaption class="illustration-label">Generic illustration — not a photo of this model</figcaption></figure>
+  <div class="shop-card-body"><span class="shop-brand">NVIDIA</span><h3><a href="/nexrig-pc/en/products/nvidia-geforce-rtx-4060/">NVIDIA GeForce RTX 4060</a></h3><p class="shop-specs">8 GB · GDDR6 · Ada Lovelace</p>
+    <div class="shop-price">4,199 DH<small class="shop-disclaimer">Demonstration price — no sales</small></div>
+    <div class="shop-actions"><button class="shop-button" type="button" data-add-to-cart="nvidia-geforce-rtx-4060" aria-label="Add to cart : NVIDIA GeForce RTX 4060" disabled>Add to cart</button><a class="detail-link" href="/nexrig-pc/en/products/nvidia-geforce-rtx-4060/">View product</a></div>
+  </div></article><article class="shop-card" data-product-id="amd-radeon-rx-7800-xt">
+  <figure><a href="/nexrig-pc/en/products/amd-radeon-rx-7800-xt/" tabindex="-1" aria-hidden="true"><img src="/nexrig-pc/assets/images/gpu-illustration.svg" width="480" height="320" loading="lazy" alt=""></a><figcaption class="illustration-label">Generic illustration — not a photo of this model</figcaption></figure>
+  <div class="shop-card-body"><span class="shop-brand">AMD</span><h3><a href="/nexrig-pc/en/products/amd-radeon-rx-7800-xt/">AMD Radeon RX 7800 XT</a></h3><p class="shop-specs">16 GB · GDDR6 · RDNA 3</p>
+    <div class="shop-price">6,290 DH<small class="shop-disclaimer">Demonstration price — no sales</small></div>
+    <div class="shop-actions"><button class="shop-button" type="button" data-add-to-cart="amd-radeon-rx-7800-xt" aria-label="Add to cart : AMD Radeon RX 7800 XT" disabled>Add to cart</button><a class="detail-link" href="/nexrig-pc/en/products/amd-radeon-rx-7800-xt/">View product</a></div>
+  </div></article><article class="shop-card" data-product-id="amd-ryzen-5-5600">
+  <figure><a href="/nexrig-pc/en/products/amd-ryzen-5-5600/" tabindex="-1" aria-hidden="true"><img src="/nexrig-pc/assets/images/cpu-illustration.svg" width="480" height="320" loading="lazy" alt=""></a><figcaption class="illustration-label">Generic illustration — not a photo of this model</figcaption></figure>
+  <div class="shop-card-body"><span class="shop-brand">AMD</span><h3><a href="/nexrig-pc/en/products/amd-ryzen-5-5600/">AMD Ryzen 5 5600</a></h3><p class="shop-specs">6 cores · 12 threads · AM4 · DDR4</p>
+    <div class="shop-price">1,349 DH<small class="shop-disclaimer">Demonstration price — no sales</small></div>
+    <div class="shop-actions"><button class="shop-button" type="button" data-add-to-cart="amd-ryzen-5-5600" aria-label="Add to cart : AMD Ryzen 5 5600" disabled>Add to cart</button><a class="detail-link" href="/nexrig-pc/en/products/amd-ryzen-5-5600/">View product</a></div>
+  </div></article><article class="shop-card" data-product-id="intel-core-i5-12400f">
+  <figure><a href="/nexrig-pc/en/products/intel-core-i5-12400f/" tabindex="-1" aria-hidden="true"><img src="/nexrig-pc/assets/images/cpu-illustration.svg" width="480" height="320" loading="lazy" alt=""></a><figcaption class="illustration-label">Generic illustration — not a photo of this model</figcaption></figure>
+  <div class="shop-card-body"><span class="shop-brand">Intel</span><h3><a href="/nexrig-pc/en/products/intel-core-i5-12400f/">Intel Core i5-12400F</a></h3><p class="shop-specs">6 cores · 12 threads · LGA1700 · DDR4 / DDR5</p>
+    <div class="shop-price">1,490 DH<small class="shop-disclaimer">Demonstration price — no sales</small></div>
+    <div class="shop-actions"><button class="shop-button" type="button" data-add-to-cart="intel-core-i5-12400f" aria-label="Add to cart : Intel Core i5-12400F" disabled>Add to cart</button><a class="detail-link" href="/nexrig-pc/en/products/intel-core-i5-12400f/">View product</a></div>
+  </div></article></div>
+<!-- featured:end -->
       </div>
     </section>
 
