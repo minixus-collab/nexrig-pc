@@ -24,10 +24,12 @@ WORDS = {
 
 # Additional storefront categories share translated specifications and filter definitions.
 EXPANSION_PATHS = {
+ 'controller':('manettes/','en/controllers/'),
  'case':('boitiers/','en/cases/'), 'laptop':('ordinateurs-portables/','en/laptops/'),
  'keyboard':('claviers/','en/keyboards/'), 'mouse':('souris/','en/mice/'), 'chair':('chaises-gaming/','en/gaming-chairs/'), 'audio':('audio/','en/audio/'), 'pc':('pc-gamer/','en/gaming-pcs/')}
-EXPANSION_LABELS = {'fr':{'pc':'PC gamer assemblés','audio':'Audio','case':'Boîtiers PC','laptop':'Ordinateurs portables','keyboard':'Claviers','mouse':'Souris','chair':'Chaises gaming'},'en':{'pc':'Gaming PCs','audio':'Audio','case':'PC cases','laptop':'Laptops','keyboard':'Keyboards','mouse':'Mice','chair':'Gaming chairs'}}
+EXPANSION_LABELS = {'fr':{'controller':'Manettes','pc':'PC gamer assemblés','audio':'Audio','case':'Boîtiers PC','laptop':'Ordinateurs portables','keyboard':'Claviers','mouse':'Souris','chair':'Chaises gaming'},'en':{'controller':'Controllers','pc':'Gaming PCs','audio':'Audio','case':'PC cases','laptop':'Laptops','keyboard':'Keyboards','mouse':'Mice','chair':'Gaming chairs'}}
 EXPANSION_FIELDS = {
+ 'controller':[('connection_type','Connexion principale','Primary connection')],
  'pc':[('cpu_platform','Plateforme CPU','CPU platform'),('memory_generation','Mémoire','Memory')],
  'audio':[('audio_type','Type audio','Audio type'),('signal_path','Signal principal','Primary signal')],
  'case':[('case_format','Format principal','Primary form factor')],
@@ -48,6 +50,7 @@ def expansion_value(key,value,lang):
  return EXPANSION_VALUES[lang].get(value,str(value))
 
 EXPANSION_ADVICE = {
+ 'controller':('Vérifiez le support Windows, les pilotes, le firmware et les modes XInput/DirectInput ou Steam Input du jeu. Bluetooth n’est pas une connexion Xbox Wireless. Les fonctions avancées DualSense dépendent du jeu et peuvent demander une connexion USB. Vérifiez si le câble, le récepteur ou l’adaptateur requis est inclus ; aucune compatibilité universelle n’est garantie.','Check Windows support, drivers, firmware and the game’s XInput/DirectInput or Steam Input modes. Bluetooth is not Xbox Wireless. Advanced DualSense features depend on the game and may require USB. Check whether the required cable, receiver or adapter is included; universal compatibility is not guaranteed.'),
  'pc':('Configuration complète proposée pour la démonstration, pas un PC physiquement assemblé ou testé. Le socket et la génération mémoire correspondent dans les données, mais il reste à vérifier BIOS, liste CPU, profil RAM, dimensions GPU/ventirad, câblage et kit de montage exacts.','A complete proposed demonstration configuration, not a physically assembled or tested PC. Socket and memory generation match in the data, but BIOS, CPU support, memory profiles, GPU/cooler clearance, cables and exact mounting kits still need verification.'),
  'audio':('Vérifiez le signal audio, les connecteurs et les câbles de la référence exacte. USB peut alimenter un appareil sans transporter le son : les Creative Pebble V2 utilisent une entrée audio analogique. Un microphone XLR nécessite une interface ou un préampli adapté ; un adaptateur passif XLR-vers-USB ne suffit pas. Un DAC seul ne remplace pas un amplificateur de casque.','Check audio signal, connectors and cables for the exact model. USB can provide power without carrying sound: Creative Pebble V2 uses an analog audio input. An XLR microphone needs a suitable interface or preamp; a passive XLR-to-USB adapter is not enough. A standalone DAC does not replace a headphone amplifier.'),
  'case':('Vérifiez les dimensions exactes et la révision : format de carte mère, longueur GPU, hauteur du ventirad, baie PSU et radiateurs avec ventilateurs. Le format principal ne décrit pas toutes les possibilités de montage.','Check exact dimensions and revision: motherboard format, GPU length, cooler height, PSU bay and radiators with fans. The primary form factor does not describe every mounting option.'),
@@ -86,6 +89,8 @@ def resolution_label(value):
 
 def label_specs(p, lang):
  w=WORDS[lang]
+ if p['category']=='controller':
+  return [(w['brand'],p['brand']),('Connexion principale' if lang=='fr' else 'Primary connection',expansion_value('connection_type',p['connection_type'],lang)),('Modes de connexion' if lang=='fr' else 'Connection modes',p['connection_modes'])]
  if p['category'] in EXPANSION_FIELDS:
   return [(w['brand'],p['brand'])]+[(fr if lang=='fr' else en,expansion_value(key,p[key],lang)) for key,fr,en in EXPANSION_FIELDS[p['category']]]+([('Fonction' if lang=='fr' else 'Function',expansion_value('conversion_role',p['conversion_role'],lang))] if 'conversion_role' in p else [])
  if p['category']=='monitor':
@@ -156,7 +161,7 @@ def grouped_navigation(lang):
  w=WORDS[lang]
  def link(cat):return f'<a href="{BASE+CATEGORY_PATHS[lang][cat]}">{w[cat]}</a>'
  groups=''
- for title,cats in [(('Composants' if lang=='fr' else 'Components'),['gpu','cpu','ram','storage','psu','motherboard','cooling','monitor','case']),(('Accessoires' if lang=='fr' else 'Accessories'),['keyboard','mouse','chair','audio'])]:
+ for title,cats in [(('Composants' if lang=='fr' else 'Components'),['gpu','cpu','ram','storage','psu','motherboard','cooling','monitor','case']),(('Accessoires' if lang=='fr' else 'Accessories'),['keyboard','mouse','chair','audio','controller'])]:
   groups+=f'<details class="nav-group"><summary>{title}</summary><div class="nav-group-links">'+''.join(link(cat) for cat in cats)+(f'<a href="{BASE+homedir(lang)}#components">'+('Tous les composants' if lang=='fr' else 'All components')+'</a>' if title in ['Components','Composants'] else '')+'</div></details>'
  return f'<a href="{BASE+homedir(lang)}">{w["home"]}</a><a href="{BASE+("boutique/" if lang=="fr" else "en/shop/")}">'+('Boutique' if lang=='fr' else 'Shop')+'</a>'+groups+link('laptop')+link('pc')+f'<a href="{BASE+("configurateur/" if lang=="fr" else "en/pc-builder/")}">'+('Configuration PC' if lang=='fr' else 'PC configuration')+f'</a><a href="{BASE+homedir(lang)}#about">{w["about"]}</a>'
 

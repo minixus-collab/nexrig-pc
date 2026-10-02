@@ -114,3 +114,7 @@ The game finder lists 11 games/editions: eight reference profiles with suggestio
 ## Hover navigation
 
 Homepage hamburger and shared component/accessory groups open on fine-pointer mouse hover. A 200 ms delayed close permits movement into links; focused submenu links keep the menu open. Clicking after hover keeps the menu open on the first click; subsequent clicks toggle normally. Coarse/touch input uses click/tap, and native summary keyboard operation plus homepage Escape/focus handling remain intact. Run `node tests/menu-hover.cjs` alongside the browser smoke checks when changing navigation.
+
+## Controllers
+
+Only controllers were added: `/manettes/` and `/en/controllers/`, with 12 Microsoft, Sony, 8BitDo, GameSir and Logitech models. The category appears in Accessories and the unified shop; details and both sitemaps are generated. Primary wired/wireless filtering does not list every supported connection; detail pages include connection modes. Avoid universal game/console/OS compatibility claims, undocumented included receivers/cables, polling rates, latency, Hall-effect claims or shared DualSense feature guarantees. Verify revisions and firmware against the manufacturer reference. Demo prices and original generic SVG remain labeled. Total catalogue: 291 products, 32 bilingual category pages, 620 sitemap URLs. Run `node tests/controllers-smoke.cjs` for filters, category/detail additions and bilingual saved-cart persistence.

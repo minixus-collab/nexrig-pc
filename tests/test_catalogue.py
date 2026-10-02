@@ -31,10 +31,10 @@ class CatalogueTests(unittest.TestCase):
         cls.pages = [p for p in ROOT.rglob('index.html') if '.git' not in p.parts]
 
     def test_product_identity_and_demo_prices(self):
-        self.assertEqual(len(self.products), 279)
-        self.assertEqual(len({p['id'] for p in self.products}), 279)
+        self.assertEqual(len(self.products), 291)
+        self.assertEqual(len({p['id'] for p in self.products}), 291)
         self.assertEqual(collections.Counter((p['category'], p['brand']) for p in self.products),
-                         {('pc','NEXRIG'):6, **{('audio', b): count for b,count in {'7Hz': 1, 'TRUTHEAR': 1, 'MOONDROP': 1, 'TANGZU': 1, 'KZ': 1, 'SIMGOT': 1, 'Sennheiser': 1, 'beyerdynamic': 1, 'Audio-Technica': 2, 'HyperX': 2, 'Logitech': 2, 'SteelSeries': 1, 'Creative': 2, 'Edifier': 1, 'PreSonus': 1, 'Mackie': 1, 'FIFINE': 1, 'Blue': 1, 'Elgato': 1, 'RØDE': 1, 'FiiO': 1, 'Topping': 1, 'SMSL': 1, 'Schiit': 2, 'iFi': 1}.items()}, **{('case', b): 3 for b in ['Corsair','NZXT','Fractal Design','Cooler Master']}, **{('laptop', b): 3 for b in ['ASUS','Lenovo','MSI','Acer']}, **{('keyboard', b): 3 for b in ['Keychron','Logitech','Wooting','SteelSeries']}, **{('mouse', b): 3 for b in ['Logitech','Razer','SteelSeries','Corsair']}, **{('chair', b): 3 for b in ['Secretlab','Corsair','noblechairs','Cooler Master']}, **{('monitor', brand): 4 for brand in ['ASUS','LG','Samsung','AOC','MSI','Gigabyte']}, **{('cooling', brand): 4 for brand in ['Noctua','be quiet!','ARCTIC','DeepCool','Cooler Master','Corsair']}, **{('motherboard', brand): 6 for brand in ['ASUS','MSI','Gigabyte','ASRock']}, **{('psu', brand): 4 for brand in ['Corsair','Seasonic','be quiet!','Cooler Master','Thermaltake','EVGA']}, ('cpu', 'AMD'): 8, ('cpu', 'Intel'): 8, ('gpu', 'AMD'): 8, ('gpu', 'NVIDIA'): 8, **{('gpu', brand): 1 for brand in ['ASUS','MSI','Gigabyte','Zotac','Sapphire','PowerColor','XFX']}, **{('ram', brand): 4 for brand in ['Corsair','Kingston','G.Skill','Crucial','TeamGroup','Patriot']}, **{('storage', brand): 4 for brand in ['Samsung','Western Digital','Crucial','Kingston','Seagate','Corsair']}})
+                         {('controller','Microsoft'):2,('controller','Sony'):2,('controller','8BitDo'):4,('controller','GameSir'):2,('controller','Logitech'):2,('pc','NEXRIG'):6, **{('audio', b): count for b,count in {'7Hz': 1, 'TRUTHEAR': 1, 'MOONDROP': 1, 'TANGZU': 1, 'KZ': 1, 'SIMGOT': 1, 'Sennheiser': 1, 'beyerdynamic': 1, 'Audio-Technica': 2, 'HyperX': 2, 'Logitech': 2, 'SteelSeries': 1, 'Creative': 2, 'Edifier': 1, 'PreSonus': 1, 'Mackie': 1, 'FIFINE': 1, 'Blue': 1, 'Elgato': 1, 'RØDE': 1, 'FiiO': 1, 'Topping': 1, 'SMSL': 1, 'Schiit': 2, 'iFi': 1}.items()}, **{('case', b): 3 for b in ['Corsair','NZXT','Fractal Design','Cooler Master']}, **{('laptop', b): 3 for b in ['ASUS','Lenovo','MSI','Acer']}, **{('keyboard', b): 3 for b in ['Keychron','Logitech','Wooting','SteelSeries']}, **{('mouse', b): 3 for b in ['Logitech','Razer','SteelSeries','Corsair']}, **{('chair', b): 3 for b in ['Secretlab','Corsair','noblechairs','Cooler Master']}, **{('monitor', brand): 4 for brand in ['ASUS','LG','Samsung','AOC','MSI','Gigabyte']}, **{('cooling', brand): 4 for brand in ['Noctua','be quiet!','ARCTIC','DeepCool','Cooler Master','Corsair']}, **{('motherboard', brand): 6 for brand in ['ASUS','MSI','Gigabyte','ASRock']}, **{('psu', brand): 4 for brand in ['Corsair','Seasonic','be quiet!','Cooler Master','Thermaltake','EVGA']}, ('cpu', 'AMD'): 8, ('cpu', 'Intel'): 8, ('gpu', 'AMD'): 8, ('gpu', 'NVIDIA'): 8, **{('gpu', brand): 1 for brand in ['ASUS','MSI','Gigabyte','Zotac','Sapphire','PowerColor','XFX']}, **{('ram', brand): 4 for brand in ['Corsair','Kingston','G.Skill','Crucial','TeamGroup','Patriot']}, **{('storage', brand): 4 for brand in ['Samsung','Western Digital','Crucial','Kingston','Seagate','Corsair']}})
         for p in self.products:
             self.assertRegex(p['id'], r'^[a-z0-9-]+$')
             self.assertIs(type(p['demo_price_mad']), int)
@@ -206,7 +206,7 @@ class CatalogueTests(unittest.TestCase):
         for url in ['boutique','en/shop']:
             text=(ROOT/url/'index.html').read_text()
             self.assertIn('id="shop-category"',text)
-            self.assertEqual(text.count('class="shop-card"'),279)
+            self.assertEqual(text.count('class="shop-card"'),291)
 
     def test_homepage_heading_structure_and_pc_priority(self):
         for lang,relative in [('fr',''),('en','en/')]:
@@ -290,8 +290,8 @@ class CatalogueTests(unittest.TestCase):
             self.assertEqual(tree.getroot().tag, '{http://www.sitemaps.org/schemas/sitemap/0.9}urlset')
             urls.extend(loc.text for loc in tree.findall('s:url/s:loc', ns))
         ET.parse(ROOT / 'sitemap.xsl')
-        self.assertEqual(len(urls), 594)
-        self.assertEqual(len(set(urls)), 594)
+        self.assertEqual(len(urls), 620)
+        self.assertEqual(len(set(urls)), 620)
         for url in urls:
             self.assertTrue((ROOT / url.removeprefix(LIVE) / 'index.html').is_file(), url)
         for folder in ['panier/', 'en/cart/']:

@@ -3214,5 +3214,125 @@
     "demo_price_mad": 29030,
     "search_terms": "AMD Ryzen 7 7800X3D NVIDIA GeForce RTX 4080 SUPER Corsair Vengeance 32 GB (2 × 16 GB) DDR5-6000 Samsung 990 PRO 2 TB MSI MAG B650 TOMAHAWK WIFI Corsair 4000D AIRFLOW Seasonic FOCUS GX-850 (2020) DeepCool AK620",
     "source": "/nexrig-pc/pc-gamer/"
+  },
+  {
+    "id": "xbox-wireless-controller",
+    "name": "Xbox Wireless Controller",
+    "brand": "Microsoft",
+    "category": "controller",
+    "connection_type": "wireless",
+    "connection_modes": "USB-C / Bluetooth / Xbox Wireless",
+    "demo_price_mad": 699,
+    "source": "https://www.xbox.com/accessories/controllers/xbox-wireless-controller"
+  },
+  {
+    "id": "xbox-elite-wireless-controller-series-2",
+    "name": "Xbox Elite Wireless Controller Series 2",
+    "brand": "Microsoft",
+    "category": "controller",
+    "connection_type": "wireless",
+    "connection_modes": "USB-C / Bluetooth / Xbox Wireless",
+    "demo_price_mad": 1699,
+    "source": "https://www.xbox.com/accessories/controllers/elite-wireless-controller-series-2"
+  },
+  {
+    "id": "sony-dualsense",
+    "name": "Sony DualSense",
+    "brand": "Sony",
+    "category": "controller",
+    "connection_type": "wireless",
+    "connection_modes": "USB-C / Bluetooth",
+    "demo_price_mad": 799,
+    "source": "https://www.playstation.com/accessories/dualsense-wireless-controller/"
+  },
+  {
+    "id": "sony-dualsense-edge",
+    "name": "Sony DualSense Edge",
+    "brand": "Sony",
+    "category": "controller",
+    "connection_type": "wireless",
+    "connection_modes": "USB-C / Bluetooth",
+    "demo_price_mad": 2199,
+    "source": "https://www.playstation.com/accessories/dualsense-edge-wireless-controller/"
+  },
+  {
+    "id": "8bitdo-pro-2-bluetooth",
+    "name": "8BitDo Pro 2 Bluetooth",
+    "brand": "8BitDo",
+    "category": "controller",
+    "connection_type": "wireless",
+    "connection_modes": "USB-C / Bluetooth",
+    "demo_price_mad": 599,
+    "source": "https://www.8bitdo.com/pro2/"
+  },
+  {
+    "id": "8bitdo-sn30-pro-bluetooth",
+    "name": "8BitDo SN30 Pro Bluetooth",
+    "brand": "8BitDo",
+    "category": "controller",
+    "connection_type": "wireless",
+    "connection_modes": "USB-C / Bluetooth",
+    "demo_price_mad": 449,
+    "source": "https://www.8bitdo.com/sn30-pro-g-classic-or-sn30-pro-sn/"
+  },
+  {
+    "id": "8bitdo-ultimate-2-4g",
+    "name": "8BitDo Ultimate 2.4G Controller",
+    "brand": "8BitDo",
+    "category": "controller",
+    "connection_type": "wireless",
+    "connection_modes": "USB / 2.4 GHz",
+    "demo_price_mad": 649,
+    "source": "https://www.8bitdo.com/ultimate-2.4g-wireless-controller/"
+  },
+  {
+    "id": "8bitdo-ultimate-c-wired",
+    "name": "8BitDo Ultimate C Wired Controller",
+    "brand": "8BitDo",
+    "category": "controller",
+    "connection_type": "wired",
+    "connection_modes": "USB",
+    "demo_price_mad": 299,
+    "source": "https://www.8bitdo.com/ultimate-c-wired-controller/"
+  },
+  {
+    "id": "gamesir-g7-se",
+    "name": "GameSir G7 SE",
+    "brand": "GameSir",
+    "category": "controller",
+    "connection_type": "wired",
+    "connection_modes": "USB",
+    "demo_price_mad": 599,
+    "source": "https://www.gamesir.hk/"
+  },
+  {
+    "id": "gamesir-t4-kaleid",
+    "name": "GameSir T4 Kaleid",
+    "brand": "GameSir",
+    "category": "controller",
+    "connection_type": "wired",
+    "connection_modes": "USB",
+    "demo_price_mad": 549,
+    "source": "https://www.gamesir.hk/"
+  },
+  {
+    "id": "logitech-f310",
+    "name": "Logitech F310",
+    "brand": "Logitech",
+    "category": "controller",
+    "connection_type": "wired",
+    "connection_modes": "USB",
+    "demo_price_mad": 299,
+    "source": "https://www.logitechg.com/products/gamepads/f310-gamepad.html"
+  },
+  {
+    "id": "logitech-f710",
+    "name": "Logitech F710",
+    "brand": "Logitech",
+    "category": "controller",
+    "connection_type": "wireless",
+    "connection_modes": "2.4 GHz USB receiver",
+    "demo_price_mad": 449,
+    "source": "https://www.logitechg.com/products/gamepads/f710-wireless-gamepad.html"
   }
 ]
