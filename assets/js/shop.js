@@ -1,6 +1,20 @@
 /* Shared demonstration cart. Prices and quantities come from the catalogue, never storage. */
 (() => {
   'use strict';
+  // Mouse hover supplements native click/touch and keyboard group controls.
+  document.querySelectorAll('.header .nav-group').forEach(group => {
+    let closeTimer, hoverOpened=false;
+    group.addEventListener('pointerenter', event => {
+      clearTimeout(closeTimer);
+      if(event.pointerType==='mouse' && matchMedia('(hover: hover) and (pointer: fine)').matches && !group.open){group.open=true;hoverOpened=true;}
+    });
+    group.querySelector('summary').addEventListener('click',event=>{if(hoverOpened && event.detail>0){event.preventDefault();hoverOpened=false;}});
+    group.addEventListener('pointerleave', event => {
+      if(event.pointerType==='mouse' && matchMedia('(hover: hover) and (pointer: fine)').matches) {
+        closeTimer=setTimeout(()=>{if(!group.querySelector('.nav-group-links')?.contains(document.activeElement)){group.open=false;hoverOpened=false;}},200);
+      }
+    });
+  });
   const en = document.documentElement.lang === 'en';
   const t = en ? {
     added: 'added to your demonstration cart.', removed: 'Item removed.', cleared: 'Cart cleared.',

@@ -110,3 +110,7 @@ The game finder no longer displays ready-built PC cards. Curated component ID po
 ## Expanded game selection
 
 The game finder lists 11 games/editions: eight reference profiles with suggestions (Fortnite, Valorant, CS2, Overwatch 2, GTA V Legacy/Enhanced, Apex Legends, Rocket League), and three pending profiles (Rust, ARC Raiders, Rainbow Six Siege/Siege X). Pending profiles link to the official store and preserve current components; they contain no invented requirement values or hardware suggestions. Added active profiles are reference summaries, not a live audit of current publisher requirements. Keep minimum/recommended labels explicit, verify current editions/requirements before making stronger claims, and distinguish a required SSD from specifically required NVMe. Tests exercise all active and pending choices in both languages.
+
+## Hover navigation
+
+Homepage hamburger and shared component/accessory groups open on fine-pointer mouse hover. A 200 ms delayed close permits movement into links; focused submenu links keep the menu open. Clicking after hover keeps the menu open on the first click; subsequent clicks toggle normally. Coarse/touch input uses click/tap, and native summary keyboard operation plus homepage Escape/focus handling remain intact. Run `node tests/menu-hover.cjs` alongside the browser smoke checks when changing navigation.
