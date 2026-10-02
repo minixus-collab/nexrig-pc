@@ -156,7 +156,7 @@ def grouped_navigation(lang):
  groups=''
  for title,cats in [(('Composants' if lang=='fr' else 'Components'),['gpu','cpu','ram','storage','psu','motherboard','cooling','monitor','case']),(('Accessoires' if lang=='fr' else 'Accessories'),['keyboard','mouse','chair','audio'])]:
   groups+=f'<details class="nav-group"><summary>{title}</summary><div class="nav-group-links">'+''.join(link(cat) for cat in cats)+(f'<a href="{BASE+homedir(lang)}#components">'+('Tous les composants' if lang=='fr' else 'All components')+'</a>' if title in ['Components','Composants'] else '')+'</div></details>'
- return f'<a href="{BASE+homedir(lang)}">{w["home"]}</a><a href="{BASE+("boutique/" if lang=="fr" else "en/shop/")}">'+('Boutique' if lang=='fr' else 'Shop')+'</a>'+groups+link('laptop')+link('pc')+f'<a href="{BASE+homedir(lang)}#builder">'+('Configuration PC' if lang=='fr' else 'PC configuration')+f'</a><a href="{BASE+homedir(lang)}#about">{w["about"]}</a>'
+ return f'<a href="{BASE+homedir(lang)}">{w["home"]}</a><a href="{BASE+("boutique/" if lang=="fr" else "en/shop/")}">'+('Boutique' if lang=='fr' else 'Shop')+'</a>'+groups+link('laptop')+link('pc')+f'<a href="{BASE+("configurateur/" if lang=="fr" else "en/pc-builder/")}">'+('Configuration PC' if lang=='fr' else 'PC configuration')+f'</a><a href="{BASE+homedir(lang)}#about">{w["about"]}</a>'
 
 def organize_header(doc,lang):
  start=doc.index('<header');end=doc.index('</header>',start)
@@ -291,6 +291,19 @@ def build_cart(lang):
  url=cartpath(lang);doc=document(title+' | NEXRIG',title,url,cartpath('en' if lang=='fr' else 'fr'),lang,body,[(w['home'],homedir(lang)),(w['cart'],url)],noindex=True)
  target=ROOT/url/'index.html';target.parent.mkdir(parents=True,exist_ok=True);target.write_text(doc)
 
+def build_selector(lang):
+ w=WORDS[lang];fr=lang=='fr';url='configurateur/' if fr else 'en/pc-builder/';alt='en/pc-builder/' if fr else 'configurateur/'
+ title='Construisez votre PC' if fr else 'Build your PC'
+ cats=['cpu','gpu','motherboard','ram','storage','cooling','psu','case']
+ fields=''
+ for cat in cats:
+  options=''.join(f'<option value="{p["id"]}">{e(p["name"])} — {money(p["demo_price_mad"],lang)}</option>' for p in PRODUCTS if p['category']==cat)
+  fields+=f'<div class="builder-field"><label for="build-{cat}">{w[cat]}</label><select id="build-{cat}" name="{cat}" required><option value="">'+('Choisir…' if fr else 'Choose…')+f'</option>{options}</select><p data-build-detail="{cat}"></p></div>'
+ note=('Vérifications limitées au socket CPU/carte mère et au type de RAM. BIOS, dimensions, fixations du refroidisseur, ports de stockage, connecteurs et puissance de l’alimentation restent à vérifier dans les fiches exactes. Aucun FPS ni compatibilité complète ne sont garantis.' if fr else 'Checks cover CPU/motherboard socket and RAM type only. BIOS, dimensions, cooler mounting, storage ports, power connectors and PSU capacity still need checking against exact specifications. No FPS or complete compatibility is guaranteed.')
+ body=f'<div class="hero"><h1>{title}</h1><p class="intro">'+('Choisissez huit composants et comparez leur total de démonstration.' if fr else 'Choose eight components and compare their demonstration total.')+'</p></div><form id="pc-selector" class="pc-selector"><div class="builder-fields">'+fields+'</div><aside class="builder-summary"><h2>'+('Votre configuration' if fr else 'Your configuration')+'</h2><p id="build-progress"></p><div id="build-total" class="cart-total" aria-live="polite"></div><p class="shop-disclaimer">'+w['demo']+'</p><ul id="build-checks" aria-live="polite"></ul><p>'+note+'</p><button id="build-add" class="shop-button" disabled>'+('Ajouter les composants au panier' if fr else 'Add components to cart')+'</button><button type="reset" class="shop-button secondary">'+('Réinitialiser' if fr else 'Reset')+'</button><p id="build-status" role="status"></p><a href="'+BASE+cartpath(lang)+'">'+w['cart']+'</a></aside></form><noscript><p class="note">'+('Activez JavaScript pour calculer le total et utiliser le configurateur.' if fr else 'Enable JavaScript to calculate totals and use the builder.')+'</p></noscript><script type="application/json" id="builder-products">'+schema_text([p for p in PRODUCTS if p['category'] in cats])+'</script><script src="'+BASE+'assets/js/builder.js?v='+hashlib.sha256((ROOT/'assets/js/builder.js').read_bytes()).hexdigest()[:12]+'" defer></script>'
+ doc=document(title+' | NEXRIG',title+' — NEXRIG '+w['demo'],url,alt,lang,body,[(w['home'],homedir(lang)),(title,url)])
+ target=ROOT/url/'index.html';target.parent.mkdir(parents=True,exist_ok=True);target.write_text(doc)
+
 def compact_category_intro(doc, cat, lang, count):
  # Keep the original introduction and guide navigation below the product grid.
  if 'id="category-overview"' in doc:return doc
@@ -342,6 +355,7 @@ def main():
   shop=shop.replace('</head>','<script type="application/ld+json">'+schema_text(listing)+'</script></head>',1)
   target=ROOT/shopurl/'index.html';target.parent.mkdir(parents=True,exist_ok=True);target.write_text(shop)
   for p in PRODUCTS:build_product(p,lang)
+  build_selector(lang)
   build_cart(lang)
   target=ROOT/homedir(lang)/'index.html';doc=target.read_text();featured_ids=['nvidia-geforce-rtx-4060','amd-radeon-rx-7800-xt','amd-ryzen-5-5600','intel-core-i5-12400f'];featured=[next(p for p in PRODUCTS if p['id']==id) for id in featured_ids]
   block='<!-- featured:start -->\n<div class="shop-grid">'+''.join(card(p,lang) for p in featured)+'</div>\n<!-- featured:end -->'
@@ -350,7 +364,7 @@ def main():
    start=doc.index('        <div class="product-grid">');end=doc.index('\n      </div>\n    </section>',start);doc=doc[:start]+block+doc[end:]
   pcs=[p for p in PRODUCTS if p['category']=='pc']
   pcurl=CATEGORY_PATHS[lang]['pc']
-  builder=f'<section class="section builder" id="builder"><div class="container"><div class="section-head"><div><span class="eyebrow">NEXRIG</span><h2>'+('Des configurations PC gamer à comparer' if lang=='fr' else 'Gaming PC configurations to compare')+f'</h2></div><a class="text-link" href="{BASE+pcurl}">'+('Voir les 6 PC →' if lang=='fr' else 'View all 6 PCs →')+'</a></div><p class="intro">'+('Comparez les plateformes AMD et Intel, la carte graphique, la RAM et le stockage. Chaque fiche détaille une configuration complète proposée pour la démonstration, pas une machine assemblée ou testée.' if lang=='fr' else 'Compare AMD and Intel platforms, graphics, RAM and storage. Each page details a complete proposed demonstration configuration, not an assembled or tested machine.')+'</p><div class="shop-grid">'+''.join(card(p,lang) for p in pcs[:3])+'</div></div></section>'
+  builder=f'<section class="section builder" id="builder"><div class="container"><div class="section-head"><div><span class="eyebrow">NEXRIG</span><h2>'+('Des configurations PC gamer à comparer' if lang=='fr' else 'Gaming PC configurations to compare')+f'</h2></div><a class="text-link" href="{BASE+pcurl}">'+('Voir les 6 PC →' if lang=='fr' else 'View all 6 PCs →')+'</a></div><p><a class="shop-button" href="'+BASE+('configurateur/' if lang=='fr' else 'en/pc-builder/')+'">'+('Construire mon PC' if lang=='fr' else 'Build my PC')+'</a></p><p class="intro">'+('Comparez les plateformes AMD et Intel, la carte graphique, la RAM et le stockage. Chaque fiche détaille une configuration complète proposée pour la démonstration, pas une machine assemblée ou testée.' if lang=='fr' else 'Compare AMD and Intel platforms, graphics, RAM and storage. Each page details a complete proposed demonstration configuration, not an assembled or tested machine.')+'</p><div class="shop-grid">'+''.join(card(p,lang) for p in pcs[:3])+'</div></div></section>'
   prices=[p['demo_price_mad'] for p in pcs]
   budget_intro=('Les six configurations du catalogue vont de '+money(min(prices),lang)+' à '+money(max(prices),lang)+'. Ce sont des montants fictifs calculés à partir des huit composants, pas des prix du marché ni des devis. Aucun montage, système d’exploitation, périphérique ou service de livraison n’est inclus.' if lang=='fr' else 'The six catalogue configurations range from '+money(min(prices),lang)+' to '+money(max(prices),lang)+'. These are fictional totals calculated from eight components, not market prices or quotations. No assembly, operating system, peripherals or delivery service is included.')
   budget_links=('Comparez le '+f'<a href="{BASE+path(pcs[0],lang)}">NEXRIG Atlas</a>, le <a href="{BASE+path(pcs[1],lang)}">NEXRIG Pulse</a> et le <a href="{BASE+path(pcs[2],lang)}">NEXRIG Vector</a> : GPU, mémoire et plateforme diffèrent. Réservez aussi un budget à l’écran et aux accessoires si vous en avez besoin.' if lang=='fr' else 'Compare '+f'<a href="{BASE+path(pcs[0],lang)}">NEXRIG Atlas</a>, <a href="{BASE+path(pcs[1],lang)}">NEXRIG Pulse</a> and <a href="{BASE+path(pcs[2],lang)}">NEXRIG Vector</a>: graphics, memory and platform differ. Also allow for a monitor and accessories if needed.')
@@ -359,7 +373,7 @@ def main():
   doc=doc.replace('<h2>Exemples de composants</h2>','<h2>Notre sélection de composants</h2>').replace('<h2>Component examples</h2>','<h2>Our component selection</h2>');target.write_text(addcart(doc,lang))
  # Cart is intentionally excluded from the sitemap and marked noindex.
  ET.register_namespace('','http://www.sitemaps.org/schemas/sitemap/0.9');namespace='{http://www.sitemaps.org/schemas/sitemap/0.9}';sitemap=ET.Element(namespace+'urlset')
- urls=['boutique/','en/shop/']+[homedir(lang) for lang in ['fr','en']]+[url for lang in ['fr','en'] for url in CATEGORY_PATHS[lang].values()]+[path(p,lang) for lang in ['fr','en'] for p in PRODUCTS]
+ urls=['configurateur/','en/pc-builder/','boutique/','en/shop/']+[homedir(lang) for lang in ['fr','en']]+[url for lang in ['fr','en'] for url in CATEGORY_PATHS[lang].values()]+[path(p,lang) for lang in ['fr','en'] for p in PRODUCTS]
  for url in urls:ET.SubElement(ET.SubElement(sitemap,namespace+'url'),namespace+'loc').text=LIVE+url
  ET.indent(sitemap);ET.ElementTree(sitemap).write(ROOT/'sitemap.xml',encoding='UTF-8',xml_declaration=True)
  print(f'Rendered {len(PRODUCTS)} products in 2 languages, {2*len(CATEGORY_PATHS['fr'])} catalogues, 2 carts and {len(urls)} sitemap URLs.')

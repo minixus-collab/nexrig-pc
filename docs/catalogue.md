@@ -86,3 +86,7 @@ No new categories change the saved cart key. Always regenerate content-hashed as
 ## Grouped navigation
 
 The shared renderer groups hardware (including monitors and cases) under Components and keyboards, mice, chairs and audio under Accessories. Native details/summary controls work with keyboard and without JavaScript. Laptops and gaming PCs remain separate links. The shared cart link is outside navigation, before the homepage hamburger; existing homepage dismissal and focus handling remains in place. Headers on category, shop, product and cart pages use the same groups. Preserve all category URLs and the cart storage key.
+
+## Component selector
+
+`/configurateur/` and `/en/pc-builder/` are generated bilingual selectors for CPU, GPU, motherboard, RAM, storage, cooling, PSU and case. Demo totals come from catalogue prices. CPU/board socket and CPU/board RAM generation mismatches block cart additions. Other compatibility points remain explicitly unchecked; do not infer PSU sizing, BIOS certification or physical clearance from these checks. The selector saves only validated part IDs under `nexrig.demo-build.v1`; its add-build event lets the shared cart validate all eight IDs and increment them atomically, respecting its quantity limit. No FPS estimation or real checkout is included. Homepage `#builder` remains intact with a link to the selector. Run `node tests/builder-smoke.cjs` for totals, conflict blocking, persistence, responsive widths and shared-cart integration.

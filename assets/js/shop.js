@@ -124,6 +124,16 @@
     if (remove) { cart=cart.filter(item=>item.id!==remove.dataset.remove);save();announce(t.removed);document.querySelector('[data-remove], .cart-empty a')?.focus(); }
     if (event.target.closest('#clear-cart')) {cart=[];save();announce(t.cleared);document.querySelector('.cart-empty a')?.focus();}
   });
+  document.addEventListener('nexrig:add-build', event => {
+    const ids=event.detail?.ids;
+    if (!Array.isArray(ids) || ids.length!==8 || new Set(ids).size!==8 || ids.some(id=>!products.has(id))) return;
+    const categories=ids.map(id=>products.get(id).category);
+    if (!['cpu','gpu','motherboard','ram','storage','cooling','psu','case'].every(cat=>categories.includes(cat))) return;
+    if(ids.some(id=>cart.some(item=>item.id===id && item.quantity>=99))){announce(t.limit);return;}
+    ids.forEach(id=>{const item=cart.find(x=>x.id===id);if(item)item.quantity++;else cart.push({id,quantity:1});});
+    save();announce(en?'Components added to your demonstration cart.':'Composants ajoutés au panier de démonstration.');
+    document.dispatchEvent(new CustomEvent('nexrig:build-added'));
+  });
   document.addEventListener('change', event => {
     if (!event.target.matches('[data-quantity]')) return;
     const input=event.target, item=cart.find(entry=>entry.id===input.dataset.quantity), value=Number(input.value);
@@ -136,7 +146,7 @@
     if (!Array.isArray(data) || (catalogueCount && data.length !== catalogueCount)) throw Error('incomplete catalogue');
     const ids = new Set(data.map(p => p.id));
     if ([...document.querySelectorAll('[data-add-to-cart]')].some(button => !ids.has(button.dataset.addToCart))) throw Error('missing products');
-    products=new Map(data.map(p=>[p.id,p]));cart=read();render();initFilters();
+    products=new Map(data.map(p=>[p.id,p]));cart=read();render();initFilters();document.documentElement.dataset.cartReady="true";document.dispatchEvent(new CustomEvent("nexrig:cart-ready"));
     document.querySelectorAll('[data-add-to-cart]').forEach(button=>{button.disabled=false;});
     const loading=document.getElementById('cart-loading');if(loading)loading.hidden=true;
     const warning=document.getElementById('cart-storage-warning');if(warning&&!persistent){warning.hidden=false;warning.textContent=t.memory;}

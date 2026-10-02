@@ -279,8 +279,8 @@ class CatalogueTests(unittest.TestCase):
     def test_sitemap_and_cart_indexing(self):
         ns = {'s': 'http://www.sitemaps.org/schemas/sitemap/0.9'}
         urls = [loc.text for loc in ET.parse(ROOT / 'sitemap.xml').findall('s:url/s:loc', ns)]
-        self.assertEqual(len(urls), 592)
-        self.assertEqual(len(set(urls)), 592)
+        self.assertEqual(len(urls), 594)
+        self.assertEqual(len(set(urls)), 594)
         for url in urls:
             self.assertTrue((ROOT / url.removeprefix(LIVE) / 'index.html').is_file(), url)
         for folder in ['panier/', 'en/cart/']:
