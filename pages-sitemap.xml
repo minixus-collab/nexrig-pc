@@ -2,6 +2,18 @@
 <?xml-stylesheet type="text/xsl" href="sitemap.xsl"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/composants-pc/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/accessoires/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/en/components/</loc>
+  </url>
+  <url>
+    <loc>https://minixus-collab.github.io/nexrig-pc/en/accessories/</loc>
+  </url>
+  <url>
     <loc>https://minixus-collab.github.io/nexrig-pc/configurateur/</loc>
   </url>
   <url>

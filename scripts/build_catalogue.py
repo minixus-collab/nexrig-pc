@@ -157,12 +157,19 @@ def assets(doc):
  doc=re.sub(r'<script\s+[^>]*src="'+re.escape(BASE)+r'assets/js/navigation\.js(?:\?[^"]*)?"[^>]*></script>\s*','',doc)
  return doc.replace('</head>',SHOP_SCRIPT+'\n'+NAV_SCRIPT+'\n</head>',1)
 
+HUB_GROUPS = {'components':['gpu','cpu','ram','storage','psu','motherboard','cooling','case'],'accessories':['keyboard','mouse','chair','audio','controller']}
+HUB_PATHS = {'fr':{'components':'composants-pc/','accessories':'accessoires/'},'en':{'components':'en/components/','accessories':'en/accessories/'}}
+
+def hub_label(group,lang):
+ return {'fr':{'components':'Composants','accessories':'Accessoires'},'en':{'components':'Components','accessories':'Accessories'}}[lang][group]
+
 def grouped_navigation(lang):
  w=WORDS[lang]
  def link(cat):return f'<a href="{BASE+CATEGORY_PATHS[lang][cat]}">{w[cat]}</a>'
  groups=''
- for title,cats in [(('Composants' if lang=='fr' else 'Components'),['gpu','cpu','ram','storage','psu','motherboard','cooling','case']),(('Accessoires' if lang=='fr' else 'Accessories'),['keyboard','mouse','chair','audio','controller'])]:
-  groups+=f'<details class="nav-group"><summary>{title}</summary><div class="nav-group-links">'+''.join(link(cat) for cat in cats)+(f'<a href="{BASE+homedir(lang)}#components">'+('Tous les composants' if lang=='fr' else 'All components')+'</a>' if title in ['Components','Composants'] else '')+'</div></details>'
+ for group,cats in HUB_GROUPS.items():
+  title=hub_label(group,lang)
+  groups+=f'<details class="nav-group"><summary><a class="nav-hub-link" href="{BASE+HUB_PATHS[lang][group]}">{title}</a></summary><div class="nav-group-links">'+''.join(link(cat) for cat in cats)+(f'<a href="{BASE+homedir(lang)}#components">'+('Tous les composants' if lang=='fr' else 'All components')+'</a>' if group=='components' else '')+'</div></details>'
  return f'<a href="{BASE+homedir(lang)}">{w["home"]}</a><a href="{BASE+("boutique/" if lang=="fr" else "en/shop/")}">'+('Boutique' if lang=='fr' else 'Shop')+'</a>'+groups+link('monitor')+link('laptop')+link('pc')+f'<a href="{BASE+("configurateur/" if lang=="fr" else "en/pc-builder/")}">'+('Configuration PC' if lang=='fr' else 'PC configuration')+f'</a><a href="{BASE+homedir(lang)}#about">{w["about"]}</a>'
 
 def organize_header(doc,lang):
@@ -298,6 +305,27 @@ def build_cart(lang):
  url=cartpath(lang);doc=document(title+' | NEXRIG',title,url,cartpath('en' if lang=='fr' else 'fr'),lang,body,[(w['home'],homedir(lang)),(w['cart'],url)],noindex=True)
  target=ROOT/url/'index.html';target.parent.mkdir(parents=True,exist_ok=True);target.write_text(doc)
 
+def build_hub(group,lang):
+ fr=lang=='fr';url=HUB_PATHS[lang][group];alt=HUB_PATHS['en' if fr else 'fr'][group]
+ title=('Composants PC au Maroc' if group=='components' else 'Accessoires gaming au Maroc') if fr else ('PC components in Morocco' if group=='components' else 'Gaming accessories in Morocco')
+ intro=('Découvrez une sélection par catégorie, comparez les fiches et ajoutez des produits au panier de démonstration.' if fr else 'Explore a selection from each category, compare product details and add items to the demonstration cart.')
+ body=f'<div class="hero"><h1>{title}</h1><p class="intro">{intro}</p><p class="shop-disclaimer">{WORDS[lang]["demo"]}</p></div>'
+ chosen=[]
+ for cat in HUB_GROUPS[group]:
+  items=[p for p in PRODUCTS if p['category']==cat]
+  # Show different brands where possible; keep stable catalogue order.
+  selection=[];brands=set()
+  for p in items:
+   if p['brand'] not in brands:selection.append(p);brands.add(p['brand'])
+   if len(selection)==3:break
+  if len(selection)<3:selection+=[p for p in items if p not in selection][:3-len(selection)]
+  chosen+=selection
+  body+=f'<section id="selection-{cat}"><h2><a href="{BASE+CATEGORY_PATHS[lang][cat]}">{WORDS[lang][cat]}</a></h2><div class="shop-grid">'+''.join(card(p,lang) for p in selection)+f'</div><p class="hub-category-link"><a href="{BASE+CATEGORY_PATHS[lang][cat]}">'+('Voir toute la catégorie' if fr else 'View the full category')+' →</a></p></section>'
+ doc=document(title+' | NEXRIG',intro,url,alt,lang,body,[(WORDS[lang]['home'],homedir(lang)),(hub_label(group,lang),url)])
+ listing={'@context':'https://schema.org','@type':'ItemList','itemListElement':[{'@type':'ListItem','position':i+1,'name':p['name'],'url':LIVE+path(p,lang)} for i,p in enumerate(chosen)]}
+ doc=doc.replace('<body>','<body class="shop-category">',1).replace('</head>','<script type="application/ld+json">'+schema_text(listing)+'</script></head>',1)
+ target=ROOT/url/'index.html';target.parent.mkdir(parents=True,exist_ok=True);target.write_text(doc)
+
 def game_finder_panel(lang):
  fr=lang=='fr';games=json.loads((ROOT/'data/game-requirements.json').read_text())
  options=''.join(f'<option value="{g["id"]}">{e(g["name"])}</option>' for g in games['games'])
@@ -370,6 +398,7 @@ def main():
   target=ROOT/shopurl/'index.html';target.parent.mkdir(parents=True,exist_ok=True);target.write_text(shop)
   for p in PRODUCTS:build_product(p,lang)
   build_selector(lang)
+  for group in HUB_GROUPS:build_hub(group,lang)
   build_cart(lang)
   target=ROOT/homedir(lang)/'index.html';doc=target.read_text();featured_ids=['nvidia-geforce-rtx-4060','amd-radeon-rx-7800-xt','amd-ryzen-5-5600','intel-core-i5-12400f'];featured=[next(p for p in PRODUCTS if p['id']==id) for id in featured_ids]
   block='<!-- featured:start -->\n<div class="shop-grid">'+''.join(card(p,lang) for p in featured)+'</div>\n<!-- featured:end -->'
@@ -388,7 +417,7 @@ def main():
  # Preserve the submitted address as an index; exclude noindex cart pages.
  ET.register_namespace('','http://www.sitemaps.org/schemas/sitemap/0.9');namespace='{http://www.sitemaps.org/schemas/sitemap/0.9}'
  groups={
-  'pages-sitemap.xml':['configurateur/','en/pc-builder/','boutique/','en/shop/']+[homedir(lang) for lang in ['fr','en']],
+  'pages-sitemap.xml':[u for paths in HUB_PATHS.values() for u in paths.values()]+['configurateur/','en/pc-builder/','boutique/','en/shop/']+[homedir(lang) for lang in ['fr','en']],
   'categories-sitemap.xml':[url for lang in ['fr','en'] for url in CATEGORY_PATHS[lang].values()],
   'products-sitemap.xml':[path(p,lang) for lang in ['fr','en'] for p in PRODUCTS]
  }

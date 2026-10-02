@@ -8,7 +8,7 @@
       clearTimeout(closeTimer);
       if(event.pointerType==='mouse' && matchMedia('(hover: hover) and (pointer: fine)').matches && !group.open){group.open=true;hoverOpened=true;}
     });
-    group.querySelector('summary').addEventListener('click',event=>{if(hoverOpened && event.detail>0){event.preventDefault();hoverOpened=false;}});
+    group.querySelector('summary').addEventListener('click',event=>{if(!event.target.closest('a') && hoverOpened && event.detail>0){event.preventDefault();hoverOpened=false;}});
     group.addEventListener('pointerleave', event => {
       if(event.pointerType==='mouse' && matchMedia('(hover: hover) and (pointer: fine)').matches) {
         closeTimer=setTimeout(()=>{if(!group.querySelector('.nav-group-links')?.contains(document.activeElement)){group.open=false;hoverOpened=false;}},200);

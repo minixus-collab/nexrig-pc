@@ -118,3 +118,7 @@ Homepage hamburger and shared component/accessory groups open on fine-pointer mo
 ## Controllers
 
 Only controllers were added: `/manettes/` and `/en/controllers/`, with 12 Microsoft, Sony, 8BitDo, GameSir and Logitech models. The category appears in Accessories and the unified shop; details and both sitemaps are generated. Primary wired/wireless filtering does not list every supported connection; detail pages include connection modes. Avoid universal game/console/OS compatibility claims, undocumented included receivers/cables, polling rates, latency, Hall-effect claims or shared DualSense feature guarantees. Verify revisions and firmware against the manufacturer reference. Demo prices and original generic SVG remain labeled. Total catalogue: 291 products, 32 bilingual category pages, 620 sitemap URLs. Run `node tests/controllers-smoke.cjs` for filters, category/detail additions and bilingual saved-cart persistence.
+
+## Components and Accessories overview pages
+
+`/composants-pc/` / `/en/components/` and `/accessoires/` / `/en/accessories/` contain three existing products from each menu group category, favoring different brands. Menu heading text links to the overview while native summary keyboard/arrow interaction and hover retain category dropdowns. Full category/product URLs and shared cart IDs remain stable. Monitors stays outside Components. `pages-sitemap.xml` includes these four URLs (624 aggregate URLs). Run `node tests/hubs-smoke.cjs` for coverage, heading navigation and cart additions in both languages.
