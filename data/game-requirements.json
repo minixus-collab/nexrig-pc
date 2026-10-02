@@ -170,6 +170,310 @@
           "deepcool-ak620"
         ]
       }
+    },
+    {
+      "id": "overwatch-2",
+      "name": "Overwatch 2",
+      "requirement_level": "recommended",
+      "cpu_reference": "Intel Core i7 / AMD Ryzen 5",
+      "gpu_reference": "NVIDIA GTX 1060 / AMD R9 380",
+      "ram_gb": 8,
+      "storage_gb": 50,
+      "source_url": "https://us.battle.net/support/en/article/65159",
+      "component_options": {
+        "cpu": [
+          "amd-ryzen-5-5600",
+          "intel-core-i5-12400f",
+          "amd-ryzen-5-7600",
+          "amd-ryzen-7-7700",
+          "intel-core-i5-13600k",
+          "amd-ryzen-7-7800x3d"
+        ],
+        "gpu": [
+          "amd-radeon-rx-6600",
+          "nvidia-geforce-rtx-4060",
+          "amd-radeon-rx-7600",
+          "amd-radeon-rx-7800-xt",
+          "nvidia-geforce-rtx-4070-super",
+          "nvidia-geforce-rtx-4080-super"
+        ],
+        "ram": [
+          "corsair-vengeance-lpx-16gb-ddr4-3200",
+          "corsair-vengeance-32gb-ddr5-5600",
+          "corsair-vengeance-32gb-ddr5-6000"
+        ],
+        "storage": [
+          "crucial-p3-plus-1tb",
+          "samsung-990-pro-2tb"
+        ],
+        "motherboard": [
+          "msi-b550m-pro-vdh-wifi",
+          "msi-pro-b760m-a-ddr4",
+          "msi-pro-b650m-a-wifi",
+          "msi-mag-b650-tomahawk-wifi",
+          "msi-mag-z790-tomahawk-wifi"
+        ],
+        "case": [
+          "corsair-4000d-airflow"
+        ],
+        "psu": [
+          "corsair-cv650",
+          "seasonic-focus-gx-650-2020",
+          "corsair-rm750x-2021",
+          "seasonic-focus-gx-850-2020"
+        ],
+        "cooling": [
+          "deepcool-ak400",
+          "deepcool-ak620"
+        ]
+      }
+    },
+    {
+      "id": "gta-v-legacy",
+      "name": "GTA V Legacy",
+      "requirement_level": "recommended",
+      "cpu_reference": "Intel Core i5-3470 / AMD FX-8350",
+      "gpu_reference": "NVIDIA GTX 660 / AMD HD 7870",
+      "ram_gb": 8,
+      "storage_gb": 120,
+      "source_url": "https://store.steampowered.com/app/271590/Grand_Theft_Auto_V_Legacy/",
+      "component_options": {
+        "cpu": [
+          "amd-ryzen-5-5600",
+          "intel-core-i5-12400f",
+          "amd-ryzen-5-7600",
+          "amd-ryzen-7-7700",
+          "intel-core-i5-13600k",
+          "amd-ryzen-7-7800x3d"
+        ],
+        "gpu": [
+          "amd-radeon-rx-6600",
+          "nvidia-geforce-rtx-4060",
+          "amd-radeon-rx-7600",
+          "amd-radeon-rx-7800-xt",
+          "nvidia-geforce-rtx-4070-super",
+          "nvidia-geforce-rtx-4080-super"
+        ],
+        "ram": [
+          "corsair-vengeance-lpx-16gb-ddr4-3200",
+          "corsair-vengeance-32gb-ddr5-5600",
+          "corsair-vengeance-32gb-ddr5-6000"
+        ],
+        "storage": [
+          "crucial-p3-plus-1tb",
+          "samsung-990-pro-2tb"
+        ],
+        "motherboard": [
+          "msi-b550m-pro-vdh-wifi",
+          "msi-pro-b760m-a-ddr4",
+          "msi-pro-b650m-a-wifi",
+          "msi-mag-b650-tomahawk-wifi",
+          "msi-mag-z790-tomahawk-wifi"
+        ],
+        "case": [
+          "corsair-4000d-airflow"
+        ],
+        "psu": [
+          "corsair-cv650",
+          "seasonic-focus-gx-650-2020",
+          "corsair-rm750x-2021",
+          "seasonic-focus-gx-850-2020"
+        ],
+        "cooling": [
+          "deepcool-ak400",
+          "deepcool-ak620"
+        ]
+      }
+    },
+    {
+      "id": "gta-v-enhanced",
+      "name": "GTA V Enhanced",
+      "requirement_level": "minimum",
+      "cpu_reference": "Intel Core i7-4770 / AMD FX-9590",
+      "gpu_reference": "NVIDIA GTX 1630 / AMD RX 6400",
+      "ram_gb": 8,
+      "storage_gb": 105,
+      "source_url": "https://store.steampowered.com/app/3240220/Grand_Theft_Auto_V_Enhanced/",
+      "component_options": {
+        "cpu": [
+          "amd-ryzen-5-5600",
+          "intel-core-i5-12400f",
+          "amd-ryzen-5-7600",
+          "amd-ryzen-7-7700",
+          "intel-core-i5-13600k",
+          "amd-ryzen-7-7800x3d"
+        ],
+        "gpu": [
+          "amd-radeon-rx-6600",
+          "nvidia-geforce-rtx-4060",
+          "amd-radeon-rx-7600",
+          "amd-radeon-rx-7800-xt",
+          "nvidia-geforce-rtx-4070-super",
+          "nvidia-geforce-rtx-4080-super"
+        ],
+        "ram": [
+          "corsair-vengeance-lpx-16gb-ddr4-3200",
+          "corsair-vengeance-32gb-ddr5-5600",
+          "corsair-vengeance-32gb-ddr5-6000"
+        ],
+        "storage": [
+          "crucial-p3-plus-1tb",
+          "samsung-990-pro-2tb"
+        ],
+        "motherboard": [
+          "msi-b550m-pro-vdh-wifi",
+          "msi-pro-b760m-a-ddr4",
+          "msi-pro-b650m-a-wifi",
+          "msi-mag-b650-tomahawk-wifi",
+          "msi-mag-z790-tomahawk-wifi"
+        ],
+        "case": [
+          "corsair-4000d-airflow"
+        ],
+        "psu": [
+          "corsair-cv650",
+          "seasonic-focus-gx-650-2020",
+          "corsair-rm750x-2021",
+          "seasonic-focus-gx-850-2020"
+        ],
+        "cooling": [
+          "deepcool-ak400",
+          "deepcool-ak620"
+        ]
+      },
+      "storage_note": "SSD"
+    },
+    {
+      "id": "apex-legends",
+      "name": "Apex Legends",
+      "requirement_level": "recommended",
+      "cpu_reference": "Intel Core i5-3570K / AMD Ryzen 5",
+      "gpu_reference": "NVIDIA GTX 970 / AMD R9 290",
+      "ram_gb": 8,
+      "storage_gb": 75,
+      "source_url": "https://store.steampowered.com/app/1172470/Apex_Legends/",
+      "component_options": {
+        "cpu": [
+          "amd-ryzen-5-5600",
+          "intel-core-i5-12400f",
+          "amd-ryzen-5-7600",
+          "amd-ryzen-7-7700",
+          "intel-core-i5-13600k",
+          "amd-ryzen-7-7800x3d"
+        ],
+        "gpu": [
+          "amd-radeon-rx-6600",
+          "nvidia-geforce-rtx-4060",
+          "amd-radeon-rx-7600",
+          "amd-radeon-rx-7800-xt",
+          "nvidia-geforce-rtx-4070-super",
+          "nvidia-geforce-rtx-4080-super"
+        ],
+        "ram": [
+          "corsair-vengeance-lpx-16gb-ddr4-3200",
+          "corsair-vengeance-32gb-ddr5-5600",
+          "corsair-vengeance-32gb-ddr5-6000"
+        ],
+        "storage": [
+          "crucial-p3-plus-1tb",
+          "samsung-990-pro-2tb"
+        ],
+        "motherboard": [
+          "msi-b550m-pro-vdh-wifi",
+          "msi-pro-b760m-a-ddr4",
+          "msi-pro-b650m-a-wifi",
+          "msi-mag-b650-tomahawk-wifi",
+          "msi-mag-z790-tomahawk-wifi"
+        ],
+        "case": [
+          "corsair-4000d-airflow"
+        ],
+        "psu": [
+          "corsair-cv650",
+          "seasonic-focus-gx-650-2020",
+          "corsair-rm750x-2021",
+          "seasonic-focus-gx-850-2020"
+        ],
+        "cooling": [
+          "deepcool-ak400",
+          "deepcool-ak620"
+        ]
+      }
+    },
+    {
+      "id": "rocket-league",
+      "name": "Rocket League",
+      "requirement_level": "minimum",
+      "cpu_reference": "Dual-core 2.5 GHz",
+      "gpu_reference": "NVIDIA GTX 760 / AMD R7 270X",
+      "ram_gb": 4,
+      "storage_gb": 20,
+      "source_url": "https://store.epicgames.com/en-US/p/rocket-league",
+      "component_options": {
+        "cpu": [
+          "amd-ryzen-5-5600",
+          "intel-core-i5-12400f",
+          "amd-ryzen-5-7600",
+          "amd-ryzen-7-7700",
+          "intel-core-i5-13600k",
+          "amd-ryzen-7-7800x3d"
+        ],
+        "gpu": [
+          "amd-radeon-rx-6600",
+          "nvidia-geforce-rtx-4060",
+          "amd-radeon-rx-7600",
+          "amd-radeon-rx-7800-xt",
+          "nvidia-geforce-rtx-4070-super",
+          "nvidia-geforce-rtx-4080-super"
+        ],
+        "ram": [
+          "corsair-vengeance-lpx-16gb-ddr4-3200",
+          "corsair-vengeance-32gb-ddr5-5600",
+          "corsair-vengeance-32gb-ddr5-6000"
+        ],
+        "storage": [
+          "crucial-p3-plus-1tb",
+          "samsung-990-pro-2tb"
+        ],
+        "motherboard": [
+          "msi-b550m-pro-vdh-wifi",
+          "msi-pro-b760m-a-ddr4",
+          "msi-pro-b650m-a-wifi",
+          "msi-mag-b650-tomahawk-wifi",
+          "msi-mag-z790-tomahawk-wifi"
+        ],
+        "case": [
+          "corsair-4000d-airflow"
+        ],
+        "psu": [
+          "corsair-cv650",
+          "seasonic-focus-gx-650-2020",
+          "corsair-rm750x-2021",
+          "seasonic-focus-gx-850-2020"
+        ],
+        "cooling": [
+          "deepcool-ak400",
+          "deepcool-ak620"
+        ]
+      }
+    },
+    {
+      "id": "rust",
+      "name": "Rust",
+      "requirement_level": "pending",
+      "source_url": "https://store.steampowered.com/app/252490/Rust/"
+    },
+    {
+      "id": "arc-raiders",
+      "name": "ARC Raiders",
+      "requirement_level": "pending",
+      "source_url": "https://store.steampowered.com/app/1808500/ARC_Raiders/"
+    },
+    {
+      "id": "rainbow-six-siege",
+      "name": "Rainbow Six Siege / Siege X",
+      "requirement_level": "pending",
+      "source_url": "https://store.steampowered.com/app/359550/Tom_Clancys_Rainbow_Six_Siege/"
     }
   ]
 }

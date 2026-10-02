@@ -8,6 +8,7 @@
  let activeGame=null, activeBudget=Infinity;
  const build=document.getElementById('pc-selector');
  function show(apply=false){result.replaceChildren();const g=data.games.find(g=>g.id===document.getElementById('finder-game').value);if(!g)return;
+  if(g.requirement_level==='pending'){activeGame=null;node('h3',g.name);node('p',t('Exigences à vérifier : aucune suggestion automatique n’est proposée pour ce jeu. Vos composants actuels sont conservés.','Requirements need verification: automatic suggestions are not available for this game. Your current components are preserved.'));const source=node('a',t('Consulter les exigences officielles','View official requirements'));source.href=g.source_url;return;}
   node('h3',g.name+' · '+(g.requirement_level==='minimum'?t('Exigences minimales de référence','Minimum reference requirements'):t('Exigences recommandées de référence','Recommended reference requirements')));
   node('p',`CPU: ${g.cpu_reference} · GPU: ${g.gpu_reference} · RAM: ${g.ram_gb} GB`);
   if(g.storage_gb)node('p',t('Espace libre requis : ','Required free space: ')+g.storage_gb+' GB');if(g.storage_note)node('p',g.storage_note);
@@ -18,7 +19,7 @@
   const candidates=[];
   choices('cpu').forEach(cpu=>choices('motherboard').filter(board=>board.socket===cpu.socket).forEach(board=>choices('ram').filter(ram=>ram.capacity_gb>=g.ram_gb&&ram.memory_generation===board.memory_generation&&cpu.ram.includes(ram.memory_generation)).forEach(ram=>{
    const parts={cpu,motherboard:board,ram};
-   ['gpu','storage','cooling','psu','case'].forEach(cat=>{parts[cat]=choices(cat).find(p=>cat!=='storage'||((!g.storage_gb||p.capacity_gb>=g.storage_gb)&&(!g.storage_note||p.storage_protocol==='NVMe')));});
+   ['gpu','storage','cooling','psu','case'].forEach(cat=>{parts[cat]=choices(cat).find(p=>cat!=='storage'||((!g.storage_gb||p.capacity_gb>=g.storage_gb)&&(!g.storage_note||(g.storage_note==='NVMe SSD'?p.storage_protocol==='NVMe':p.drive_type==='SSD'))));});
    if(Object.values(parts).every(Boolean))candidates.push({parts,total:Object.values(parts).reduce((n,p)=>n+p.demo_price_mad,0)});
   })));
   candidates.sort((a,b)=>a.total-b.total);const suggestion=candidates.find(c=>c.total<=budget);
@@ -30,7 +31,7 @@
    const selected=Object.fromEntries(Object.keys(g.component_options).map(cat=>[cat,products.get(build.elements[cat].value)]));const warnings=[];
    if(!selected.ram||selected.ram.capacity_gb<activeGame.ram_gb)warnings.push(t('RAM sous la référence du jeu.','RAM is below the game reference.'));
    for(const cat of ['cpu','gpu'])if(!activeGame.component_options[cat].includes(selected[cat]?.id))warnings.push(t('Comparaison '+cat.toUpperCase()+' non évaluée pour ce jeu.','This '+cat.toUpperCase()+' comparison has not been assessed for this game.'));
-   const drive=selected.storage;if(!drive||(activeGame.storage_gb&&drive.capacity_gb<activeGame.storage_gb)||(activeGame.storage_note&&drive.storage_protocol!=='NVMe'))warnings.push(t('Stockage à vérifier selon les exigences du jeu.','Check storage against the game requirements.'));
+   const drive=selected.storage;if(!drive||(activeGame.storage_gb&&drive.capacity_gb<activeGame.storage_gb)||(activeGame.storage_note&&(activeGame.storage_note==='NVMe SSD'?drive.storage_protocol!=='NVMe':drive.drive_type!=='SSD')))warnings.push(t('Stockage à vérifier selon les exigences du jeu.','Check storage against the game requirements.'));
    const total=Object.values(selected).reduce((n,p)=>n+(p?.demo_price_mad||0),0);if(total>activeBudget)warnings.push(t('Votre sélection dépasse le budget de démonstration.','Your selection exceeds the demonstration budget.'));
    summary.textContent=activeGame.name+' · '+money(total)+' · '+(warnings.length?warnings.join(' '):t('Références matérielles de base prises en compte ; performances et compatibilité complète à vérifier.','Baseline hardware references considered; performance and complete compatibility still need verification.'));
   }
