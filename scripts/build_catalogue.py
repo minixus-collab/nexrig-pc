@@ -379,11 +379,26 @@ def main():
   builder=builder.replace('</div></div></section>','</div><div id="budget"><h2>'+('Quel prix pour un PC gamer au Maroc ?' if lang=='fr' else 'What budget should you plan for a gaming PC in Morocco?')+'</h2><p>'+budget_intro+'</p><p>'+budget_links+'</p><p><a class="text-link" href="'+BASE+CATEGORY_PATHS[lang]['monitor']+'">'+('Comparer les écrans' if lang=='fr' else 'Compare monitors')+' →</a></p></div></div></section>')
   doc=re.sub(r'<section class="section builder" id="builder">.*?</section>',lambda _:builder,doc,flags=re.S)
   doc=doc.replace('<h2>Exemples de composants</h2>','<h2>Notre sélection de composants</h2>').replace('<h2>Component examples</h2>','<h2>Our component selection</h2>');target.write_text(addcart(doc,lang))
- # Cart is intentionally excluded from the sitemap and marked noindex.
- ET.register_namespace('','http://www.sitemaps.org/schemas/sitemap/0.9');namespace='{http://www.sitemaps.org/schemas/sitemap/0.9}';sitemap=ET.Element(namespace+'urlset')
- urls=['configurateur/','en/pc-builder/','boutique/','en/shop/']+[homedir(lang) for lang in ['fr','en']]+[url for lang in ['fr','en'] for url in CATEGORY_PATHS[lang].values()]+[path(p,lang) for lang in ['fr','en'] for p in PRODUCTS]
- for url in urls:ET.SubElement(ET.SubElement(sitemap,namespace+'url'),namespace+'loc').text=LIVE+url
- ET.indent(sitemap);ET.ElementTree(sitemap).write(ROOT/'sitemap.xml',encoding='UTF-8',xml_declaration=True)
+ # Preserve the submitted address as an index; exclude noindex cart pages.
+ ET.register_namespace('','http://www.sitemaps.org/schemas/sitemap/0.9');namespace='{http://www.sitemaps.org/schemas/sitemap/0.9}'
+ groups={
+  'pages-sitemap.xml':['configurateur/','en/pc-builder/','boutique/','en/shop/']+[homedir(lang) for lang in ['fr','en']],
+  'categories-sitemap.xml':[url for lang in ['fr','en'] for url in CATEGORY_PATHS[lang].values()],
+  'products-sitemap.xml':[path(p,lang) for lang in ['fr','en'] for p in PRODUCTS]
+ }
+ def write_sitemap(filename,tree):
+  ET.indent(tree)
+  content=ET.tostring(tree,encoding='unicode')
+  (ROOT/filename).write_text('<?xml version="1.0" encoding="UTF-8"?>\n<?xml-stylesheet type="text/xsl" href="sitemap.xsl"?>\n'+content+'\n',encoding='utf-8')
+ index=ET.Element(namespace+'sitemapindex')
+ for filename,entries in groups.items():
+  sitemap=ET.Element(namespace+'urlset')
+  for url in entries:ET.SubElement(ET.SubElement(sitemap,namespace+'url'),namespace+'loc').text=LIVE+url
+  write_sitemap(filename,sitemap)
+  ET.SubElement(ET.SubElement(index,namespace+'sitemap'),namespace+'loc').text=LIVE+filename
+ write_sitemap('sitemap.xml',index)
+ urls=[url for entries in groups.values() for url in entries]
+
  print(f'Rendered {len(PRODUCTS)} products in 2 languages, {2*len(CATEGORY_PATHS['fr'])} catalogues, 2 carts and {len(urls)} sitemap URLs.')
 
 if __name__=='__main__':main()

@@ -278,7 +278,18 @@ class CatalogueTests(unittest.TestCase):
 
     def test_sitemap_and_cart_indexing(self):
         ns = {'s': 'http://www.sitemaps.org/schemas/sitemap/0.9'}
-        urls = [loc.text for loc in ET.parse(ROOT / 'sitemap.xml').findall('s:url/s:loc', ns)]
+        index = ET.parse(ROOT / 'sitemap.xml')
+        self.assertEqual(index.getroot().tag, '{http://www.sitemaps.org/schemas/sitemap/0.9}sitemapindex')
+        children = [loc.text for loc in index.findall('s:sitemap/s:loc', ns)]
+        self.assertEqual(set(children), {LIVE+name for name in ['pages-sitemap.xml','categories-sitemap.xml','products-sitemap.xml']})
+        urls = []
+        for child in children:
+            target = ROOT / child.removeprefix(LIVE)
+            self.assertIn('href="sitemap.xsl"', target.read_text())
+            tree = ET.parse(target)
+            self.assertEqual(tree.getroot().tag, '{http://www.sitemaps.org/schemas/sitemap/0.9}urlset')
+            urls.extend(loc.text for loc in tree.findall('s:url/s:loc', ns))
+        ET.parse(ROOT / 'sitemap.xsl')
         self.assertEqual(len(urls), 594)
         self.assertEqual(len(set(urls)), 594)
         for url in urls:
