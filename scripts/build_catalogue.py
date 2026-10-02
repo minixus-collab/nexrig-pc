@@ -150,10 +150,26 @@ def assets(doc):
  doc=re.sub(r'<script\s+[^>]*src="'+re.escape(BASE)+r'assets/js/shop\.js(?:\?[^"]*)?"[^>]*></script>\s*','',doc)
  return doc.replace('</head>',SHOP_SCRIPT+'\n</head>',1)
 
+def grouped_navigation(lang):
+ w=WORDS[lang]
+ def link(cat):return f'<a href="{BASE+CATEGORY_PATHS[lang][cat]}">{w[cat]}</a>'
+ groups=''
+ for title,cats in [(('Composants' if lang=='fr' else 'Components'),['gpu','cpu','ram','storage','psu','motherboard','cooling','monitor','case']),(('Accessoires' if lang=='fr' else 'Accessories'),['keyboard','mouse','chair','audio'])]:
+  groups+=f'<details class="nav-group"><summary>{title}</summary><div class="nav-group-links">'+''.join(link(cat) for cat in cats)+(f'<a href="{BASE+homedir(lang)}#components">'+('Tous les composants' if lang=='fr' else 'All components')+'</a>' if title in ['Components','Composants'] else '')+'</div></details>'
+ return f'<a href="{BASE+homedir(lang)}">{w["home"]}</a><a href="{BASE+("boutique/" if lang=="fr" else "en/shop/")}">'+('Boutique' if lang=='fr' else 'Shop')+'</a>'+groups+link('laptop')+link('pc')+f'<a href="{BASE+homedir(lang)}#builder">'+('Configuration PC' if lang=='fr' else 'PC configuration')+f'</a><a href="{BASE+homedir(lang)}#about">{w["about"]}</a>'
+
+def organize_header(doc,lang):
+ start=doc.index('<header');end=doc.index('</header>',start)
+ header=doc[start:end]
+ header=re.sub(r'<a class="cart-link".*?</a>\s*','',header,flags=re.S)
+ header=re.sub(r'(<nav\b[^>]*>).*?</nav>',lambda m:m.group(1)+grouped_navigation(lang)+'</nav>',header, count=1,flags=re.S)
+ if 'class="menu"' in header:header=header.replace(f'href="{BASE+homedir(lang)}#components"','href="#components"')
+ if 'class="menu"' in header:header=header.replace('<button class="menu"',cartlink(lang)+'<button class="menu"',1)
+ else:header=header.replace('<nav',cartlink(lang)+'<nav',1)
+ return doc[:start]+header+doc[end:]
+
 def addcart(doc,lang):
- if 'data-cart-link' not in doc:
-  start=doc.index('<nav',doc.index('<header'));end=doc.index('</nav>',start);doc=doc[:end]+cartlink(lang)+'\n      '+doc[end:]
- return assets(doc)
+ return assets(organize_header(doc,lang))
 
 def filters(products,lang):
  w=WORDS[lang];brands=sorted({p['brand'] for p in products})
@@ -203,7 +219,7 @@ def document(title,description,url,alternate,lang,body,bread=None,noindex=False)
  w=WORDS[lang];fr=url if lang=='fr' else alternate;en=url if lang=='en' else alternate
  nav=''.join(f'<a href="{BASE+target}">{label}</a>' for target,label in [(homedir(lang),w['home']),('boutique/' if lang=='fr' else 'en/shop/','Boutique' if lang=='fr' else 'Shop')]+[(CATEGORY_PATHS[lang][cat],w[cat]) for cat in ['gpu','cpu']+[key for key in CATEGORY_PATHS[lang] if key not in ['gpu','cpu']]])
  nav=nav.replace(f'<a href="{BASE+url}">',f'<a href="{BASE+url}" aria-current="page">')
- return f'''<!DOCTYPE html>
+ return organize_header(f'''<!DOCTYPE html>
 <html lang="{lang}"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>{e(title)}</title><meta name="description" content="{e(description)}"><link rel="canonical" href="{LIVE+url}">
 {'<meta name="robots" content="noindex,follow">' if noindex else ''}
@@ -211,9 +227,9 @@ def document(title,description,url,alternate,lang,body,bread=None,noindex=False)
 <link rel="stylesheet" href="{BASE}assets/css/category.css"><link rel="stylesheet" href="{BASE}assets/css/language.css"><link rel="stylesheet" href="{BASE}assets/css/shop.css">{SHOP_SCRIPT}
 {'<script type="application/ld+json">'+schema_text(breadcrumbs(bread,lang))+'</script>' if bread else ''}
 </head><body><a class="skip-link" href="#main">{w['skip']}</a><div class="demo-banner">{w['banner']}</div>
-<header class="header"><div class="container header-inner"><a class="logo" href="{BASE+homedir(lang)}" aria-label="NEXRIG - {w['home']}">NEX<span>RIG</span></a><a class="language-switch" href="{BASE+alternate}" lang="{'en' if lang=='fr' else 'fr'}" hreflang="{'en' if lang=='fr' else 'fr'}">{'English' if lang=='fr' else 'Français'}</a><nav aria-label="{w['nav']}">{nav}{cartlink(lang)}</nav></div></header>
+<header class="header"><div class="container header-inner"><a class="logo" href="{BASE+homedir(lang)}" aria-label="NEXRIG - {w['home']}">NEX<span>RIG</span></a><a class="language-switch" href="{BASE+alternate}" lang="{'en' if lang=='fr' else 'fr'}" hreflang="{'en' if lang=='fr' else 'fr'}">{'English' if lang=='fr' else 'Français'}</a><nav aria-label="{w['nav']}">{nav}</nav></div></header>
 <main class="container" id="main" tabindex="-1">{('<nav class="breadcrumbs" aria-label="'+w['bread']+'"><ol>'+''.join('<li>'+('<a href="'+BASE+target+'">'+e(name)+'</a>' if i<len(bread)-1 else '<span aria-current="page">'+e(name)+'</span>')+'</li>' for i,(name,target) in enumerate(bread))+'</ol></nav>') if bread else ''}{body}</main>
-<footer class="footer"><div class="container footer-inner"><span>© 2026 NEXRIG · {'Boutique fictive' if lang=='fr' else 'Fictional store'}</span><a href="{BASE+homedir(lang)}#about">{w['about']}</a><a href="{BASE+cartpath(lang)}">{w['cart']}</a></div></footer></body></html>\n'''
+<footer class="footer"><div class="container footer-inner"><span>© 2026 NEXRIG · {'Boutique fictive' if lang=='fr' else 'Fictional store'}</span><a href="{BASE+homedir(lang)}#about">{w['about']}</a><a href="{BASE+cartpath(lang)}">{w['cart']}</a></div></footer></body></html>\n''',lang)
 
 def product_description(p,lang):
  if lang=='fr':

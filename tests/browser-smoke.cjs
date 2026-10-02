@@ -14,9 +14,9 @@ const server=require('node:child_process').spawn('python3',['-m','http.server','
  for(const homepage of ['', 'en/']){
   await page.goto(base+homepage);await ready(page);
   for(const width of [390,1440]){
-   await page.setViewportSize({width,height:900});const menu=page.locator('.menu');const nav=page.locator('#navigation');assert(await menu.isVisible());assert.equal(await menu.getAttribute('aria-expanded'),'false');assert(await nav.evaluate(el=>el.inert));
+   await page.setViewportSize({width,height:900});const menu=page.locator('.menu');const nav=page.locator('#navigation');assert(await menu.isVisible());assert.equal(await menu.getAttribute('aria-expanded'),'false');assert(await nav.evaluate(el=>el.inert));assert(await page.locator('header [data-cart-link]').isVisible());assert.equal(await page.locator('header [data-cart-link]').evaluate(el=>el.closest('nav')),null);assert.equal(await nav.locator('.nav-group').count(),2);assert.equal(await nav.locator('.nav-group').nth(1).locator('a').count(),4);
    await menu.click();assert.equal(await menu.getAttribute('aria-expanded'),'true');await page.locator('#navigation a').first().focus();await page.keyboard.press('Escape');assert.equal(await menu.getAttribute('aria-expanded'),'false');assert(await menu.evaluate(el=>el===document.activeElement));
-   await menu.click();await page.locator('#navigation a[href="#components"]').click();assert.equal(await menu.getAttribute('aria-expanded'),'false');assert.equal(await page.evaluate(()=>document.activeElement.id),'components');
+   await menu.click();if(!await page.locator('#navigation .nav-group').first().evaluate(el=>el.open))await page.locator('#navigation .nav-group summary').first().click();await page.locator('#navigation a[href="#components"]').click();assert.equal(await menu.getAttribute('aria-expanded'),'false');assert.equal(await page.evaluate(()=>document.activeElement.id),'components');
    await menu.click();await page.mouse.click(5,899);assert.equal(await menu.getAttribute('aria-expanded'),'false');
   }
  }
