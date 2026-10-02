@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "games": [
+    {
+      "id": "fortnite",
+      "name": "Fortnite",
+      "requirement_level": "recommended",
+      "cpu_reference": "Intel Core i5-7300U / AMD Ryzen 3 3300U",
+      "gpu_reference": "NVIDIA GTX 960 / AMD R9 280",
+      "ram_gb": 16,
+      "storage_note": "NVMe SSD",
+      "source_url": "https://www.epicgames.com/help/en-US/c-Category_Fortnite/c-Fortnite_TechnicalSupport/what-are-the-system-requirements-for-fortnite-on-pc-a000084912",
+      "candidate_build_ids": ["nexrig-atlas", "nexrig-pulse", "nexrig-vector", "nexrig-horizon", "nexrig-orbit", "nexrig-apex"]
+    },
+    {
+      "id": "valorant",
+      "name": "Valorant",
+      "requirement_level": "recommended",
+      "cpu_reference": "Intel Core i3-4150 / AMD Ryzen 3 1200",
+      "gpu_reference": "NVIDIA GT 730 / AMD Radeon R7 240",
+      "ram_gb": 4,
+      "source_url": "https://playvalorant.com/en-us/specs/",
+      "candidate_build_ids": ["nexrig-atlas", "nexrig-pulse", "nexrig-vector", "nexrig-horizon", "nexrig-orbit", "nexrig-apex"]
+    },
+    {
+      "id": "cs2",
+      "name": "Counter-Strike 2",
+      "requirement_level": "minimum",
+      "cpu_reference": "Intel Core i5-750 · 4 hardware threads",
+      "gpu_reference": "DirectX 11 · Shader Model 5.0 · 1 GB VRAM",
+      "ram_gb": 8,
+      "storage_gb": 85,
+      "source_url": "https://store.steampowered.com/app/730/CounterStrike_2/",
+      "candidate_build_ids": ["nexrig-atlas", "nexrig-pulse", "nexrig-vector", "nexrig-horizon", "nexrig-orbit", "nexrig-apex"]
+    }
+  ]
+}
