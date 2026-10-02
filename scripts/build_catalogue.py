@@ -15,6 +15,7 @@ PRODUCTS = json.loads((ROOT / 'data/products.json').read_text())
 CATALOGUE_VERSION = hashlib.sha256((ROOT / 'data/products.json').read_bytes()).hexdigest()[:12]
 SCRIPT_VERSION = hashlib.sha256((ROOT / 'assets/js/shop.js').read_bytes()).hexdigest()[:12]
 SHOP_SCRIPT = f'<script src="{BASE}assets/js/shop.js?v={SCRIPT_VERSION}" data-catalogue-url="{BASE}data/products.json?v={CATALOGUE_VERSION}" data-catalogue-count="{len(PRODUCTS)}" defer></script>'
+NAV_SCRIPT = f'<script src="{BASE}assets/js/navigation.js?v={hashlib.sha256((ROOT / "assets/js/navigation.js").read_bytes()).hexdigest()[:12]}" defer></script>'
 CATEGORY_PATHS = {'fr': {'cpu': 'processeurs/', 'gpu': 'cartes-graphiques/', 'ram': 'ram/', 'storage': 'stockage/', 'psu': 'alimentations/', 'motherboard': 'cartes-meres/', 'cooling': 'refroidissement/', 'monitor': 'ecrans/'}, 'en': {'cpu': 'en/processors/', 'gpu': 'en/graphics-cards/', 'ram': 'en/ram/', 'storage': 'en/storage/', 'psu': 'en/power-supplies/', 'motherboard': 'en/motherboards/', 'cooling': 'en/cooling/', 'monitor': 'en/monitors/'}}
 WORDS = {
  'fr': {'home':'Accueil','cpu':'Processeurs','gpu':'Cartes graphiques','cart':'Panier','add':'Ajouter au panier','view':'Voir le produit','demo':'Prix de démonstration — aucune vente','illustration':'Illustration générique — pas une photo du modèle','cpu_alt':'Illustration générique d’un processeur','gpu_alt':'Illustration générique d’une carte graphique','cores':'cœurs','threads':'threads','socket':'Socket','supported_memory':'Mémoire compatible','ram':'Mémoire RAM','ram_alt':'Illustration générique d’une barrette mémoire RAM','monitor':'Écrans','monitor_alt':'Illustration générique d’un écran PC','cooling':'Refroidissement','cooling_alt':'Illustration générique de refroidisseurs CPU','motherboard':'Cartes mères','motherboard_alt':'Illustration générique d’une carte mère','psu':'Alimentations','psu_alt':'Illustration générique d’une alimentation PC','storage':'Stockage','storage_alt':'Illustration générique de supports de stockage','integrated':'Graphique intégré','yes':'Oui','no':'Non','memory':'Mémoire vidéo','architecture':'Architecture','search':'Rechercher un modèle','brand':'Marque','all':'Toutes les marques','sort':'Trier par','default':'Ordre du catalogue','low':'Prix démo croissant','high':'Prix démo décroissant','name':'Nom du modèle','reset':'Réinitialiser','empty':'Aucun modèle ne correspond à ces critères.','filters_note':'Les filtres et le panier nécessitent JavaScript. Les produits et leurs fiches restent consultables.','skip':'Aller au contenu','nav':'Navigation principale','bread':'Fil d’Ariane','banner':'Boutique fictive · Prix de démonstration · Aucune vente','about':'Le projet','back':'Retour à la catégorie','specs':'Caractéristiques du modèle','source':'Gamme du fabricant','related':'Autres modèles à découvrir','compat':'Compatibilité à vérifier'},
@@ -148,7 +149,8 @@ def assets(doc):
  css=f'<link rel="stylesheet" href="{BASE}assets/css/shop.css">'
  if css not in doc:doc=doc.replace('</head>',css+'\n</head>',1)
  doc=re.sub(r'<script\s+[^>]*src="'+re.escape(BASE)+r'assets/js/shop\.js(?:\?[^"]*)?"[^>]*></script>\s*','',doc)
- return doc.replace('</head>',SHOP_SCRIPT+'\n</head>',1)
+ doc=re.sub(r'<script\s+[^>]*src="'+re.escape(BASE)+r'assets/js/navigation\.js(?:\?[^"]*)?"[^>]*></script>\s*','',doc)
+ return doc.replace('</head>',SHOP_SCRIPT+'\n'+NAV_SCRIPT+'\n</head>',1)
 
 def grouped_navigation(lang):
  w=WORDS[lang]
@@ -224,7 +226,7 @@ def document(title,description,url,alternate,lang,body,bread=None,noindex=False)
 <title>{e(title)}</title><meta name="description" content="{e(description)}"><link rel="canonical" href="{LIVE+url}">
 {'<meta name="robots" content="noindex,follow">' if noindex else ''}
 <link rel="alternate" hreflang="fr" href="{LIVE+fr}"><link rel="alternate" hreflang="en" href="{LIVE+en}"><link rel="alternate" hreflang="x-default" href="{LIVE+fr}">
-<link rel="stylesheet" href="{BASE}assets/css/category.css"><link rel="stylesheet" href="{BASE}assets/css/language.css"><link rel="stylesheet" href="{BASE}assets/css/shop.css">{SHOP_SCRIPT}
+<link rel="stylesheet" href="{BASE}assets/css/category.css"><link rel="stylesheet" href="{BASE}assets/css/language.css"><link rel="stylesheet" href="{BASE}assets/css/shop.css">{SHOP_SCRIPT}{NAV_SCRIPT}
 {'<script type="application/ld+json">'+schema_text(breadcrumbs(bread,lang))+'</script>' if bread else ''}
 </head><body><a class="skip-link" href="#main">{w['skip']}</a><div class="demo-banner">{w['banner']}</div>
 <header class="header"><div class="container header-inner"><a class="logo" href="{BASE+homedir(lang)}" aria-label="NEXRIG - {w['home']}">NEX<span>RIG</span></a><a class="language-switch" href="{BASE+alternate}" lang="{'en' if lang=='fr' else 'fr'}" hreflang="{'en' if lang=='fr' else 'fr'}">{'English' if lang=='fr' else 'Français'}</a><nav aria-label="{w['nav']}">{nav}</nav></div></header>
