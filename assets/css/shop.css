@@ -50,3 +50,11 @@
 @media(max-width:650px){.blog-grid{grid-template-columns:1fr}}
 .gta-article-cover{margin:0 0 32px}.gta-article-cover img{display:block;width:100%;height:auto;border-radius:16px}.gta-article-cover figcaption{margin-top:8px}
 .website-rating{max-width:660px}.website-rating fieldset{border:0;padding:0;margin:20px 0}.website-rating legend{color:#b4bdcc;margin-bottom:12px}.rating-stars{display:flex;flex-wrap:wrap;gap:12px}.rating-option{position:relative;display:flex;align-items:center;justify-content:center;min-width:48px;min-height:48px;border:1px solid #46516b;border-radius:10px;background:#11151d;color:#9b83ff;cursor:pointer;font-size:1.6rem}.rating-option input{position:absolute;opacity:0;width:100%;height:100%;margin:0;cursor:pointer}.rating-option:has(input:checked){color:#20d6a7;border-color:#20d6a7;background:#202d43}.rating-option:has(input:focus-visible){outline:3px solid #20d6a7;outline-offset:4px}.rating-option small{font-size:.85rem;margin-left:6px}.rating-actions{display:flex;gap:12px;flex-wrap:wrap}
+
+/* Independent category links and controls: no nested interactive targets. */
+.header .nav-group-heading{display:flex;align-items:center;gap:8px}
+.header .nav-group-heading .nav-hub-link{display:flex;align-items:center;min-height:48px;color:inherit;font:inherit;text-decoration:none}
+.header .nav-group-toggle{display:flex;align-items:center;justify-content:center;flex:none;width:48px;height:48px;border:1px solid #2b3444;border-radius:10px;background:#171c26;color:#20d6a7;font:inherit;font-size:24px;cursor:pointer}
+.header .nav-group-toggle:focus-visible{outline:3px solid #20d6a7;outline-offset:3px}
+@media(max-width:1099px){.header .nav-group-heading{justify-content:space-between;gap:12px}.header .nav-group-heading .nav-hub-link{flex:1;min-width:0;min-height:56px}.header .nav-group-toggle{width:56px;height:56px}}
+@media(min-width:1100px){.responsive-navigation .primary-navigation{gap:8px!important}.header .nav-group-heading{gap:4px}.header .nav-group-toggle{width:32px;height:48px;border-color:transparent;background:transparent;font-size:18px}.header .nav-group-heading .nav-hub-link{min-height:48px}}

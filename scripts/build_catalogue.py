@@ -183,7 +183,7 @@ def grouped_navigation(lang):
  groups=''
  for group,cats in HUB_GROUPS.items():
   title=hub_label(group,lang)
-  groups+=f'<details class="nav-group"><summary><a class="nav-hub-link" href="{BASE+HUB_PATHS[lang][group]}">{title}</a></summary><div class="nav-group-links">'+''.join(link(cat) for cat in cats)+(f'<a href="{BASE+homedir(lang)}#components">'+('Tous les composants' if lang=='fr' else 'All components')+'</a>' if group=='components' else '')+'</div></details>'
+  groups+=f'<div class="nav-group"><div class="nav-group-heading"><a class="nav-hub-link" href="{BASE+HUB_PATHS[lang][group]}">{title}</a><button type="button" class="nav-group-toggle" aria-expanded="false" aria-controls="nav-{group}" aria-label="'+('Afficher les catégories : ' if lang=='fr' else 'Show categories: ')+f'{title}"><span aria-hidden="true">▾</span></button></div><div class="nav-group-links" id="nav-{group}" hidden>'+''.join(link(cat) for cat in cats)+(f'<a href="{BASE+homedir(lang)}#components">'+('Tous les composants' if lang=='fr' else 'All components')+'</a>' if group=='components' else '')+'</div></div>'
  return f'<a href="{BASE+homedir(lang)}">{w["home"]}</a><a href="{BASE+("boutique/" if lang=="fr" else "en/shop/")}">'+('Boutique' if lang=='fr' else 'Shop')+'</a>'+groups+link('monitor')+link('laptop')+link('pc')+f'<a href="{BASE+("configurateur/" if lang=="fr" else "en/pc-builder/")}">'+('Configuration PC' if lang=='fr' else 'PC configuration')+f'</a><a href="{BASE+("blog/" if lang=="fr" else "en/blog/")}">Blog</a><a href="{BASE+homedir(lang)}#about">{w["about"]}</a>'
 
 def organize_header(doc,lang):
