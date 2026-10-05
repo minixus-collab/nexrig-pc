@@ -381,7 +381,7 @@ def build_blog(lang):
  cards=[]
  for entry in BLOG_ARTICLES:
   title=entry['titles'][lang];description=entry['descriptions'][lang];url=entry['paths'][lang]
-  article=(ROOT/'content/blog'/(entry['slug']+'.'+lang+'.html')).read_text()
+  article=(ROOT/'content/blog'/(entry['slug']+'.'+lang+'.html')).read_text().removeprefix('<meta name="robots" content="noindex,follow">\n')
   bread=[(WORDS[lang]['home'],homedir(lang)),('Blog',index),(title,url)]
   doc=document(title+' | NEXRIG',description,url,entry['paths'][other],lang,article,bread)
   schema={'@context':'https://schema.org','@type':'BlogPosting','headline':title,'description':description,'inLanguage':lang,'mainEntityOfPage':LIVE+url}

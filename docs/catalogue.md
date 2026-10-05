@@ -132,3 +132,5 @@ The VRAM guide uses `content/blog/vram-carte-graphique.fr.html` and `.en.html`, 
 GPU temperature guide: `content/blog/temperature-carte-graphique.fr.html` and `.en.html`, with `/blog/temperature-carte-graphique/` and `/en/blog/gpu-temperature/`. Distinguish sensors, avoid universal thermal thresholds, and keep CPU cooler links explicitly separate from GPU cooling compatibility.
 
 Blog indexes use `.blog-grid` cards with decorative original SVG covers in `assets/images/blog/`, translated topic badges, excerpts and article links. Layout is three columns on desktop, two on tablet and one on mobile. The shared navigation includes the existing bilingual blog index. No invented bylines or dates are displayed.
+
+Blog source HTML carries `noindex,follow` because GitHub Pages can expose repository source paths. The renderer strips this source-only directive when generating the indexable article. Source files and carts stay outside the sitemap.
