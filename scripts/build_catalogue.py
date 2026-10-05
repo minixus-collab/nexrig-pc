@@ -137,10 +137,13 @@ def laptop_configuration_panel(p, lang):
  rows=''.join(f'<div><dt>{e(label)}</dt><dd>{pending}</dd></div>' for label in labels)
  return f'<details class="laptop-configuration"><summary>{title}</summary><p class="shop-specs">{note}</p><dl>{rows}</dl></details>'
 
+def product_image(p,lang):
+ return (p.get('image_url',BASE+'assets/images/'+p['category']+'-illustration.svg'),p.get('image_alt',{}).get(lang,WORDS[lang][p['category']+'_alt']),p.get('image_caption',{}).get(lang,WORDS[lang]['illustration']))
+
 def card(p, lang):
- w=WORDS[lang]
+ w=WORDS[lang];image,alt,caption=product_image(p,lang)
  return f'''<article class="shop-card" data-product-id="{p['id']}">
-  <figure><a href="{BASE+path(p,lang)}" tabindex="-1" aria-hidden="true"><img src="{BASE}assets/images/{p['category']}-illustration.svg" width="480" height="320" loading="lazy" alt=""></a><figcaption class="illustration-label">{w['illustration']}</figcaption></figure>
+  <figure><a href="{BASE+path(p,lang)}" tabindex="-1" aria-hidden="true"><img src="{e(image)}" width="480" height="320" loading="lazy" alt=""></a><figcaption class="illustration-label">{e(caption)}</figcaption></figure>
   <div class="shop-card-body"><span class="shop-brand">{e(p['brand'])}</span><h3><a href="{BASE+path(p,lang)}">{e(p['name'])}</a></h3><p class="shop-specs">{e(summary(p,lang))}</p>{laptop_configuration_panel(p,lang)}
     <div class="shop-price">{money(p['demo_price_mad'],lang)}<small class="shop-disclaimer">{w['demo']}</small></div>
     <div class="shop-actions"><button class="shop-button" type="button" data-add-to-cart="{p['id']}" aria-label="{w['add']} : {e(p['name'])}" disabled>{w['add']}</button><a class="detail-link" href="{BASE+path(p,lang)}">{w['view']}</a></div>
@@ -284,7 +287,8 @@ def build_product(p,lang):
   extra=('Les performances dépendent des jeux, des réglages, de la résolution et du reste du PC. Consultez des tests indépendants correspondant à votre usage.' if lang=='fr' else 'Performance depends on games, settings, resolution and the rest of the PC. Consult independent tests matching your use case.')
  related=[x for x in PRODUCTS if x['category']==p['category'] and x['id']!=p['id']][:4]
  dl=''.join(f'<div><dt>{e(k)}</dt><dd>{e(v)}</dd></div>' for k,v in label_specs(p,lang))
- body=f'''<div class="product-layout"><figure><img src="{BASE}assets/images/{p['category']}-illustration.svg" alt="{w[p['category']+'_alt']}" width="480" height="320"><figcaption class="illustration-label">{w['illustration']}</figcaption></figure>
+ image,image_alt,caption=product_image(p,lang)
+ body=f'''<div class="product-layout"><figure><img src="{e(image)}" alt="{e(image_alt)}" width="480" height="320"><figcaption class="illustration-label">{e(caption)}</figcaption></figure>
 <div class="product-purchase"><span class="eyebrow">{e(p['brand'])} · {w[p['category']]}</span><h1>{e(p['name'])}</h1><p>{e(product_description(p,lang))}</p><div class="shop-price">{money(p['demo_price_mad'],lang)}<small class="shop-disclaimer">{w['demo']}</small></div><dl aria-label="{w['specs']}">{dl}</dl>{laptop_configuration_panel(p,lang)}<button class="shop-button" type="button" data-add-to-cart="{p['id']}" disabled>{w['add']}</button><noscript><p class="shop-noscript">{w['filters_note']}</p></noscript><p class="shop-disclaimer">{'Le panier sert uniquement à simuler une sélection. Aucun paiement ni commande réelle.' if lang=='fr' else 'The cart only simulates a selection. No payment or real order.'}</p><a href="{BASE+category}">{w['back']}</a></div></div>
 <section><h2>{w['compat']}</h2><p>{advice}</p><p>{extra}</p><p><a href="{e(p['source'])}">{('Référence externe' if lang=='fr' else 'External reference') if p['category'] in ['audio','pc'] else w['source']} : {e(p['brand'])}</a></p></section>
 <section><h2>{w['related']}</h2><div class="shop-grid">{''.join(card(x,lang) for x in related)}</div></section>'''

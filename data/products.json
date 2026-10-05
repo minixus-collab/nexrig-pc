@@ -216,7 +216,16 @@
     "architecture": "RDNA 2",
     "vram_gb": 8,
     "memory_type": "GDDR6",
-    "source": "https://www.amd.com/en/products/graphics/desktops/radeon.html"
+    "source": "https://www.amd.com/en/products/graphics/desktops/radeon.html",
+    "image_url": "https://www.ultrapc.ma/24332-large_default/asus-radeon-rx-6600-dual-v2-8gb-gddr6.jpg",
+    "image_alt": {
+      "fr": "Image fournie pour ASUS Dual V2 Radeon RX 6600",
+      "en": "Supplied image for ASUS Dual V2 Radeon RX 6600"
+    },
+    "image_caption": {
+      "fr": "Photo d’une variante partenaire — modèle exact à vérifier",
+      "en": "Partner card example — verify the exact model"
+    }
   },
   {
     "id": "amd-radeon-rx-6650-xt",
@@ -227,7 +236,16 @@
     "architecture": "RDNA 2",
     "vram_gb": 8,
     "memory_type": "GDDR6",
-    "source": "https://www.amd.com/en/products/graphics/desktops/radeon.html"
+    "source": "https://www.amd.com/en/products/graphics/desktops/radeon.html",
+    "image_url": "https://www.ultrapc.ma/23986-large_default/asus-radeon-rx-6650-xt-dual-oc-8gb-gddr6.jpg",
+    "image_alt": {
+      "fr": "Image fournie pour ASUS Dual OC Radeon RX 6650 XT",
+      "en": "Supplied image for ASUS Dual OC Radeon RX 6650 XT"
+    },
+    "image_caption": {
+      "fr": "Photo d’une variante partenaire — modèle exact à vérifier",
+      "en": "Partner card example — verify the exact model"
+    }
   },
   {
     "id": "amd-radeon-rx-6700-xt",
@@ -238,7 +256,16 @@
     "architecture": "RDNA 2",
     "vram_gb": 12,
     "memory_type": "GDDR6",
-    "source": "https://www.amd.com/en/products/graphics/desktops/radeon.html"
+    "source": "https://www.amd.com/en/products/graphics/desktops/radeon.html",
+    "image_url": "https://www.materielmaroc.com/wp-content/uploads/2022/03/asus-tuf-rx6700.jpg",
+    "image_alt": {
+      "fr": "Image fournie pour ASUS TUF Radeon RX 6700 XT",
+      "en": "Supplied image for ASUS TUF Radeon RX 6700 XT"
+    },
+    "image_caption": {
+      "fr": "Photo d’une variante partenaire — modèle exact à vérifier",
+      "en": "Partner card example — verify the exact model"
+    }
   },
   {
     "id": "amd-radeon-rx-6750-xt",
@@ -249,7 +276,16 @@
     "architecture": "RDNA 2",
     "vram_gb": 12,
     "memory_type": "GDDR6",
-    "source": "https://www.amd.com/en/products/graphics/desktops/radeon.html"
+    "source": "https://www.amd.com/en/products/graphics/desktops/radeon.html",
+    "image_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRFGt2jB1fIuWrEsMLKP9Ecwk8sQnT-f-Iolvu_pCS7UQ&s=10",
+    "image_alt": {
+      "fr": "Image fournie pour Radeon RX 6750 XT",
+      "en": "Supplied image for Radeon RX 6750 XT"
+    },
+    "image_caption": {
+      "fr": "Photo d’une variante partenaire — modèle exact à vérifier",
+      "en": "Partner card example — verify the exact model"
+    }
   },
   {
     "id": "amd-radeon-rx-7600",

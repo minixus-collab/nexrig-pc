@@ -136,3 +136,7 @@ Blog indexes use `.blog-grid` cards with decorative original SVG covers in `asse
 Blog source HTML carries `noindex,follow` because GitHub Pages can expose repository source paths. The renderer strips this source-only directive when generating the indexable article. Source files and carts stay outside the sitemap.
 
 GTA 6 article: `/blog/gta-6-pc/` and `/en/blog/gta-6-pc/`, with original decorative skyline cover. Console schedule supplied by the user points to Rockstar VI; live verification was blocked by network policy. PC release timing and GPU/resolution pairings are not presented as confirmed requirements. Recheck official announcements before updating time-sensitive facts.
+
+## Product image overrides
+
+Optional `image_url`, bilingual `image_alt` and `image_caption` fields override category illustrations through `product_image`. Cart thumbnails use the same URL. The first four generic Radeon entries use user-supplied external image URLs; specific partner-card photos are labeled as examples and do not change the product identity or specifications. External image availability and exact visual matches have not been verified in this restricted environment. Regenerate after data/image changes so catalogue hashes remain synchronized.
