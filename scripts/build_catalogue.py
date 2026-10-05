@@ -153,7 +153,14 @@ def cartpath(lang):return 'en/cart/' if lang=='en' else 'panier/'
 def homedir(lang):return 'en/' if lang=='en' else ''
 def cartlink(lang):
  return f'<a class="cart-link" href="{BASE+cartpath(lang)}" data-cart-link>{WORDS[lang]["cart"]} <span class="cart-count" data-cart-count>0</span></a>'
+FAVICON_LINKS = f'<link rel="icon" type="image/png" sizes="96x96" href="{BASE}assets/images/brand/favicon-96.png"><link rel="icon" type="image/x-icon" href="{BASE}assets/images/brand/favicon.ico"><link rel="apple-touch-icon" sizes="180x180" href="{BASE}assets/images/brand/apple-touch-icon.png">'
+
+def favicon(doc):
+ if BASE+'assets/images/brand/favicon-96.png' not in doc:doc=doc.replace('</head>',FAVICON_LINKS+'\n</head>',1)
+ return doc
+
 def assets(doc):
+ doc=favicon(doc)
  css=f'<link rel="stylesheet" href="{BASE}assets/css/shop.css">'
  if css not in doc:doc=doc.replace('</head>',css+'\n</head>',1)
  doc=re.sub(r'<script\s+[^>]*src="'+re.escape(BASE)+r'assets/js/shop\.js(?:\?[^"]*)?"[^>]*></script>\s*','',doc)
@@ -241,7 +248,7 @@ def document(title,description,url,alternate,lang,body,bread=None,noindex=False)
 <title>{e(title)}</title><meta name="description" content="{e(description)}"><link rel="canonical" href="{LIVE+url}">
 {'<meta name="robots" content="noindex,follow">' if noindex else ''}
 <link rel="alternate" hreflang="fr" href="{LIVE+fr}"><link rel="alternate" hreflang="en" href="{LIVE+en}"><link rel="alternate" hreflang="x-default" href="{LIVE+fr}">
-<link rel="stylesheet" href="{BASE}assets/css/category.css"><link rel="stylesheet" href="{BASE}assets/css/language.css"><link rel="stylesheet" href="{BASE}assets/css/shop.css">{SHOP_SCRIPT}{NAV_SCRIPT}
+{FAVICON_LINKS}<link rel="stylesheet" href="{BASE}assets/css/category.css"><link rel="stylesheet" href="{BASE}assets/css/language.css"><link rel="stylesheet" href="{BASE}assets/css/shop.css">{SHOP_SCRIPT}{NAV_SCRIPT}
 {'<script type="application/ld+json">'+schema_text(breadcrumbs(bread,lang))+'</script>' if bread else ''}
 </head><body><a class="skip-link" href="#main">{w['skip']}</a><div class="demo-banner">{w['banner']}</div>
 <header class="header"><div class="container header-inner"><a class="logo" href="{BASE+homedir(lang)}" aria-label="NEXRIG - {w['home']}">NEX<span>RIG</span></a><a class="language-switch" href="{BASE+alternate}" lang="{'en' if lang=='fr' else 'fr'}" hreflang="{'en' if lang=='fr' else 'fr'}">{'English' if lang=='fr' else 'Français'}</a><nav aria-label="{w['nav']}">{nav}</nav></div></header>
