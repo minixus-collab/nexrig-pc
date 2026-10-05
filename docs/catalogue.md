@@ -125,7 +125,7 @@ Only controllers were added: `/manettes/` and `/en/controllers/`, with 12 Micros
 
 ## Blog guides
 
-`content/blog/quelle-carte-graphique-choisir.fr.html` and its `.en.html` counterpart hold the first editorial guide. `build_blog` in the renderer creates bilingual blog indexes and article pages using the shared header, footer and styles. Edit these content files, then regenerate. Category guidance links to the article; the article links to existing categories, product references and the PC builder. Keep informational targets separate from commercial category targets. The article makes no numerical benchmark or real market-price claims. Both indexes and articles are included in `pages-sitemap.xml` (632 total URLs).
+`content/blog/quelle-carte-graphique-choisir.fr.html` and its `.en.html` counterpart hold the first editorial guide. `build_blog` in the renderer creates bilingual blog indexes and article pages using the shared header, footer and styles. Edit these content files, then regenerate. Category guidance links to the article; the article links to existing categories, product references and the PC builder. Keep informational targets separate from commercial category targets. The article makes no numerical benchmark or real market-price claims. Both indexes and articles are included in `pages-sitemap.xml` (634 total URLs).
 
 The VRAM guide uses `content/blog/vram-carte-graphique.fr.html` and `.en.html`, published at `/blog/vram-carte-graphique/` and `/en/blog/what-is-vram/`. `BLOG_ARTICLES` holds bilingual metadata and stable paths for both articles. Add future entries here; generation updates blog indexes and sitemap coverage automatically.
 
@@ -134,3 +134,5 @@ GPU temperature guide: `content/blog/temperature-carte-graphique.fr.html` and `.
 Blog indexes use `.blog-grid` cards with decorative original SVG covers in `assets/images/blog/`, translated topic badges, excerpts and article links. Layout is three columns on desktop, two on tablet and one on mobile. The shared navigation includes the existing bilingual blog index. No invented bylines or dates are displayed.
 
 Blog source HTML carries `noindex,follow` because GitHub Pages can expose repository source paths. The renderer strips this source-only directive when generating the indexable article. Source files and carts stay outside the sitemap.
+
+GTA 6 article: `/blog/gta-6-pc/` and `/en/blog/gta-6-pc/`, with original decorative skyline cover. Console schedule supplied by the user points to Rockstar VI; live verification was blocked by network policy. PC release timing and GPU/resolution pairings are not presented as confirmed requirements. Recheck official announcements before updating time-sensitive facts.

@@ -372,6 +372,10 @@ BLOG_ARTICLES = [
  {'slug':'temperature-carte-graphique','paths':{'fr':'blog/temperature-carte-graphique/','en':'en/blog/gpu-temperature/'},
  'titles':{'fr':'Température de carte graphique : comment la surveiller et réduire la chauffe','en':'GPU temperature: how to monitor it and reduce heat'},
  'descriptions':{'fr':'Surveillez la température de votre carte graphique : GPU, hotspot, ventilation et nettoyage. Identifiez les vérifications utiles sans seuil universel.','en':'Learn to monitor GPU temperature, distinguish hotspot readings and check airflow, dust and settings without assuming one safe limit for every card.'}}
+,
+ {'slug':'gta-6-pc','paths':{'fr':'blog/gta-6-pc/','en':'en/blog/gta-6-pc/'},
+ 'titles':{'fr':'GTA 6 sur PC : date de sortie et configuration, ce que l’on sait','en':'GTA 6 on PC: release date and system requirements explained'},
+ 'descriptions':{'fr':'GTA 6 sur PC : distinguez annonces, estimations de configuration et benchmarks. Préparez votre PC sans confondre hypothèses et exigences officielles.','en':'GTA 6 on PC: understand release-date uncertainty, hardware estimates and what to verify before upgrading. No invented requirements or FPS promises.'}}
 
 ]
 
@@ -387,7 +391,7 @@ def build_blog(lang):
   schema={'@context':'https://schema.org','@type':'BlogPosting','headline':title,'description':description,'inLanguage':lang,'mainEntityOfPage':LIVE+url}
   doc=doc.replace('</head>','<script type="application/ld+json">'+schema_text(schema)+'</script></head>')
   target=ROOT/url/'index.html';target.parent.mkdir(parents=True,exist_ok=True);target.write_text(doc)
-  label=('Guide d’achat' if lang=='fr' else 'Buying guide') if entry['slug']=='quelle-carte-graphique-choisir' else ('Matériel expliqué' if lang=='fr' else 'Hardware explained')
+  label=('Gaming' if lang=='en' else 'Jeux PC') if entry['slug']=='gta-6-pc' else ('Guide d’achat' if lang=='fr' else 'Buying guide') if entry['slug']=='quelle-carte-graphique-choisir' else ('Matériel expliqué' if lang=='fr' else 'Hardware explained')
   cards.append('<article class="blog-card"><div class="blog-cover"><a href="'+BASE+url+'" tabindex="-1" aria-hidden="true"><img src="'+BASE+'assets/images/blog/'+entry['slug']+'.svg" width="800" height="400" loading="lazy" alt=""></a><span class="blog-category">'+label+'</span></div><div class="blog-card-body"><h3><a href="'+BASE+url+'">'+e(title)+'</a></h3><p>'+e(description)+'</p><a class="blog-read" href="'+BASE+url+'">'+('Lire l’article' if lang=='fr' else 'Read article')+' <span aria-hidden="true">→</span><span class="blog-sr-only"> : '+e(title)+'</span></a></div></article>')
  intro='Des guides pratiques pour comprendre le matériel et préparer votre configuration.' if lang=='fr' else 'Practical guides to understand hardware and plan your configuration.'
  body='<div class="hero"><span class="eyebrow">NEXRIG</span><h1>'+('Blog : guides pour votre PC gamer' if lang=='fr' else 'Blog: guides for your gaming PC')+'</h1><p class="intro">'+intro+'</p></div><section><h2>'+('Choisir ses composants' if lang=='fr' else 'Choosing components')+'</h2><div class="blog-grid">'+''.join(cards)+'</div></section>'
