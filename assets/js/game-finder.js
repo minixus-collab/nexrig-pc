@@ -5,7 +5,7 @@
  const en=document.documentElement.lang==='en',t=(fr,english)=>en?english:fr,base='/nexrig-pc/',result=document.getElementById('finder-result');
  const money=n=>new Intl.NumberFormat(en?'en-MA':'fr-MA',{style:'currency',currency:'MAD',maximumFractionDigits:0}).format(n);
  function node(tag,text,parent=result){const el=document.createElement(tag);el.textContent=text;parent.append(el);return el;}
- let activeGame=null, activeBudget=Infinity;
+ let activeGame=null, activeBudget=Infinity, autoRequest=0;
  const build=document.getElementById('pc-selector');
  function show(apply=false){result.replaceChildren();const g=data.games.find(g=>g.id===document.getElementById('finder-game').value);if(!g)return;
   if(g.requirement_level==='pending'){activeGame=null;node('h3',g.name);node('p',t('Exigences à vérifier : aucune suggestion automatique n’est proposée pour ce jeu. Vos composants actuels sont conservés.','Requirements need verification: automatic suggestions are not available for this game. Your current components are preserved.'));const source=node('a',t('Consulter les exigences officielles','View official requirements'));source.href=g.source_url;return;}
@@ -35,7 +35,16 @@
    const total=Object.values(selected).reduce((n,p)=>n+(p?.demo_price_mad||0),0);if(total>activeBudget)warnings.push(t('Votre sélection dépasse le budget de démonstration.','Your selection exceeds the demonstration budget.'));
    summary.textContent=activeGame.name+' · '+money(total)+' · '+(warnings.length?warnings.join(' '):t('Références matérielles de base prises en compte ; performances et compatibilité complète à vérifier.','Baseline hardware references considered; performance and complete compatibility still need verification.'));
   }
-  build.onchange=selectionStatus;build.onreset=()=>{activeGame=null;requestAnimationFrame(selectionStatus);};selectionStatus();
+  build.onchange=selectionStatus;build.onreset=()=>{activeGame=null;requestAnimationFrame(selectionStatus);};selectionStatus();return true;
  }
- form.addEventListener('submit',event=>{event.preventDefault();show(true);});form.addEventListener('change',()=>{activeGame=null;result.replaceChildren();node('p',t('Critères modifiés : demandez une nouvelle suggestion.','Criteria changed: request a new suggestion.'));});show(false);
+ form.addEventListener('submit',event=>{event.preventDefault();autoRequest++;show(true);});
+ form.addEventListener('change',event=>{
+  const request=++autoRequest;
+  if(event.target.id==='finder-game'){
+   if(!show(true))return;
+   const add=()=>{if(request!==autoRequest)return;const button=document.getElementById('build-add');if(!button.disabled)build.requestSubmit(button);};
+   if(document.documentElement.dataset.cartReady==='true')add();
+   else document.addEventListener('nexrig:cart-ready',()=>requestAnimationFrame(add),{once:true});
+  }else{activeGame=null;result.replaceChildren();node('p',t('Critères modifiés : demandez une nouvelle suggestion.','Criteria changed: request a new suggestion.'));}
+ });show(false);
 })();
