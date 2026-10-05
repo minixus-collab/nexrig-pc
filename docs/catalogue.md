@@ -144,3 +144,5 @@ Optional `image_url`, bilingual `image_alt` and `image_caption` fields override 
 ## Researched content keywords
 
 `scripts/content_seo.py` maintains the approved keyword map for Components, laptops, graphics cards, storage and the RTX 3060 12 GB product. The renderer applies metadata, short category headings/intros and idempotent guidance below product listings in both languages. French targets: composants PC / composants PC Maroc; PC portable gamer Maroc; carte graphique Maroc; SSD prix Maroc; RTX 3060 prix Maroc. English counterparts use natural translated intent, not assumed Ahrefs volumes. Price queries explicitly distinguish demonstration amounts from market prices. Homepage keyword targeting, canonicals, URLs and product identities remain intact.
+
+Laptop `example_configuration` fields hold user-supplied CPU, mobile GPU, RAM, storage and display details. These are family examples without verified retail SKUs or source links. Bilingual expandable panels label that scope; operating systems remain unspecified, and Nitro 5 refresh rate preserves the supplied alternatives. Example details are not added as verified Product structured-data properties.

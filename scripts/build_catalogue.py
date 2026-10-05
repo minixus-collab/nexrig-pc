@@ -131,11 +131,14 @@ def summary(p, lang):
 
 def laptop_configuration_panel(p, lang):
  if p['category']!='laptop':return ''
- labels=(['Processeur (CPU)', 'Carte graphique (GPU)', 'Mémoire RAM', 'Stockage SSD', 'Résolution / fréquence', 'Système d’exploitation'] if lang=='fr' else ['Processor (CPU)', 'Graphics (GPU)', 'RAM', 'SSD storage', 'Resolution / refresh rate', 'Operating system'])
+ labels=(['Processeur (CPU)', 'Carte graphique (GPU)', 'Mémoire RAM', 'Stockage SSD', 'Écran / fréquence', 'Système d’exploitation'] if lang=='fr' else ['Processor (CPU)', 'Graphics (GPU)', 'RAM', 'SSD storage', 'Display / refresh rate', 'Operating system'])
  pending='À confirmer selon la référence exacte' if lang=='fr' else 'To confirm for the exact SKU'
- title='Configuration à préciser' if lang=='fr' else 'Configuration to confirm'
- note=('La diagonale ci-dessus décrit la famille. Les composants et capacités ci-dessous ne sont pas encore renseignés pour une référence commerciale précise.' if lang=='fr' else 'The screen size above describes the model family. Components and capacities below have not yet been specified for an exact retail SKU.')
- rows=''.join(f'<div><dt>{e(label)}</dt><dd>{pending}</dd></div>' for label in labels)
+ example=p.get('example_configuration',{})
+ title=('Exemple de configuration : caractéristiques' if lang=='fr' else 'Example configuration: specifications') if example else ('Configuration à préciser' if lang=='fr' else 'Configuration to confirm')
+ note=('Exemple fourni pour cette famille, sans vérification d’une référence commerciale exacte. Les variantes peuvent différer. Les fréquences et puissances indiquées ne sont pas des performances garanties ; vérifiez le SKU et le mode de puissance GPU.' if lang=='fr' else 'Supplied example for this model family, not verified against an exact retail SKU. Variants may differ. Listed clocks and power figures are not guaranteed performance; check the exact SKU and GPU power mode.')
+ values=[example.get(key,pending) for key in ['cpu','gpu','ram','storage','display']]+[pending]
+ if lang=='fr':values=[v.replace('up to ','jusqu’à ').replace(' GB',' Go').replace(' TB',' To').replace('-inch',' pouces').replace('or 165 Hz, variant to confirm','ou 165 Hz, variante à confirmer') for v in values]
+ rows=''.join(f'<div><dt>{e(label)}</dt><dd>{e(value)}</dd></div>' for label,value in zip(labels,values))
  return f'<details class="laptop-configuration"><summary>{title}</summary><p class="shop-specs">{note}</p><dl>{rows}</dl></details>'
 
 def product_image(p,lang):
