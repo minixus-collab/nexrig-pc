@@ -369,7 +369,7 @@ BLOG_ARTICLES = [
  {'slug':'vram-carte-graphique', 'cover':'https://staticg.sportskeeda.com/editor/2023/04/2b0f3-16826203142306-1920.jpg', 'paths':{'fr':'blog/vram-carte-graphique/','en':'en/blog/what-is-vram/'},
   'titles':{'fr':'VRAM d’une carte graphique : à quoi sert-elle et combien faut-il ?','en':'What is VRAM, and how much do you need?'},
   'descriptions':{'fr':'Comprenez la VRAM d’une carte graphique, sa différence avec la RAM et les besoins selon vos jeux. Choisissez votre GPU sans comparer les Go seuls.','en':'Understand graphics card VRAM, how it differs from system RAM and what affects gaming requirements. Compare GPUs using more than memory capacity.'}},
- {'slug':'temperature-carte-graphique','paths':{'fr':'blog/temperature-carte-graphique/','en':'en/blog/gpu-temperature/'},
+ {'slug':'temperature-carte-graphique','cover':'https://cdn.mos.cms.futurecdn.net/W9gHnzYr6LU6Fg8FsrHouT.jpg','paths':{'fr':'blog/temperature-carte-graphique/','en':'en/blog/gpu-temperature/'},
  'titles':{'fr':'Température de carte graphique : comment la surveiller et réduire la chauffe','en':'GPU temperature: how to monitor it and reduce heat'},
  'descriptions':{'fr':'Surveillez la température de votre carte graphique : GPU, hotspot, ventilation et nettoyage. Identifiez les vérifications utiles sans seuil universel.','en':'Learn to monitor GPU temperature, distinguish hotspot readings and check airflow, dust and settings without assuming one safe limit for every card.'}}
 ,
