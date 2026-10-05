@@ -366,7 +366,7 @@ BLOG_ARTICLES = [
  {'slug':'quelle-carte-graphique-choisir', 'cover':'https://hyperpc.ae/images/support/articles/how-to-choose-vga/content/how-to-choose-vga-banner_webp.jpg', 'paths':{'fr':'blog/quelle-carte-graphique-choisir/','en':'en/blog/how-to-choose-a-graphics-card/'},
   'titles':{'fr':'Quelle carte graphique choisir pour son PC gamer ?','en':'How to choose a graphics card for your gaming PC'},
   'descriptions':{'fr':'Quelle carte graphique choisir ? Comparez jeux, résolution, VRAM et compatibilité pour sélectionner un GPU adapté à votre PC gamer.','en':'Learn how to choose a graphics card for your gaming PC: compare games, resolution, VRAM, benchmarks, compatibility and your whole-system budget.'}},
- {'slug':'vram-carte-graphique', 'paths':{'fr':'blog/vram-carte-graphique/','en':'en/blog/what-is-vram/'},
+ {'slug':'vram-carte-graphique', 'cover':'https://staticg.sportskeeda.com/editor/2023/04/2b0f3-16826203142306-1920.jpg', 'paths':{'fr':'blog/vram-carte-graphique/','en':'en/blog/what-is-vram/'},
   'titles':{'fr':'VRAM d’une carte graphique : à quoi sert-elle et combien faut-il ?','en':'What is VRAM, and how much do you need?'},
   'descriptions':{'fr':'Comprenez la VRAM d’une carte graphique, sa différence avec la RAM et les besoins selon vos jeux. Choisissez votre GPU sans comparer les Go seuls.','en':'Understand graphics card VRAM, how it differs from system RAM and what affects gaming requirements. Compare GPUs using more than memory capacity.'}},
  {'slug':'temperature-carte-graphique','paths':{'fr':'blog/temperature-carte-graphique/','en':'en/blog/gpu-temperature/'},
