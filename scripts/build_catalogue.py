@@ -362,21 +362,30 @@ def compact_category_intro(doc, cat, lang, count):
  doc=doc[:start]+compact+doc[end:]
  return doc.replace('</main>',overview+'</main>',1)
 
-BLOG_PATHS = {'fr': 'blog/quelle-carte-graphique-choisir/', 'en': 'en/blog/how-to-choose-a-graphics-card/'}
+BLOG_ARTICLES = [
+ {'slug':'quelle-carte-graphique-choisir', 'paths':{'fr':'blog/quelle-carte-graphique-choisir/','en':'en/blog/how-to-choose-a-graphics-card/'},
+  'titles':{'fr':'Quelle carte graphique choisir pour son PC gamer ?','en':'How to choose a graphics card for your gaming PC'},
+  'descriptions':{'fr':'Quelle carte graphique choisir ? Comparez jeux, résolution, VRAM et compatibilité pour sélectionner un GPU adapté à votre PC gamer.','en':'Learn how to choose a graphics card for your gaming PC: compare games, resolution, VRAM, benchmarks, compatibility and your whole-system budget.'}},
+ {'slug':'vram-carte-graphique', 'paths':{'fr':'blog/vram-carte-graphique/','en':'en/blog/what-is-vram/'},
+  'titles':{'fr':'VRAM d’une carte graphique : à quoi sert-elle et combien faut-il ?','en':'What is VRAM, and how much do you need?'},
+  'descriptions':{'fr':'Comprenez la VRAM d’une carte graphique, sa différence avec la RAM et les besoins selon vos jeux. Choisissez votre GPU sans comparer les Go seuls.','en':'Understand graphics card VRAM, how it differs from system RAM and what affects gaming requirements. Compare GPUs using more than memory capacity.'}}
+]
 
 def build_blog(lang):
  index='blog/' if lang=='fr' else 'en/blog/'
  other='en' if lang=='fr' else 'fr'
- title='Quelle carte graphique choisir pour son PC gamer ?' if lang=='fr' else 'How to choose a graphics card for your gaming PC'
- description=('Quelle carte graphique choisir ? Comparez jeux, résolution, VRAM et compatibilité pour sélectionner un GPU adapté à votre PC gamer.' if lang=='fr' else 'Learn how to choose a graphics card for your gaming PC: compare games, resolution, VRAM, benchmarks, compatibility and your whole-system budget.')
- article=(ROOT/'content/blog'/('quelle-carte-graphique-choisir.'+lang+'.html')).read_text()
- bread=[(WORDS[lang]['home'],homedir(lang)),('Blog',index),(title,BLOG_PATHS[lang])]
- doc=document(title+' | NEXRIG',description,BLOG_PATHS[lang],BLOG_PATHS[other],lang,article,bread)
- schema={'@context':'https://schema.org','@type':'BlogPosting','headline':title,'description':description,'inLanguage':lang,'mainEntityOfPage':LIVE+BLOG_PATHS[lang]}
- doc=doc.replace('</head>','<script type="application/ld+json">'+schema_text(schema)+'</script></head>')
- target=ROOT/BLOG_PATHS[lang]/'index.html';target.parent.mkdir(parents=True,exist_ok=True);target.write_text(doc)
+ cards=[]
+ for entry in BLOG_ARTICLES:
+  title=entry['titles'][lang];description=entry['descriptions'][lang];url=entry['paths'][lang]
+  article=(ROOT/'content/blog'/(entry['slug']+'.'+lang+'.html')).read_text()
+  bread=[(WORDS[lang]['home'],homedir(lang)),('Blog',index),(title,url)]
+  doc=document(title+' | NEXRIG',description,url,entry['paths'][other],lang,article,bread)
+  schema={'@context':'https://schema.org','@type':'BlogPosting','headline':title,'description':description,'inLanguage':lang,'mainEntityOfPage':LIVE+url}
+  doc=doc.replace('</head>','<script type="application/ld+json">'+schema_text(schema)+'</script></head>')
+  target=ROOT/url/'index.html';target.parent.mkdir(parents=True,exist_ok=True);target.write_text(doc)
+  cards.append('<article class="guide-card"><h3><a href="'+BASE+url+'">'+e(title)+'</a></h3><p>'+e(description)+'</p></article>')
  intro='Des guides pratiques pour comprendre le matériel et préparer votre configuration.' if lang=='fr' else 'Practical guides to understand hardware and plan your configuration.'
- body='<div class="hero"><span class="eyebrow">NEXRIG</span><h1>'+('Blog : guides pour votre PC gamer' if lang=='fr' else 'Blog: guides for your gaming PC')+'</h1><p class="intro">'+intro+'</p></div><section><h2>'+('Choisir ses composants' if lang=='fr' else 'Choosing components')+'</h2><div class="guide-grid"><article class="guide-card"><h3><a href="'+BASE+BLOG_PATHS[lang]+'">'+title+'</a></h3><p>'+description+'</p></article></div></section>'
+ body='<div class="hero"><span class="eyebrow">NEXRIG</span><h1>'+('Blog : guides pour votre PC gamer' if lang=='fr' else 'Blog: guides for your gaming PC')+'</h1><p class="intro">'+intro+'</p></div><section><h2>'+('Choisir ses composants' if lang=='fr' else 'Choosing components')+'</h2><div class="guide-grid">'+''.join(cards)+'</div></section>'
  target=ROOT/index/'index.html';target.parent.mkdir(parents=True,exist_ok=True);target.write_text(document('Blog PC gamer : guides matériels | NEXRIG' if lang=='fr' else 'Gaming PC blog: hardware guides | NEXRIG',intro,index,'en/blog/' if lang=='fr' else 'blog/',lang,body,[(WORDS[lang]['home'],homedir(lang)),('Blog',index)]))
 
 def main():
@@ -435,7 +444,7 @@ def main():
  # Preserve the submitted address as an index; exclude noindex cart pages.
  ET.register_namespace('','http://www.sitemaps.org/schemas/sitemap/0.9');namespace='{http://www.sitemaps.org/schemas/sitemap/0.9}'
  groups={
-  'pages-sitemap.xml':[u for paths in HUB_PATHS.values() for u in paths.values()]+['blog/','en/blog/']+list(BLOG_PATHS.values())+['configurateur/','en/pc-builder/','boutique/','en/shop/']+[homedir(lang) for lang in ['fr','en']],
+  'pages-sitemap.xml':[u for paths in HUB_PATHS.values() for u in paths.values()]+['blog/','en/blog/']+[url for entry in BLOG_ARTICLES for url in entry['paths'].values()]+['configurateur/','en/pc-builder/','boutique/','en/shop/']+[homedir(lang) for lang in ['fr','en']],
   'categories-sitemap.xml':[url for lang in ['fr','en'] for url in CATEGORY_PATHS[lang].values()],
   'products-sitemap.xml':[path(p,lang) for lang in ['fr','en'] for p in PRODUCTS]
  }
