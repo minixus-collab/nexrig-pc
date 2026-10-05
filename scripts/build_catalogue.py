@@ -170,7 +170,7 @@ def grouped_navigation(lang):
  for group,cats in HUB_GROUPS.items():
   title=hub_label(group,lang)
   groups+=f'<details class="nav-group"><summary><a class="nav-hub-link" href="{BASE+HUB_PATHS[lang][group]}">{title}</a></summary><div class="nav-group-links">'+''.join(link(cat) for cat in cats)+(f'<a href="{BASE+homedir(lang)}#components">'+('Tous les composants' if lang=='fr' else 'All components')+'</a>' if group=='components' else '')+'</div></details>'
- return f'<a href="{BASE+homedir(lang)}">{w["home"]}</a><a href="{BASE+("boutique/" if lang=="fr" else "en/shop/")}">'+('Boutique' if lang=='fr' else 'Shop')+'</a>'+groups+link('monitor')+link('laptop')+link('pc')+f'<a href="{BASE+("configurateur/" if lang=="fr" else "en/pc-builder/")}">'+('Configuration PC' if lang=='fr' else 'PC configuration')+f'</a><a href="{BASE+homedir(lang)}#about">{w["about"]}</a>'
+ return f'<a href="{BASE+homedir(lang)}">{w["home"]}</a><a href="{BASE+("boutique/" if lang=="fr" else "en/shop/")}">'+('Boutique' if lang=='fr' else 'Shop')+'</a>'+groups+link('monitor')+link('laptop')+link('pc')+f'<a href="{BASE+("configurateur/" if lang=="fr" else "en/pc-builder/")}">'+('Configuration PC' if lang=='fr' else 'PC configuration')+f'</a><a href="{BASE+("blog/" if lang=="fr" else "en/blog/")}">Blog</a><a href="{BASE+homedir(lang)}#about">{w["about"]}</a>'
 
 def organize_header(doc,lang):
  start=doc.index('<header');end=doc.index('</header>',start)
@@ -387,9 +387,10 @@ def build_blog(lang):
   schema={'@context':'https://schema.org','@type':'BlogPosting','headline':title,'description':description,'inLanguage':lang,'mainEntityOfPage':LIVE+url}
   doc=doc.replace('</head>','<script type="application/ld+json">'+schema_text(schema)+'</script></head>')
   target=ROOT/url/'index.html';target.parent.mkdir(parents=True,exist_ok=True);target.write_text(doc)
-  cards.append('<article class="guide-card"><h3><a href="'+BASE+url+'">'+e(title)+'</a></h3><p>'+e(description)+'</p></article>')
+  label=('Guide d’achat' if lang=='fr' else 'Buying guide') if entry['slug']=='quelle-carte-graphique-choisir' else ('Matériel expliqué' if lang=='fr' else 'Hardware explained')
+  cards.append('<article class="blog-card"><div class="blog-cover"><a href="'+BASE+url+'" tabindex="-1" aria-hidden="true"><img src="'+BASE+'assets/images/blog/'+entry['slug']+'.svg" width="800" height="400" loading="lazy" alt=""></a><span class="blog-category">'+label+'</span></div><div class="blog-card-body"><h3><a href="'+BASE+url+'">'+e(title)+'</a></h3><p>'+e(description)+'</p><a class="blog-read" href="'+BASE+url+'">'+('Lire l’article' if lang=='fr' else 'Read article')+' <span aria-hidden="true">→</span><span class="blog-sr-only"> : '+e(title)+'</span></a></div></article>')
  intro='Des guides pratiques pour comprendre le matériel et préparer votre configuration.' if lang=='fr' else 'Practical guides to understand hardware and plan your configuration.'
- body='<div class="hero"><span class="eyebrow">NEXRIG</span><h1>'+('Blog : guides pour votre PC gamer' if lang=='fr' else 'Blog: guides for your gaming PC')+'</h1><p class="intro">'+intro+'</p></div><section><h2>'+('Choisir ses composants' if lang=='fr' else 'Choosing components')+'</h2><div class="guide-grid">'+''.join(cards)+'</div></section>'
+ body='<div class="hero"><span class="eyebrow">NEXRIG</span><h1>'+('Blog : guides pour votre PC gamer' if lang=='fr' else 'Blog: guides for your gaming PC')+'</h1><p class="intro">'+intro+'</p></div><section><h2>'+('Choisir ses composants' if lang=='fr' else 'Choosing components')+'</h2><div class="blog-grid">'+''.join(cards)+'</div></section>'
  target=ROOT/index/'index.html';target.parent.mkdir(parents=True,exist_ok=True);target.write_text(document('Blog PC gamer : guides matériels | NEXRIG' if lang=='fr' else 'Gaming PC blog: hardware guides | NEXRIG',intro,index,'en/blog/' if lang=='fr' else 'blog/',lang,body,[(WORDS[lang]['home'],homedir(lang)),('Blog',index)]))
 
 def main():

@@ -130,3 +130,5 @@ Only controllers were added: `/manettes/` and `/en/controllers/`, with 12 Micros
 The VRAM guide uses `content/blog/vram-carte-graphique.fr.html` and `.en.html`, published at `/blog/vram-carte-graphique/` and `/en/blog/what-is-vram/`. `BLOG_ARTICLES` holds bilingual metadata and stable paths for both articles. Add future entries here; generation updates blog indexes and sitemap coverage automatically.
 
 GPU temperature guide: `content/blog/temperature-carte-graphique.fr.html` and `.en.html`, with `/blog/temperature-carte-graphique/` and `/en/blog/gpu-temperature/`. Distinguish sensors, avoid universal thermal thresholds, and keep CPU cooler links explicitly separate from GPU cooling compatibility.
+
+Blog indexes use `.blog-grid` cards with decorative original SVG covers in `assets/images/blog/`, translated topic badges, excerpts and article links. Layout is three columns on desktop, two on tablet and one on mobile. The shared navigation includes the existing bilingual blog index. No invented bylines or dates are displayed.
