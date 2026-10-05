@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Render the static bilingual catalogue from data/products.json. No third-party dependencies."""
 from pathlib import Path
+from content_seo import optimize
 import html
 import hashlib
 import json
@@ -305,6 +306,7 @@ def build_product(p,lang):
   body+=f'<section class="product-purchase"><h2>'+('Composition complète' if lang=='fr' else 'Complete component list')+f'</h2><dl>{rows}</dl><p>'+('Le prix de démonstration est la somme de ces huit composants, sans frais d’assemblage, système d’exploitation, périphériques, livraison ni taxes supplémentaires. Aucun service réel ni licence Windows n’est inclus.' if lang=='fr' else 'The demonstration price is the sum of these eight components, with no assembly fee, operating system, peripherals, delivery or additional taxes. No real service or Windows licence is included.')+'</p></section>'
  doc=document(p['name']+(' – Caractéristiques | NEXRIG' if lang=='fr' else ' – Specifications | NEXRIG'),product_description(p,lang),url,alt,lang,body,[(w['home'],homedir(lang)),(w[p['category']],category),(p['name'],url)])
  product={'@context':'https://schema.org','@type':'Product','name':p['name'],'brand':{'@type':'Brand','name':p['brand']},'category':w[p['category']],'description':product_description(p,lang),'url':LIVE+url,'additionalProperty':[{'@type':'PropertyValue','name':k,'value':v} for k,v in label_specs(p,lang)]}
+ if p['id']=='nvidia-geforce-rtx-3060':doc=optimize(doc,'rtx3060',lang)
  doc=doc.replace('</head>','<script type="application/ld+json">'+schema_text(product)+'</script>\n</head>',1)
  target=ROOT/url/'index.html';target.parent.mkdir(parents=True,exist_ok=True);target.write_text(doc)
 
@@ -333,6 +335,7 @@ def build_hub(group,lang):
   chosen+=selection
   body+=f'<section id="selection-{cat}"><h2><a href="{BASE+CATEGORY_PATHS[lang][cat]}">{WORDS[lang][cat]}</a></h2><div class="shop-grid">'+''.join(card(p,lang) for p in selection)+f'</div><p class="hub-category-link"><a href="{BASE+CATEGORY_PATHS[lang][cat]}">'+('Voir toute la catégorie' if fr else 'View the full category')+' →</a></p></section>'
  doc=document(title+' | NEXRIG',intro,url,alt,lang,body,[(WORDS[lang]['home'],homedir(lang)),(hub_label(group,lang),url)])
+ if group=='components':doc=optimize(doc,'components',lang)
  listing={'@context':'https://schema.org','@type':'ItemList','itemListElement':[{'@type':'ListItem','position':i+1,'name':p['name'],'url':LIVE+path(p,lang)} for i,p in enumerate(chosen)]}
  doc=doc.replace('<body>','<body class="shop-category">',1).replace('</head>','<script type="application/ld+json">'+schema_text(listing)+'</script></head>',1)
  target=ROOT/url/'index.html';target.parent.mkdir(parents=True,exist_ok=True);target.write_text(doc)
@@ -427,7 +430,7 @@ def main():
    doc=doc.replace('Découvrez deux exemples de GPU NVIDIA GeForce et AMD Radeon','Explorez les modèles NVIDIA GeForce et AMD Radeon').replace('Découvrez trois exemples de CPU AMD Ryzen et Intel Core','Explorez les modèles AMD Ryzen et Intel Core').replace('Explore two NVIDIA GeForce and AMD Radeon GPU examples','Explore NVIDIA GeForce and AMD Radeon models').replace('Explore three AMD Ryzen and Intel Core CPU examples','Explore AMD Ryzen and Intel Core models')
    doc=doc.replace('Il ne propose ni commande, ni stock, ni prix de vente.','Les prix sont des montants de démonstration ; aucune vente ni disponibilité en stock n’est annoncée.').replace('sans commande, stock ni prix de vente.','avec des prix de démonstration, sans commande réelle ni disponibilité en stock annoncée.').replace('It offers no ordering, stock availability or selling prices.','Prices are demonstration amounts; no real ordering or stock availability is offered.').replace('without ordering, stock availability or selling prices.','with demonstration prices, without real ordering or stock availability.')
    doc=doc.replace('Exemples de GPU</a>','Catalogue GPU</a>').replace('Exemples de CPU</a>','Catalogue CPU</a>').replace('GPU examples</a>','GPU catalogue</a>').replace('CPU examples</a>','CPU catalogue</a>')
-   doc=compact_category_intro(doc,cat,lang,len(items))
+   doc=optimize(compact_category_intro(doc,cat,lang,len(items)),cat,lang)
    doc=addcart(doc,lang)
    if 'class="shop-category"' not in doc:doc=doc.replace('<body>','<body class="shop-category">',1)
    listing={'@context':'https://schema.org','@type':'ItemList','itemListElement':[{'@type':'ListItem','position':i+1,'name':p['name'],'url':LIVE+path(p,lang)} for i,p in enumerate(items)]}

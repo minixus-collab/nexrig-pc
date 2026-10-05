@@ -140,3 +140,7 @@ GTA 6 article: `/blog/gta-6-pc/` and `/en/blog/gta-6-pc/`, with original decorat
 ## Product image overrides
 
 Optional `image_url`, bilingual `image_alt` and `image_caption` fields override category illustrations through `product_image`. Cart thumbnails use the same URL. The first four generic Radeon entries use user-supplied external image URLs; specific partner-card photos are labeled as examples and do not change the product identity or specifications. External image availability and exact visual matches have not been verified in this restricted environment. Regenerate after data/image changes so catalogue hashes remain synchronized.
+
+## Researched content keywords
+
+`scripts/content_seo.py` maintains the approved keyword map for Components, laptops, graphics cards, storage and the RTX 3060 12 GB product. The renderer applies metadata, short category headings/intros and idempotent guidance below product listings in both languages. French targets: composants PC / composants PC Maroc; PC portable gamer Maroc; carte graphique Maroc; SSD prix Maroc; RTX 3060 prix Maroc. English counterparts use natural translated intent, not assumed Ahrefs volumes. Price queries explicitly distinguish demonstration amounts from market prices. Homepage keyword targeting, canonicals, URLs and product identities remain intact.
