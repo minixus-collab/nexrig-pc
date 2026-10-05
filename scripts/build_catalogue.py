@@ -27,7 +27,7 @@ EXPANSION_PATHS = {
  'controller':('manettes/','en/controllers/'),
  'case':('boitiers/','en/cases/'), 'laptop':('ordinateurs-portables/','en/laptops/'),
  'keyboard':('claviers/','en/keyboards/'), 'mouse':('souris/','en/mice/'), 'chair':('chaises-gaming/','en/gaming-chairs/'), 'audio':('audio/','en/audio/'), 'pc':('pc-gamer/','en/gaming-pcs/')}
-EXPANSION_LABELS = {'fr':{'controller':'Manettes','pc':'PC gamer assemblés','audio':'Audio','case':'Boîtiers PC','laptop':'Ordinateurs portables','keyboard':'Claviers','mouse':'Souris','chair':'Chaises gaming'},'en':{'controller':'Controllers','pc':'Gaming PCs','audio':'Audio','case':'PC cases','laptop':'Laptops','keyboard':'Keyboards','mouse':'Mice','chair':'Gaming chairs'}}
+EXPANSION_LABELS = {'fr':{'controller':'Manettes','pc':'PC gamer fixes','audio':'Audio','case':'Boîtiers PC','laptop':'Ordinateurs portables','keyboard':'Claviers','mouse':'Souris','chair':'Chaises gaming'},'en':{'controller':'Controllers','pc':'Gaming Desktops','audio':'Audio','case':'PC cases','laptop':'Laptops','keyboard':'Keyboards','mouse':'Mice','chair':'Gaming chairs'}}
 EXPANSION_FIELDS = {
  'controller':[('connection_type','Connexion principale','Primary connection')],
  'pc':[('cpu_platform','Plateforme CPU','CPU platform'),('memory_generation','Mémoire','Memory')],
