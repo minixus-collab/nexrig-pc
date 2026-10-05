@@ -122,3 +122,7 @@ Only controllers were added: `/manettes/` and `/en/controllers/`, with 12 Micros
 ## Components and Accessories overview pages
 
 `/composants-pc/` / `/en/components/` and `/accessoires/` / `/en/accessories/` contain three existing products from each menu group category, favoring different brands. Menu heading text links to the overview while native summary keyboard/arrow interaction and hover retain category dropdowns. Full category/product URLs and shared cart IDs remain stable. Monitors stays outside Components. `pages-sitemap.xml` includes these four URLs (624 aggregate URLs). Run `node tests/hubs-smoke.cjs` for coverage, heading navigation and cart additions in both languages.
+
+## Blog guides
+
+`content/blog/quelle-carte-graphique-choisir.fr.html` and its `.en.html` counterpart hold the first editorial guide. `build_blog` in the renderer creates bilingual blog indexes and article pages using the shared header, footer and styles. Edit these content files, then regenerate. Category guidance links to the article; the article links to existing categories, product references and the PC builder. Keep informational targets separate from commercial category targets. The article makes no numerical benchmark or real market-price claims. Both indexes and articles are included in `pages-sitemap.xml` (628 total URLs).

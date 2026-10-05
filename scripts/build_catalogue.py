@@ -362,6 +362,23 @@ def compact_category_intro(doc, cat, lang, count):
  doc=doc[:start]+compact+doc[end:]
  return doc.replace('</main>',overview+'</main>',1)
 
+BLOG_PATHS = {'fr': 'blog/quelle-carte-graphique-choisir/', 'en': 'en/blog/how-to-choose-a-graphics-card/'}
+
+def build_blog(lang):
+ index='blog/' if lang=='fr' else 'en/blog/'
+ other='en' if lang=='fr' else 'fr'
+ title='Quelle carte graphique choisir pour son PC gamer ?' if lang=='fr' else 'How to choose a graphics card for your gaming PC'
+ description=('Quelle carte graphique choisir ? Comparez jeux, résolution, VRAM et compatibilité pour sélectionner un GPU adapté à votre PC gamer.' if lang=='fr' else 'Learn how to choose a graphics card for your gaming PC: compare games, resolution, VRAM, benchmarks, compatibility and your whole-system budget.')
+ article=(ROOT/'content/blog'/('quelle-carte-graphique-choisir.'+lang+'.html')).read_text()
+ bread=[(WORDS[lang]['home'],homedir(lang)),('Blog',index),(title,BLOG_PATHS[lang])]
+ doc=document(title+' | NEXRIG',description,BLOG_PATHS[lang],BLOG_PATHS[other],lang,article,bread)
+ schema={'@context':'https://schema.org','@type':'BlogPosting','headline':title,'description':description,'inLanguage':lang,'mainEntityOfPage':LIVE+BLOG_PATHS[lang]}
+ doc=doc.replace('</head>','<script type="application/ld+json">'+schema_text(schema)+'</script></head>')
+ target=ROOT/BLOG_PATHS[lang]/'index.html';target.parent.mkdir(parents=True,exist_ok=True);target.write_text(doc)
+ intro='Des guides pratiques pour comprendre le matériel et préparer votre configuration.' if lang=='fr' else 'Practical guides to understand hardware and plan your configuration.'
+ body='<div class="hero"><span class="eyebrow">NEXRIG</span><h1>'+('Blog : guides pour votre PC gamer' if lang=='fr' else 'Blog: guides for your gaming PC')+'</h1><p class="intro">'+intro+'</p></div><section><h2>'+('Choisir ses composants' if lang=='fr' else 'Choosing components')+'</h2><div class="guide-grid"><article class="guide-card"><h3><a href="'+BASE+BLOG_PATHS[lang]+'">'+title+'</a></h3><p>'+description+'</p></article></div></section>'
+ target=ROOT/index/'index.html';target.parent.mkdir(parents=True,exist_ok=True);target.write_text(document('Blog PC gamer : guides matériels | NEXRIG' if lang=='fr' else 'Gaming PC blog: hardware guides | NEXRIG',intro,index,'en/blog/' if lang=='fr' else 'blog/',lang,body,[(WORDS[lang]['home'],homedir(lang)),('Blog',index)]))
+
 def main():
  assert len({p['id'] for p in PRODUCTS})==len(PRODUCTS),'Duplicate product IDs'
  for p in PRODUCTS:
@@ -397,6 +414,7 @@ def main():
   shop=shop.replace('</head>','<script type="application/ld+json">'+schema_text(listing)+'</script></head>',1)
   target=ROOT/shopurl/'index.html';target.parent.mkdir(parents=True,exist_ok=True);target.write_text(shop)
   for p in PRODUCTS:build_product(p,lang)
+  build_blog(lang)
   build_selector(lang)
   for group in HUB_GROUPS:build_hub(group,lang)
   build_cart(lang)
@@ -417,7 +435,7 @@ def main():
  # Preserve the submitted address as an index; exclude noindex cart pages.
  ET.register_namespace('','http://www.sitemaps.org/schemas/sitemap/0.9');namespace='{http://www.sitemaps.org/schemas/sitemap/0.9}'
  groups={
-  'pages-sitemap.xml':[u for paths in HUB_PATHS.values() for u in paths.values()]+['configurateur/','en/pc-builder/','boutique/','en/shop/']+[homedir(lang) for lang in ['fr','en']],
+  'pages-sitemap.xml':[u for paths in HUB_PATHS.values() for u in paths.values()]+['blog/','en/blog/']+list(BLOG_PATHS.values())+['configurateur/','en/pc-builder/','boutique/','en/shop/']+[homedir(lang) for lang in ['fr','en']],
   'categories-sitemap.xml':[url for lang in ['fr','en'] for url in CATEGORY_PATHS[lang].values()],
   'products-sitemap.xml':[path(p,lang) for lang in ['fr','en'] for p in PRODUCTS]
  }
