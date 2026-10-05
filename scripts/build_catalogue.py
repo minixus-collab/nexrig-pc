@@ -363,7 +363,7 @@ def compact_category_intro(doc, cat, lang, count):
  return doc.replace('</main>',overview+'</main>',1)
 
 BLOG_ARTICLES = [
- {'slug':'quelle-carte-graphique-choisir', 'paths':{'fr':'blog/quelle-carte-graphique-choisir/','en':'en/blog/how-to-choose-a-graphics-card/'},
+ {'slug':'quelle-carte-graphique-choisir', 'cover':'https://hyperpc.ae/images/support/articles/how-to-choose-vga/content/how-to-choose-vga-banner_webp.jpg', 'paths':{'fr':'blog/quelle-carte-graphique-choisir/','en':'en/blog/how-to-choose-a-graphics-card/'},
   'titles':{'fr':'Quelle carte graphique choisir pour son PC gamer ?','en':'How to choose a graphics card for your gaming PC'},
   'descriptions':{'fr':'Quelle carte graphique choisir ? Comparez jeux, résolution, VRAM et compatibilité pour sélectionner un GPU adapté à votre PC gamer.','en':'Learn how to choose a graphics card for your gaming PC: compare games, resolution, VRAM, benchmarks, compatibility and your whole-system budget.'}},
  {'slug':'vram-carte-graphique', 'paths':{'fr':'blog/vram-carte-graphique/','en':'en/blog/what-is-vram/'},
