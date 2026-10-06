@@ -107,6 +107,15 @@
     panel.innerHTML = `<h2 id="gpu-comparison-title">${words.title}</h2><p>${words.help}</p><p class="comparison-count" role="status" aria-live="polite"></p><ul class="comparison-selection"></ul><div class="comparison-actions"><button type="button" class="shop-button" data-show-comparison>${words.compare}</button><button type="button" class="shop-button secondary" data-clear-comparison>${words.clear}</button></div><p class="comparison-limit"></p><div class="comparison-results" hidden><p>${words.note}</p><div class="comparison-scroll" tabindex="0" role="region" aria-label="${words.caption}"></div></div>`;
     cards[0].closest('main').append(panel);
     const results = panel.querySelector('.comparison-results'), scroll = panel.querySelector('.comparison-scroll');
+    const shortcut = document.createElement('button');shortcut.type='button';shortcut.className='shop-button comparison-shortcut';shortcut.hidden=true;
+    document.body.append(shortcut);
+    let panelVisible = false;
+    function shortcutState(){shortcut.hidden=!selected.length||panelVisible;shortcut.textContent=words.compare+` (${selected.length}/3)`;}
+    if ('IntersectionObserver' in window) new IntersectionObserver(entries=>{panelVisible=entries[0].isIntersecting;shortcutState();}).observe(panel);
+    shortcut.addEventListener('click',()=>{
+      if(selected.length>=2){results.hidden=false;scroll.focus();scroll.scrollIntoView({block:'center',behavior:'instant'});}
+      else {const heading=panel.querySelector('h2');heading.tabIndex=-1;heading.focus();panel.scrollIntoView({block:'start',behavior:'instant'});}
+    });
     const buttons = cards.map(card => {
       const button = document.createElement('button');button.type='button';button.className='shop-button secondary gpu-compare-select';button.dataset.compareId=card.dataset.productId;
       card.querySelector('.shop-actions').prepend(button);return button;
@@ -129,6 +138,7 @@
       const rows = [[words.brand,p=>p.brand],[words.chip,p=>p.chip_brand || p.brand],[words.vram,p=>p.vram_gb == null ? null : `${p.vram_gb} ${en?'GB':'Go'}`],[words.type,p=>p.memory_type],[words.architecture,p=>p.architecture],[words.price,p=>money(p.demo_price_mad)]];
       scroll.innerHTML = `<table><caption>${words.caption}</caption><thead><tr><th scope="col">${words.model}</th>${chosen.map(p=>`<th scope="col"><a href="${productURL(p.id)}">${esc(p.name)}</a></th>`).join('')}</tr></thead><tbody>${rows.map(([label,value])=>`<tr><th scope="row">${label}</th>${chosen.map(p=>`<td>${esc(value(p) ?? words.missing)}</td>`).join('')}</tr>`).join('')}</tbody></table>`;
       if (selected.length < 2) results.hidden = true;
+      shortcutState();
     }
     buttons.forEach(button => button.addEventListener('click', () => {
       const id = button.dataset.compareId;
