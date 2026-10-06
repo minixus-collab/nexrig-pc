@@ -65,10 +65,26 @@
     document.getElementById('cart-total').textContent = money(total);
     document.getElementById('clear-cart').disabled = !cart.length;
   }
+  const searchToggle = document.querySelector('.search-toggle');
+  const searchForm = document.getElementById('header-search-form');
+  if (searchToggle && searchForm) {
+    searchToggle.hidden = false; searchForm.hidden = true;
+    const closeSearch = () => {searchForm.hidden = true; searchToggle.setAttribute('aria-expanded', 'false');};
+    searchToggle.addEventListener('click', () => {
+      const open = searchForm.hidden; searchForm.hidden = !open;
+      searchToggle.setAttribute('aria-expanded', String(open));
+      if (open) searchForm.elements.q.focus();
+    });
+    document.addEventListener('keydown', event => {
+      if (event.key === 'Escape' && !searchForm.hidden) {closeSearch(); searchToggle.focus();}
+    });
+    document.addEventListener('click', event => {if (!event.target.closest('.header-search')) closeSearch();});
+  }
   function initFilters() {
     const form = document.querySelector('[data-shop-filters]');
     if (!form) return;
     form.hidden = false;
+    form.elements.search.value = (new URLSearchParams(location.search).get('q') || '').slice(0, 160);
     const cards = [...document.querySelectorAll('.shop-grid [data-product-id]')];
     const count = document.getElementById('shop-result');
     const empty = document.getElementById('shop-empty');

@@ -189,11 +189,16 @@ def grouped_navigation(lang):
 def organize_header(doc,lang):
  start=doc.index('<header');end=doc.index('</header>',start)
  header=doc[start:end]
+ header=re.sub(r'<div class="header-search">.*?</form></div>\s*','',header,flags=re.S)
  header=re.sub(r'<a class="cart-link".*?</a>\s*','',header,flags=re.S)
  header=re.sub(r'(<nav\b[^>]*>).*?</nav>',lambda m:m.group(1)+grouped_navigation(lang)+'</nav>',header, count=1,flags=re.S)
  if 'class="menu"' in header:header=header.replace(f'href="{BASE+homedir(lang)}#components"','href="#components"')
  if 'class="menu"' in header:header=header.replace('<button class="menu"',cartlink(lang)+'<button class="menu"',1)
  else:header=header.replace('<nav',cartlink(lang)+'<nav',1)
+ label='Search products' if lang=='en' else 'Rechercher un produit'
+ action=BASE+('en/shop/' if lang=='en' else 'boutique/')
+ search=f'<div class="header-search"><button type="button" class="search-toggle" aria-label="{label}" aria-expanded="false" aria-controls="header-search-form" hidden><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="10" cy="10" r="6"></circle><path d="m15 15 6 6"></path></svg></button><form id="header-search-form" class="header-search-form" role="search" action="{action}" method="get"><label for="header-search-input">{label}</label><div class="header-search-fields"><input id="header-search-input" type="search" name="q" placeholder="RTX 3060, Ryzen…" required maxlength="160"><button type="submit">{ 'Search' if lang=='en' else 'Rechercher' }</button></div></form></div>'
+ header=header.replace('<a class="cart-link"',search+'<a class="cart-link"',1)
  return doc[:start]+header+doc[end:]
 
 def addcart(doc,lang):

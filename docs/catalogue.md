@@ -148,3 +148,7 @@ Optional `image_url`, bilingual `image_alt` and `image_caption` fields override 
 Laptop `example_configuration` fields hold user-supplied CPU, mobile GPU, RAM, storage and display details. These are family examples without verified retail SKUs or source links. Bilingual expandable panels label that scope; operating systems remain unspecified, and Nitro 5 refresh rate preserves the supplied alternatives. Example details are not added as verified Product structured-data properties.
 
 Navigation groups now use independent hub anchors and adjacent real buttons, instead of links nested inside summary controls. Buttons expose translated labels, `aria-expanded` and `aria-controls`; submenus are hidden when closed. Mobile buttons are 56 × 56 px, with a gap from full-height links. Navigation owns hover, click, keyboard and drawer state. Retest PageSpeed touch-target findings on deployment; local browser tests do not establish a Lighthouse pass.
+
+## Header product search
+
+The bilingual header search opens a labeled field and submits `q` to the existing shop URL. Shared catalogue filters initialize their search input from that query, matching product names, SKUs and search terms across all categories. Search results retain the shop's canonical URL. Escape restores focus to the trigger; clicking outside closes the field. Without JavaScript the form stays available, but catalogue filtering still requires JavaScript. Run `node tests/header-search.cjs` for bilingual searches, empty results, focus/Escape and 320/390/1440 px layouts.
