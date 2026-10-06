@@ -290,9 +290,9 @@ class CatalogueTests(unittest.TestCase):
             self.assertEqual(tree.getroot().tag, '{http://www.sitemaps.org/schemas/sitemap/0.9}urlset')
             urls.extend(loc.text for loc in tree.findall('s:url/s:loc', ns))
         ET.parse(ROOT / 'sitemap.xsl')
-        self.assertEqual(len(urls), 638)
-        self.assertEqual(len(set(urls)), 638)
-        for article in ['blog/probleme-carte-graphique/', 'en/blog/graphics-card-problems/', 'blog/ssd-maroc/', 'en/blog/ssd-buying-guide-morocco/']:
+        self.assertEqual(len(urls), 640)
+        self.assertEqual(len(set(urls)), 640)
+        for article in ['blog/probleme-carte-graphique/', 'en/blog/graphics-card-problems/', 'blog/ssd-maroc/', 'en/blog/ssd-buying-guide-morocco/', 'blog/choisir-ram/', 'en/blog/how-to-choose-ram/']:
             self.assertIn(LIVE + article, urls)
         for url in urls:
             self.assertTrue((ROOT / url.removeprefix(LIVE) / 'index.html').is_file(), url)

@@ -387,6 +387,9 @@ def compact_category_intro(doc, cat, lang, count):
  return doc.replace('</main>',overview+'</main>',1)
 
 BLOG_ARTICLES = [
+ {'slug':'choisir-ram','paths':{'fr':'blog/choisir-ram/','en':'en/blog/how-to-choose-ram/'},
+  'titles':{'fr':'Quelle RAM choisir pour son PC gamer : capacité, DDR4 ou DDR5 ?','en':'How to choose RAM for a gaming PC: capacity, DDR4 or DDR5?'},
+  'descriptions':{'fr':'Choisir la RAM de son PC gamer : 16 ou 32 Go, DDR4 ou DDR5, compatibilité, vitesse et profils XMP/EXPO. Vérifiez la plateforme avant d’acheter.','en':'Choose RAM for a gaming PC: capacity, DDR4 versus DDR5, compatibility, speed and XMP/EXPO profiles. Check the platform before buying.'}},
  {'slug':'ssd-maroc','cover':'https://cdn.mos.cms.futurecdn.net/KEgqpKtN3p9PnWzfDLPcn.jpg','paths':{'fr':'blog/ssd-maroc/','en':'en/blog/ssd-buying-guide-morocco/'},
   'titles':{'fr':'SSD au Maroc : comment choisir et comparer les prix','en':'SSDs in Morocco: how to choose and compare prices'},
   'descriptions':{'fr':'Choisir un SSD au Maroc : SATA ou NVMe, capacité, compatibilité et garantie. Comparez les offres réelles sans confondre les prix fictifs de NEXRIG.','en':'Choose an SSD in Morocco: compare SATA and NVMe, capacity, compatibility and warranty. Separate real seller offers from NEXRIG demonstration prices.'}},
@@ -421,7 +424,7 @@ def build_blog(lang):
   schema={'@context':'https://schema.org','@type':'BlogPosting','headline':title,'description':description,'inLanguage':lang,'mainEntityOfPage':LIVE+url}
   doc=doc.replace('</head>','<script type="application/ld+json">'+schema_text(schema)+'</script></head>')
   target=ROOT/url/'index.html';target.parent.mkdir(parents=True,exist_ok=True);target.write_text(doc)
-  label=('Dépannage' if lang=='fr' else 'Troubleshooting') if entry['slug']=='probleme-carte-graphique' else ('Gaming' if lang=='en' else 'Jeux PC') if entry['slug']=='gta-6-pc' else ('Guide d’achat' if lang=='fr' else 'Buying guide') if entry['slug'] in ['quelle-carte-graphique-choisir','ssd-maroc'] else ('Matériel expliqué' if lang=='fr' else 'Hardware explained')
+  label=('Dépannage' if lang=='fr' else 'Troubleshooting') if entry['slug']=='probleme-carte-graphique' else ('Gaming' if lang=='en' else 'Jeux PC') if entry['slug']=='gta-6-pc' else ('Guide d’achat' if lang=='fr' else 'Buying guide') if entry['slug'] in ['quelle-carte-graphique-choisir','ssd-maroc','choisir-ram'] else ('Matériel expliqué' if lang=='fr' else 'Hardware explained')
   cover=entry.get('cover',BASE+'assets/images/blog/'+entry['slug']+'.svg')
   cards.append('<article class="blog-card"><div class="blog-cover"><a href="'+BASE+url+'" tabindex="-1" aria-hidden="true"><img src="'+e(cover)+'" width="800" height="400" loading="lazy" alt=""></a><span class="blog-category">'+label+'</span></div><div class="blog-card-body"><h3><a href="'+BASE+url+'">'+e(title)+'</a></h3><p>'+e(description)+'</p><a class="blog-read" href="'+BASE+url+'">'+('Lire l’article' if lang=='fr' else 'Read article')+' <span aria-hidden="true">→</span><span class="blog-sr-only"> : '+e(title)+'</span></a></div></article>')
  intro='Des guides pratiques pour comprendre le matériel et préparer votre configuration.' if lang=='fr' else 'Practical guides to understand hardware and plan your configuration.'
@@ -440,6 +443,10 @@ def main():
    heading=(EXPANSION_LABELS[lang][cat]+(' : catalogue' if lang=='fr' else ' catalogue')) if cat in EXPANSION_PATHS else {'fr':{'cpu':'Catalogue de processeurs AMD et Intel','gpu':'Catalogue de cartes graphiques AMD et NVIDIA','ram':'Catalogue RAM DDR4 et DDR5','storage':'Catalogue SSD et disques durs','psu':'Catalogue d’alimentations PC','motherboard':'Catalogue de cartes mères AMD et Intel','cooling':'Catalogue de ventirads et refroidisseurs liquides AIO','monitor':'Catalogue d’écrans PC Full HD, QHD et 4K'},'en':{'cpu':'AMD and Intel processor catalogue','gpu':'AMD and NVIDIA graphics card catalogue','ram':'DDR4 and DDR5 RAM catalogue','storage':'SSD and hard drive catalogue','psu':'PC power supply catalogue','motherboard':'AMD and Intel motherboard catalogue','cooling':'Air cooler and liquid AIO catalogue','monitor':'Full HD, QHD and 4K monitor catalogue'}}[lang][cat]
    note=('Prix fictifs · panier de démonstration · aucune vente réelle.' if lang=='fr' else 'Fictional prices · demonstration cart · no real sales.')
    block=f'<!-- catalogue:start -->\n<section id="modeles" aria-labelledby="modeles-title"><h2 id="modeles-title">{heading}</h2><p class="section-intro">{note}</p>{filters(items,lang)}<div class="shop-grid">'+''.join(card(p,lang) for p in items)+'</div></section>\n<!-- catalogue:end -->\n'
+   if cat=='ram':
+    guide=BASE+('blog/choisir-ram/' if lang=='fr' else 'en/blog/how-to-choose-ram/')
+    label='Lire le guide : quelle RAM choisir pour son PC gamer ?' if lang=='fr' else 'Read the guide: how to choose RAM for a gaming PC'
+    block=block.replace('</div></section>',f'</div><p><a href="{guide}">{label}</a></p></section>')
    if '<!-- catalogue:start -->' in doc:doc=re.sub(r'<!-- catalogue:start -->.*?<!-- catalogue:end -->\s*',lambda _:block,doc,flags=re.S)
    else:
     start=doc.index('    <section id="modeles"');end=doc.index('    <section id="comparaison"');doc=doc[:start]+block+doc[end:].lstrip()
