@@ -105,7 +105,7 @@
     const panel = document.createElement('section');
     panel.className = 'gpu-comparison'; panel.setAttribute('aria-labelledby', 'gpu-comparison-title');
     panel.innerHTML = `<h2 id="gpu-comparison-title">${words.title}</h2><p>${words.help}</p><p class="comparison-count" role="status" aria-live="polite"></p><ul class="comparison-selection"></ul><div class="comparison-actions"><button type="button" class="shop-button" data-show-comparison>${words.compare}</button><button type="button" class="shop-button secondary" data-clear-comparison>${words.clear}</button></div><p class="comparison-limit"></p><div class="comparison-results" hidden><p>${words.note}</p><div class="comparison-scroll" tabindex="0" role="region" aria-label="${words.caption}"></div></div>`;
-    cards[0].closest('.shop-grid').before(panel);
+    cards[0].closest('main').append(panel);
     const results = panel.querySelector('.comparison-results'), scroll = panel.querySelector('.comparison-scroll');
     const buttons = cards.map(card => {
       const button = document.createElement('button');button.type='button';button.className='shop-button secondary gpu-compare-select';button.dataset.compareId=card.dataset.productId;

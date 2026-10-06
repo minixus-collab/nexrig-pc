@@ -6,7 +6,7 @@ for(let i=0;i<30;i++){try{await fetch('http://127.0.0.1:8779/');break}catch{awai
 browser=await chromium.launch({executablePath:'/usr/lib/chromium/chromium',args:['--no-sandbox']});const page=await browser.newPage({viewport:{width:1440,height:900}}),errors=[];page.on('pageerror',e=>{errors.push(e.message);console.error('PAGE ERROR',e.message)});
 const data=JSON.parse(fs.readFileSync(path.resolve(__dirname,'../data/products.json'),'utf8')),gpus=data.filter(p=>p.category==='gpu');
 await page.goto('http://127.0.0.1:8779/nexrig-pc/en/graphics-cards/');await page.waitForSelector('.gpu-compare-select');
-assert.equal(await page.locator('.gpu-compare-select').count(),gpus.length);assert(await page.locator('[data-show-comparison]').isDisabled());
+assert.equal(await page.locator('.gpu-compare-select').count(),gpus.length);assert(await page.locator('.gpu-comparison').evaluate(e=>e===e.closest('main').lastElementChild));assert(await page.evaluate(()=>document.querySelector('.gpu-comparison').getBoundingClientRect().top>=document.querySelector('.shop-grid').getBoundingClientRect().bottom));assert(await page.locator('[data-show-comparison]').isDisabled());
 for(let i=0;i<3;i++)await page.locator('.gpu-compare-select').nth(i).click();
 assert(await page.locator('.gpu-compare-select').nth(3).isDisabled());assert(await page.locator('.gpu-compare-select').nth(0).isEnabled());
 await page.locator('[data-show-comparison]').click();assert(await page.locator('.comparison-results').isVisible());
