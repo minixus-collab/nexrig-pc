@@ -387,6 +387,9 @@ def compact_category_intro(doc, cat, lang, count):
  return doc.replace('</main>',overview+'</main>',1)
 
 BLOG_ARTICLES = [
+ {'slug':'probleme-carte-graphique','paths':{'fr':'blog/probleme-carte-graphique/','en':'en/blog/graphics-card-problems/'},
+  'titles':{'fr':'Problème de carte graphique : symptômes et solutions','en':'Graphics card problems: symptoms and troubleshooting steps'},
+  'descriptions':{'fr':'Problème de carte graphique : vérifiez écran noir, artefacts, plantages et FPS avant de remplacer le GPU. Câbles, pilotes, température et support.','en':'Troubleshoot graphics card problems: black screens, artifacts, crashes and low FPS. Check cables, drivers and temperatures before replacing your GPU.'}},
  {'slug':'quelle-carte-graphique-choisir', 'cover':'https://hyperpc.ae/images/support/articles/how-to-choose-vga/content/how-to-choose-vga-banner_webp.jpg', 'paths':{'fr':'blog/quelle-carte-graphique-choisir/','en':'en/blog/how-to-choose-a-graphics-card/'},
   'titles':{'fr':'Quelle carte graphique choisir pour son PC gamer ?','en':'How to choose a graphics card for your gaming PC'},
   'descriptions':{'fr':'Quelle carte graphique choisir ? Comparez jeux, résolution, VRAM et compatibilité pour sélectionner un GPU adapté à votre PC gamer.','en':'Learn how to choose a graphics card for your gaming PC: compare games, resolution, VRAM, benchmarks, compatibility and your whole-system budget.'}},
@@ -415,7 +418,7 @@ def build_blog(lang):
   schema={'@context':'https://schema.org','@type':'BlogPosting','headline':title,'description':description,'inLanguage':lang,'mainEntityOfPage':LIVE+url}
   doc=doc.replace('</head>','<script type="application/ld+json">'+schema_text(schema)+'</script></head>')
   target=ROOT/url/'index.html';target.parent.mkdir(parents=True,exist_ok=True);target.write_text(doc)
-  label=('Gaming' if lang=='en' else 'Jeux PC') if entry['slug']=='gta-6-pc' else ('Guide d’achat' if lang=='fr' else 'Buying guide') if entry['slug']=='quelle-carte-graphique-choisir' else ('Matériel expliqué' if lang=='fr' else 'Hardware explained')
+  label=('Dépannage' if lang=='fr' else 'Troubleshooting') if entry['slug']=='probleme-carte-graphique' else ('Gaming' if lang=='en' else 'Jeux PC') if entry['slug']=='gta-6-pc' else ('Guide d’achat' if lang=='fr' else 'Buying guide') if entry['slug']=='quelle-carte-graphique-choisir' else ('Matériel expliqué' if lang=='fr' else 'Hardware explained')
   cover=entry.get('cover',BASE+'assets/images/blog/'+entry['slug']+'.svg')
   cards.append('<article class="blog-card"><div class="blog-cover"><a href="'+BASE+url+'" tabindex="-1" aria-hidden="true"><img src="'+e(cover)+'" width="800" height="400" loading="lazy" alt=""></a><span class="blog-category">'+label+'</span></div><div class="blog-card-body"><h3><a href="'+BASE+url+'">'+e(title)+'</a></h3><p>'+e(description)+'</p><a class="blog-read" href="'+BASE+url+'">'+('Lire l’article' if lang=='fr' else 'Read article')+' <span aria-hidden="true">→</span><span class="blog-sr-only"> : '+e(title)+'</span></a></div></article>')
  intro='Des guides pratiques pour comprendre le matériel et préparer votre configuration.' if lang=='fr' else 'Practical guides to understand hardware and plan your configuration.'
