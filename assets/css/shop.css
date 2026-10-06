@@ -58,3 +58,6 @@
 .header .nav-group-toggle:focus-visible{outline:3px solid #20d6a7;outline-offset:3px}
 @media(max-width:1099px){.header .nav-group-heading{justify-content:space-between;gap:12px}.header .nav-group-heading .nav-hub-link{flex:1;min-width:0;min-height:56px}.header .nav-group-toggle{width:56px;height:56px}}
 @media(min-width:1100px){.responsive-navigation .primary-navigation{gap:8px!important}.header .nav-group-heading{gap:4px}.header .nav-group-toggle{width:32px;height:48px;border-color:transparent;background:transparent;font-size:18px}.header .nav-group-heading .nav-hub-link{min-height:48px}}
+
+/* Reserve a stable article-cover frame for remotely hosted artwork. */
+.gta-article-cover img{aspect-ratio:16/9;object-fit:contain;background:#11151d}
