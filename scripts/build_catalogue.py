@@ -166,7 +166,7 @@ def favicon(doc):
 def assets(doc):
  doc=favicon(doc)
  css=f'<link rel="stylesheet" href="{BASE}assets/css/shop.css">'
- if css not in doc:doc=doc.replace('</head>',css+'\n</head>',1)
+ if not re.search(r'href="'+re.escape(BASE)+r'assets/css/shop\.css(?:\?[^"]*)?"',doc):doc=doc.replace('</head>',css+'\n</head>',1)
  doc=re.sub(r'<script\s+[^>]*src="'+re.escape(BASE)+r'assets/js/shop\.js(?:\?[^"]*)?"[^>]*></script>\s*','',doc)
  doc=re.sub(r'<script\s+[^>]*src="'+re.escape(BASE)+r'assets/js/navigation\.js(?:\?[^"]*)?"[^>]*></script>\s*','',doc)
  return doc.replace('</head>',SHOP_SCRIPT+'\n'+NAV_SCRIPT+'\n</head>',1)
@@ -199,7 +199,9 @@ def organize_header(doc,lang):
  action=BASE+('en/shop/' if lang=='en' else 'boutique/')
  search=f'<div class="header-search"><button type="button" class="search-toggle" aria-label="{label}" aria-expanded="false" aria-controls="header-search-form" hidden><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="10" cy="10" r="6"></circle><path d="m15 15 6 6"></path></svg></button><form id="header-search-form" class="header-search-form" role="search" action="{action}" method="get"><label for="header-search-input">{label}</label><div class="header-search-fields"><input id="header-search-input" type="search" name="q" placeholder="RTX 3060, Ryzen…" required maxlength="160"><button type="submit">{ 'Search' if lang=='en' else 'Rechercher' }</button></div></form></div>'
  header=header.replace('<a class="cart-link"',search+'<a class="cart-link"',1)
- return doc[:start]+header+doc[end:]
+ doc=doc[:start]+header+doc[end:]
+ version=hashlib.sha256((ROOT / 'assets/css/shop.css').read_bytes()).hexdigest()[:12]
+ return re.sub(r'(href="'+re.escape(BASE)+r'assets/css/shop\.css)(?:\?[^"]*)?"',lambda m:m.group(1)+'?v='+version+'"',doc)
 
 def addcart(doc,lang):
  return assets(organize_header(doc,lang))
