@@ -387,7 +387,7 @@ def compact_category_intro(doc, cat, lang, count):
  return doc.replace('</main>',overview+'</main>',1)
 
 BLOG_ARTICLES = [
- {'slug':'ssd-maroc','paths':{'fr':'blog/ssd-maroc/','en':'en/blog/ssd-buying-guide-morocco/'},
+ {'slug':'ssd-maroc','cover':'https://cdn.mos.cms.futurecdn.net/KEgqpKtN3p9PnWzfDLPcn.jpg','paths':{'fr':'blog/ssd-maroc/','en':'en/blog/ssd-buying-guide-morocco/'},
   'titles':{'fr':'SSD au Maroc : comment choisir et comparer les prix','en':'SSDs in Morocco: how to choose and compare prices'},
   'descriptions':{'fr':'Choisir un SSD au Maroc : SATA ou NVMe, capacité, compatibilité et garantie. Comparez les offres réelles sans confondre les prix fictifs de NEXRIG.','en':'Choose an SSD in Morocco: compare SATA and NVMe, capacity, compatibility and warranty. Separate real seller offers from NEXRIG demonstration prices.'}},
  {'slug':'probleme-carte-graphique','cover':'https://maketecheasier.com/wp-content/uploads/2024/01/Graphics-card-not-working-featured.jpg','paths':{'fr':'blog/probleme-carte-graphique/','en':'en/blog/graphics-card-problems/'},
