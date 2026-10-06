@@ -390,6 +390,9 @@ BLOG_ARTICLES = [
  {'slug':'choisir-ram','cover':'https://cdn.mos.cms.futurecdn.net/aFrdtqm8QLfdsRBkwhDjcC.jpg','paths':{'fr':'blog/choisir-ram/','en':'en/blog/how-to-choose-ram/'},
   'titles':{'fr':'Quelle RAM choisir pour son PC gamer : capacité, DDR4 ou DDR5 ?','en':'How to choose RAM for a gaming PC: capacity, DDR4 or DDR5?'},
   'descriptions':{'fr':'Choisir la RAM de son PC gamer : 16 ou 32 Go, DDR4 ou DDR5, compatibilité, vitesse et profils XMP/EXPO. Vérifiez la plateforme avant d’acheter.','en':'Choose RAM for a gaming PC: capacity, DDR4 versus DDR5, compatibility, speed and XMP/EXPO profiles. Check the platform before buying.'}},
+ {'slug':'gta-6-pc','cover':'https://ichef.bbci.co.uk/news/1024/cpsprodpb/6ddf/live/9349ecd0-bb62-11f0-824f-39b3b0e3b0ee.jpg.webp','paths':{'fr':'blog/gta-6-pc/','en':'en/blog/gta-6-pc/'},
+ 'titles':{'fr':'GTA 6 sur PC : date de sortie et configuration, ce que l’on sait','en':'GTA 6 on PC: release date and system requirements explained'},
+ 'descriptions':{'fr':'GTA 6 sur PC : distinguez annonces, estimations de configuration et benchmarks. Préparez votre PC sans confondre hypothèses et exigences officielles.','en':'GTA 6 on PC: understand release-date uncertainty, hardware estimates and what to verify before upgrading. No invented requirements or FPS promises.'}},
  {'slug':'ssd-maroc','cover':'https://cdn.mos.cms.futurecdn.net/KEgqpKtN3p9PnWzfDLPcn.jpg','paths':{'fr':'blog/ssd-maroc/','en':'en/blog/ssd-buying-guide-morocco/'},
   'titles':{'fr':'SSD au Maroc : comment choisir et comparer les prix','en':'SSDs in Morocco: how to choose and compare prices'},
   'descriptions':{'fr':'Choisir un SSD au Maroc : SATA ou NVMe, capacité, compatibilité et garantie. Comparez les offres réelles sans confondre les prix fictifs de NEXRIG.','en':'Choose an SSD in Morocco: compare SATA and NVMe, capacity, compatibility and warranty. Separate real seller offers from NEXRIG demonstration prices.'}},
@@ -405,10 +408,6 @@ BLOG_ARTICLES = [
  {'slug':'temperature-carte-graphique','cover':'https://cdn.mos.cms.futurecdn.net/W9gHnzYr6LU6Fg8FsrHouT.jpg','paths':{'fr':'blog/temperature-carte-graphique/','en':'en/blog/gpu-temperature/'},
  'titles':{'fr':'Température de carte graphique : comment la surveiller et réduire la chauffe','en':'GPU temperature: how to monitor it and reduce heat'},
  'descriptions':{'fr':'Surveillez la température de votre carte graphique : GPU, hotspot, ventilation et nettoyage. Identifiez les vérifications utiles sans seuil universel.','en':'Learn to monitor GPU temperature, distinguish hotspot readings and check airflow, dust and settings without assuming one safe limit for every card.'}}
-,
- {'slug':'gta-6-pc','cover':'https://ichef.bbci.co.uk/news/1024/cpsprodpb/6ddf/live/9349ecd0-bb62-11f0-824f-39b3b0e3b0ee.jpg.webp','paths':{'fr':'blog/gta-6-pc/','en':'en/blog/gta-6-pc/'},
- 'titles':{'fr':'GTA 6 sur PC : date de sortie et configuration, ce que l’on sait','en':'GTA 6 on PC: release date and system requirements explained'},
- 'descriptions':{'fr':'GTA 6 sur PC : distinguez annonces, estimations de configuration et benchmarks. Préparez votre PC sans confondre hypothèses et exigences officielles.','en':'GTA 6 on PC: understand release-date uncertainty, hardware estimates and what to verify before upgrading. No invented requirements or FPS promises.'}}
 
 ]
 
