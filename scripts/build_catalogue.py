@@ -387,7 +387,7 @@ def compact_category_intro(doc, cat, lang, count):
  return doc.replace('</main>',overview+'</main>',1)
 
 BLOG_ARTICLES = [
- {'slug':'probleme-carte-graphique','paths':{'fr':'blog/probleme-carte-graphique/','en':'en/blog/graphics-card-problems/'},
+ {'slug':'probleme-carte-graphique','cover':'https://maketecheasier.com/wp-content/uploads/2024/01/Graphics-card-not-working-featured.jpg','paths':{'fr':'blog/probleme-carte-graphique/','en':'en/blog/graphics-card-problems/'},
   'titles':{'fr':'Problème de carte graphique : symptômes et solutions','en':'Graphics card problems: symptoms and troubleshooting steps'},
   'descriptions':{'fr':'Problème de carte graphique : vérifiez écran noir, artefacts, plantages et FPS avant de remplacer le GPU. Câbles, pilotes, température et support.','en':'Troubleshoot graphics card problems: black screens, artifacts, crashes and low FPS. Check cables, drivers and temperatures before replacing your GPU.'}},
  {'slug':'quelle-carte-graphique-choisir', 'cover':'https://hyperpc.ae/images/support/articles/how-to-choose-vga/content/how-to-choose-vga-banner_webp.jpg', 'paths':{'fr':'blog/quelle-carte-graphique-choisir/','en':'en/blog/how-to-choose-a-graphics-card/'},
