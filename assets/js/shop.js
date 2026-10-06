@@ -80,6 +80,75 @@
     });
     document.addEventListener('click', event => {if (!event.target.closest('.header-search')) closeSearch();});
   }
+  function initComparison() {
+    const cards = [...document.querySelectorAll('.shop-card[data-product-id]')].filter(card => products.get(card.dataset.productId)?.category === 'gpu');
+    if (!cards.length) return;
+    const words = en ? {
+      title: 'Compare graphics cards', help: 'Select 2 or 3 graphics cards using the buttons on their product cards. Filters do not remove your selection.',
+      select: 'Select for comparison', selected: 'Selected for comparison', compare: 'Compare selected GPUs', clear: 'Clear comparison', remove: 'Remove from comparison',
+      count: 'selected (maximum 3)', limit: 'Maximum reached. Remove a graphics card to select another.',
+      note: 'Catalogue specifications only. More VRAM does not automatically mean higher performance. Check benchmarks and the exact card manufacturer’s compatibility details. Prices are fictional demonstrations, not market offers.',
+      model: 'Model', brand: 'Brand', chip: 'GPU chip brand', vram: 'VRAM', type: 'Memory type', architecture: 'Architecture', price: 'Demonstration price — no sales', missing: 'Not specified', caption: 'Selected graphics card specifications'
+    } : {
+      title: 'Comparer les cartes graphiques', help: 'Sélectionnez 2 ou 3 cartes graphiques avec les boutons de leurs fiches. Les filtres conservent votre sélection.',
+      select: 'Sélectionner pour comparer', selected: 'Sélectionnée pour comparaison', compare: 'Comparer les GPU sélectionnés', clear: 'Vider la comparaison', remove: 'Retirer de la comparaison',
+      count: 'sélectionnées (maximum 3)', limit: 'Maximum atteint. Retirez une carte graphique pour en sélectionner une autre.',
+      note: 'Caractéristiques du catalogue uniquement. Plus de VRAM ne signifie pas automatiquement plus de performances. Vérifiez les benchmarks et la compatibilité de la référence exacte chez son fabricant. Les prix sont fictifs, pas des offres de marché.',
+      model: 'Modèle', brand: 'Marque', chip: 'Fabricant de la puce GPU', vram: 'VRAM', type: 'Type de mémoire', architecture: 'Architecture', price: 'Prix de démonstration — aucune vente', missing: 'Non précisé', caption: 'Caractéristiques des cartes graphiques sélectionnées'
+    };
+    const selectionKey = 'nexrig.gpu-comparison.v1';
+    let selected = [];
+    try {
+      const stored = JSON.parse(sessionStorage.getItem(selectionKey) || '[]');
+      if (Array.isArray(stored)) selected = [...new Set(stored.filter(id => typeof id === 'string' && products.get(id)?.category === 'gpu'))].slice(0,3);
+    } catch { /* Comparison remains usable without browser storage. */ }
+    const panel = document.createElement('section');
+    panel.className = 'gpu-comparison'; panel.setAttribute('aria-labelledby', 'gpu-comparison-title');
+    panel.innerHTML = `<h2 id="gpu-comparison-title">${words.title}</h2><p>${words.help}</p><p class="comparison-count" role="status" aria-live="polite"></p><ul class="comparison-selection"></ul><div class="comparison-actions"><button type="button" class="shop-button" data-show-comparison>${words.compare}</button><button type="button" class="shop-button secondary" data-clear-comparison>${words.clear}</button></div><p class="comparison-limit"></p><div class="comparison-results" hidden><p>${words.note}</p><div class="comparison-scroll" tabindex="0" role="region" aria-label="${words.caption}"></div></div>`;
+    cards[0].closest('.shop-grid').before(panel);
+    const results = panel.querySelector('.comparison-results'), scroll = panel.querySelector('.comparison-scroll');
+    const buttons = cards.map(card => {
+      const button = document.createElement('button');button.type='button';button.className='shop-button secondary gpu-compare-select';button.dataset.compareId=card.dataset.productId;
+      card.querySelector('.shop-actions').prepend(button);return button;
+    });
+    function update() {
+      try {sessionStorage.setItem(selectionKey, JSON.stringify(selected));} catch { /* No persistence required. */ }
+      panel.querySelector('.comparison-count').textContent = `${selected.length} / 3 ${words.count}`;
+      panel.querySelector('[data-show-comparison]').disabled = selected.length < 2;
+      panel.querySelector('[data-clear-comparison]').disabled = !selected.length;
+      panel.querySelector('.comparison-limit').textContent = selected.length === 3 ? words.limit : '';
+      for (const button of buttons) {
+        const active = selected.includes(button.dataset.compareId);
+        button.textContent = active ? words.selected : words.select;
+        button.setAttribute('aria-pressed', String(active));
+        button.setAttribute('aria-label', `${button.textContent}: ${products.get(button.dataset.compareId).name}`);
+        button.disabled = !active && selected.length === 3;
+      }
+      panel.querySelector('.comparison-selection').innerHTML = selected.map(id => `<li><span>${esc(products.get(id).name)}</span><button type="button" class="comparison-remove" data-compare-remove="${esc(id)}" aria-label="${words.remove}: ${esc(products.get(id).name)}">${words.remove}</button></li>`).join('');
+      const chosen = selected.map(id => products.get(id));
+      const rows = [[words.brand,p=>p.brand],[words.chip,p=>p.chip_brand || p.brand],[words.vram,p=>p.vram_gb == null ? null : `${p.vram_gb} ${en?'GB':'Go'}`],[words.type,p=>p.memory_type],[words.architecture,p=>p.architecture],[words.price,p=>money(p.demo_price_mad)]];
+      scroll.innerHTML = `<table><caption>${words.caption}</caption><thead><tr><th scope="col">${words.model}</th>${chosen.map(p=>`<th scope="col"><a href="${productURL(p.id)}">${esc(p.name)}</a></th>`).join('')}</tr></thead><tbody>${rows.map(([label,value])=>`<tr><th scope="row">${label}</th>${chosen.map(p=>`<td>${esc(value(p) ?? words.missing)}</td>`).join('')}</tr>`).join('')}</tbody></table>`;
+      if (selected.length < 2) results.hidden = true;
+    }
+    buttons.forEach(button => button.addEventListener('click', () => {
+      const id = button.dataset.compareId;
+      if (selected.includes(id)) selected = selected.filter(item=>item!==id);
+      else if (selected.length < 3) selected.push(id);
+      update();
+    }));
+    panel.addEventListener('click', event => {
+      const remove = event.target.closest('[data-compare-remove]');
+      if (remove) {
+        const previous = [...panel.querySelectorAll('[data-compare-remove]')].indexOf(remove);
+        selected = selected.filter(id=>id!==remove.dataset.compareRemove);update();
+        const remaining = panel.querySelectorAll('[data-compare-remove]');
+        (remaining[Math.min(previous,remaining.length-1)] || buttons.find(button=>!button.disabled))?.focus();
+      }
+      if (event.target.closest('[data-clear-comparison]')) {selected=[];update();buttons[0]?.focus();}
+      if (event.target.closest('[data-show-comparison]') && selected.length >= 2) {results.hidden=false;scroll.focus();scroll.scrollIntoView({block:'nearest',behavior:'instant'});}
+    });
+    update();
+  }
   function initFilters() {
     const form = document.querySelector('[data-shop-filters]');
     if (!form) return;
@@ -162,7 +231,7 @@
     if (!Array.isArray(data) || (catalogueCount && data.length !== catalogueCount)) throw Error('incomplete catalogue');
     const ids = new Set(data.map(p => p.id));
     if ([...document.querySelectorAll('[data-add-to-cart]')].some(button => !ids.has(button.dataset.addToCart))) throw Error('missing products');
-    products=new Map(data.map(p=>[p.id,p]));cart=read();render();initFilters();document.documentElement.dataset.cartReady="true";document.dispatchEvent(new CustomEvent("nexrig:cart-ready"));
+    products=new Map(data.map(p=>[p.id,p]));cart=read();render();initFilters();initComparison();document.documentElement.dataset.cartReady="true";document.dispatchEvent(new CustomEvent("nexrig:cart-ready"));
     document.querySelectorAll('[data-add-to-cart]').forEach(button=>{button.disabled=false;});
     const loading=document.getElementById('cart-loading');if(loading)loading.hidden=true;
     const warning=document.getElementById('cart-storage-warning');if(warning&&!persistent){warning.hidden=false;warning.textContent=t.memory;}
