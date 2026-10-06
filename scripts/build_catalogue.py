@@ -387,7 +387,7 @@ def compact_category_intro(doc, cat, lang, count):
  return doc.replace('</main>',overview+'</main>',1)
 
 BLOG_ARTICLES = [
- {'slug':'choisir-ram','paths':{'fr':'blog/choisir-ram/','en':'en/blog/how-to-choose-ram/'},
+ {'slug':'choisir-ram','cover':'https://cdn.mos.cms.futurecdn.net/aFrdtqm8QLfdsRBkwhDjcC.jpg','paths':{'fr':'blog/choisir-ram/','en':'en/blog/how-to-choose-ram/'},
   'titles':{'fr':'Quelle RAM choisir pour son PC gamer : capacité, DDR4 ou DDR5 ?','en':'How to choose RAM for a gaming PC: capacity, DDR4 or DDR5?'},
   'descriptions':{'fr':'Choisir la RAM de son PC gamer : 16 ou 32 Go, DDR4 ou DDR5, compatibilité, vitesse et profils XMP/EXPO. Vérifiez la plateforme avant d’acheter.','en':'Choose RAM for a gaming PC: capacity, DDR4 versus DDR5, compatibility, speed and XMP/EXPO profiles. Check the platform before buying.'}},
  {'slug':'ssd-maroc','cover':'https://cdn.mos.cms.futurecdn.net/KEgqpKtN3p9PnWzfDLPcn.jpg','paths':{'fr':'blog/ssd-maroc/','en':'en/blog/ssd-buying-guide-morocco/'},
