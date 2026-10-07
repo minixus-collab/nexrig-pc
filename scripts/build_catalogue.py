@@ -422,7 +422,7 @@ def build_blog(lang):
   article=(ROOT/'content/blog'/(entry['slug']+'.'+lang+'.html')).read_text().removeprefix('<meta name="robots" content="noindex,follow">\n')
   bread=[(WORDS[lang]['home'],homedir(lang)),('Blog',index),(title,url)]
   doc=document(title+' | NEXRIG',description,url,entry['paths'][other],lang,article,bread)
-  schema={'@context':'https://schema.org','@type':'BlogPosting','headline':title,'description':description,'inLanguage':lang,'mainEntityOfPage':LIVE+url}
+  schema={'@context':'https://schema.org','@type':'BlogPosting','headline':title,'description':description,'inLanguage':lang,'mainEntityOfPage':LIVE+url,'image':entry['cover']}
   doc=doc.replace('</head>','<script type="application/ld+json">'+schema_text(schema)+'</script></head>')
   target=ROOT/url/'index.html';target.parent.mkdir(parents=True,exist_ok=True);target.write_text(doc)
   label=('Dépannage' if lang=='fr' else 'Troubleshooting') if entry['slug']=='probleme-carte-graphique' else ('Gaming' if lang=='en' else 'Jeux PC') if entry['slug']=='gta-6-pc' else ('Guide d’achat' if lang=='fr' else 'Buying guide') if entry['slug'] in ['quelle-carte-graphique-choisir','ssd-maroc','choisir-ram'] else ('Matériel expliqué' if lang=='fr' else 'Hardware explained')
@@ -439,6 +439,12 @@ def main():
   assert isinstance(p['demo_price_mad'],int) and p['demo_price_mad']>0
   assert p['category'] in CATEGORY_PATHS['fr']
  for lang in ['fr','en']:
+  home=ROOT/homedir(lang)/'index.html'
+  home_doc=home.read_text()
+  website={'@context':'https://schema.org','@type':'WebSite','@id':LIVE+BASE+'#website','name':'NEXRIG','url':LIVE+BASE,'inLanguage':['fr','en'],'description':'Catalogue PC de démonstration et guides de matériel, sans vente réelle.' if lang=='fr' else 'Demonstration PC catalogue and hardware guides, with no real sales.'}
+  home_doc=re.sub(r'<script type="application/ld\+json" id="website-schema">.*?</script>\s*','',home_doc,flags=re.S)
+  home_doc=home_doc.replace('</head>','<script type="application/ld+json" id="website-schema">'+schema_text(website)+'</script>\n</head>',1)
+  home.write_text(home_doc)
   for cat,category_path in CATEGORY_PATHS[lang].items():
    target=ROOT/category_path/'index.html';doc=target.read_text();items=[p for p in PRODUCTS if p['category']==cat]
    heading=(EXPANSION_LABELS[lang][cat]+(' : catalogue' if lang=='fr' else ' catalogue')) if cat in EXPANSION_PATHS else {'fr':{'cpu':'Catalogue de processeurs AMD et Intel','gpu':'Catalogue de cartes graphiques AMD et NVIDIA','ram':'Catalogue RAM DDR4 et DDR5','storage':'Catalogue SSD et disques durs','psu':'Catalogue d’alimentations PC','motherboard':'Catalogue de cartes mères AMD et Intel','cooling':'Catalogue de ventirads et refroidisseurs liquides AIO','monitor':'Catalogue d’écrans PC Full HD, QHD et 4K'},'en':{'cpu':'AMD and Intel processor catalogue','gpu':'AMD and NVIDIA graphics card catalogue','ram':'DDR4 and DDR5 RAM catalogue','storage':'SSD and hard drive catalogue','psu':'PC power supply catalogue','motherboard':'AMD and Intel motherboard catalogue','cooling':'Air cooler and liquid AIO catalogue','monitor':'Full HD, QHD and 4K monitor catalogue'}}[lang][cat]
