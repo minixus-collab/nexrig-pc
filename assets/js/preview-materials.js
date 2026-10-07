@@ -16,7 +16,7 @@ export function createStudioMaterials(renderer,scene){
  const metalTexture=surfaceTexture(true),plasticTexture=surfaceTexture(false),prepared=new WeakSet();
  function uvFor(geometry){if(geometry.attributes.uv)return;const position=geometry.attributes.position,normal=geometry.attributes.normal,uv=new Float32Array(position.count*2);for(let i=0;i<position.count;i++){const nx=Math.abs(normal?.getX(i)||0),ny=Math.abs(normal?.getY(i)||0),nz=Math.abs(normal?.getZ(i)??1);if(nx>ny&&nx>nz){uv[i*2]=position.getZ(i);uv[i*2+1]=position.getY(i);}else if(ny>nz){uv[i*2]=position.getX(i);uv[i*2+1]=position.getZ(i);}else{uv[i*2]=position.getX(i);uv[i*2+1]=position.getY(i);}}geometry.setAttribute('uv',new THREE.BufferAttribute(uv,2));}
  function prepare(root){root.traverse(mesh=>{if(!mesh.isMesh)return;let material=mesh.material;if(!material?.isMeshStandardMaterial)return;
- if(material.name==='Smoked side glass'){
+ if(material.name==='Smoked side glass'||material.name==='Smoked front glass'){
   if(!material.isMeshPhysicalMaterial){const glass=new THREE.MeshPhysicalMaterial({name:material.name,color:0xcedae5,metalness:0,roughness:.075,transparent:true,opacity:.065,ior:1.46,clearcoat:.8,clearcoatRoughness:.12,envMapIntensity:.38,side:THREE.FrontSide,depthWrite:false});mesh.material=glass;material=glass;}
   mesh.castShadow=false;return;
  }

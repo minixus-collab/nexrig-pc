@@ -1,5 +1,5 @@
 // Original generic hardware, authored for NEXRIG. Illustrative dimensions only.
-import {T,M,box,cylinder,ring,plate,screw,wire,slot,fan,rgbRing,rgbBar,save} from './model_geometry.mjs';
+import {T,M,box,cylinder,ring,plate,screw,wire,slot,rounded,fan,rgbRing,rgbBar,save} from './model_geometry.mjs';
 import fs from 'node:fs';
 const output=process.argv[2]||'.';fs.mkdirSync(output,{recursive:true});
 const group=name=>{const g=new T.Group();g.name=name;return g;};
@@ -43,35 +43,58 @@ box(psu,.17,.23,.022,.38,.045,-.488,M.metal);box(psu,.125,.16,.026,.38,.045,-.50
 for(let i=0;i<9;i++)for(let j=0;j<5;j++)cylinder(psu,.016,.01,-.52+i*.062,-.24+j*.12,-.48,M.metal,6);
 for(let r=0;r<2;r++)for(let i=0;i<4;i++){box(psu,.17,.11,.025,-.4+i*.21,-.19+r*.27,-.484,M.metal);box(psu,.14,.08,.03,-.4+i*.21,-.19+r*.27,-.505,M.black);for(let j=0;j<3;j++)box(psu,.018,.026,.004,-.447+i*.21+j*.044,-.19+r*.27,-.523,M.gold);}
 plate(psu,.64,.25,.002,.008,-.16,0,.392,M.black);await emit('psu',psu);
-// Tower case: bent panels, removable glass, rear expansion slots, front mesh, feet and I/O.
-const pcCase=group('Original generic mid tower');
-for(const x of [-1.38,1.38])for(const z of [-.2,1.12])box(pcCase,.06,4.58,.06,x,-.35,z,M.metal);
-for(const y of [1.94,-2.64]){const panel=plate(pcCase,2.84,1.4,.04,.055,0,y,.46,M.casePanel);panel.rotation.x=Math.PI/2;}
-box(pcCase,2.75,4.48,.035,0,-.35,-.235,M.casePanel);
-// PSU basement cover and motherboard standoff posts.
-box(pcCase,2.73,.035,1.34,0,-1.57,.46,M.casePanel);for(const [x,y] of [[-1.09,1.4],[1.08,1.4],[-1.09,-1.4],[1.08,-1.4]])cylinder(pcCase,.038,.16,x,y,-.13,M.gold);
-for(const x of [-1.09,1.09])for(const y of [1.82,-2.53])screw(pcCase,x,y,1.165,.023);
-for(let i=0;i<7;i++){box(pcCase,.033,.14,.96,-1.4,-.37-i*.15,.52,M.metal);for(let j=0;j<6;j++)box(pcCase,.04,.058,.07,-1.423,-.37-i*.15,.12+j*.15,M.black);}
-// Front fan rail points along X; mesh ribs leave a view of the real fan gaps.
-for(let i=0;i<3;i++){const f=fan(pcCase,0,0,0,.475);f.rotation.y=Math.PI/2;f.position.set(1.38,1.14-i*1.16,.46);}
-for(let i=0;i<17;i++)box(pcCase,.017,4.2,.007,1.44,-.35,-.13+i*.079,M.black);for(let i=0;i<25;i++)box(pcCase,.017,.007,1.27,1.448,-2.42+i*.173,.46,M.black);
-box(pcCase,.06,4.48,.05,1.43,-.35,-.205,M.black);box(pcCase,.06,4.48,.05,1.43,-.35,1.13,M.black);
-for(const x of [-1,1])for(const z of [0,.9]){const foot=plate(pcCase,.3,.18,.15,.04,x,-2.72,z,M.black);foot.rotation.x=Math.PI/2;}
-for(let i=0;i<16;i++)box(pcCase,.9,.006,.018,.59,1.941,-.07+i*.073,M.metal);
-cylinder(pcCase,.05,.024,1.05,1.945,.92,M.silver).rotation.x=0;for(let i=0;i<2;i++)box(pcCase,.11,.014,.045,.56+i*.18,1.949,.98,M.metal);
-// Bevelled front rails and inset channels frame the fan mesh.
-for(const z of [-.21,1.13]){const rail=plate(pcCase,.09,4.5,.065,.035,1.43,-.35,z,M.metal);rail.rotation.y=Math.PI/2;box(pcCase,.026,4.23,.023,1.48,-.35,z,M.black);}
-// Tray cable grommets and drive sled, visible when the case is inspected alone.
-for(const y of [.54,-.95]){const opening=slot(0,0,.18,.48);plate(pcCase,.27,.57,.022,.065,1.18,y,-.195,M.black,[opening]);for(let i=0;i<4;i++)box(pcCase,.15,.012,.012,1.18,y-.16+i*.11,-.164,M.black);}
+// Original mid tower: folded steel shell, glass panels and recessed front fascia.
+// Wider side profile and deeper body keep the assembled hardware readable.
+const pcCase=group('Original generic mid tower'),steel=M.casePanel.clone();steel.color.setHex(0x424a55);
+const trim=M.metal.clone();trim.name='Case edge trim';trim.color.setHex(0x626b77);trim.roughness=.4;
+const xCenter=.25,zCenter=.68,left=-1.42,right=1.92,top=1.80,bottom=-2.64;
+// Sheet-metal roof and bottom, with actual elongated ventilation cutouts.
+const roofHoles=[];for(let i=0;i<14;i++)roofHoles.push(slot(-.30,-.66+i*.094,1.72,.038));
+for(const [y,holes] of [[top,roofHoles],[bottom,[]]]){const panel=plate(pcCase,3.55,1.90,.035,.055,xCenter,y,zCenter,steel,holes);panel.rotation.x=Math.PI/2;}
+// Closed cable-side cover behind the motherboard, with a separate perimeter seam.
+plate(pcCase,3.32,4.34,.035,.045,xCenter,-.40,-.275,steel);
+for(const x of [left,right])box(pcCase,.10,4.39,.10,x,-.40,-.20,trim);
+// Folded glass-side rails are broad enough to read as a real case frame.
+for(const y of [1.73,-2.57])box(pcCase,3.45,.115,.10,xCenter,y,1.60,steel);
+for(const x of [-1.39,1.89])box(pcCase,.105,4.28,.10,x,-.42,1.60,steel);
+// Motherboard tray standoffs, cable-entry grommets and rear drive sled.
+for(const [x,y] of [[-1.09,1.4],[1.08,1.4],[-1.09,-1.4],[1.08,-1.4]])cylinder(pcCase,.038,.16,x,y,-.13,M.gold);
+for(const y of [.54,-.95]){plate(pcCase,.27,.57,.022,.065,1.18,y,-.195,M.black,[slot(0,0,.18,.48)]);for(let i=0;i<4;i++)box(pcCase,.15,.012,.012,1.18,y-.16+i*.11,-.164,M.black);}
 plate(pcCase,.76,.99,.025,.04,.8,-1.99,-.18,M.metal);for(const x of [.48,1.12])for(const y of [-2.38,-1.6])screw(pcCase,x,y,-.148,.023);
-const psuOpening=slot(-.32,0,1.34,.56);plate(pcCase,2.67,.91,.025,.035,0,-2.1,1.025,M.casePanel,[psuOpening]);
-// Slim RGB strip sits on the front rail, following the case's vertical edge.
-const frontStrip=rgbBar(pcCase,4.2,.035,.035,1.53,-.35,1.14);frontStrip.rotation.z=Math.PI/2;
-// Rear thumb screws, hinge bosses and panel seals.
-for(const y of [1.7,-2.4]){cylinder(pcCase,.047,.048,-1.3,y,1.19,M.black);ring(pcCase,.039,.008,-1.3,y,1.217,M.metal);}
-for(const x of [-1.33,1.33])box(pcCase,.016,4.39,.015,x,-.35,1.13,M.black);for(const y of [1.85,-2.55])box(pcCase,2.67,.016,.015,0,y,1.13,M.black);
-// Front I/O recesses, jack and embossed switch ring.
-for(let i=0;i<2;i++)box(pcCase,.077,.015,.026,.56+i*.18,1.958,.98,M.black);ring(pcCase,.032,.007,.93,1.96,.83,M.silver).rotation.x=Math.PI/2;
-// A light smoked panel is a separate named object, toggled in the viewer.
-const glassMaterial=new T.MeshStandardMaterial({name:'Smoked side glass',color:0x758ba4,transparent:true,opacity:.13,roughness:.1,metalness:.1,depthWrite:false,side:T.DoubleSide});
-plate(pcCase,2.68,4.38,.008,.04,0,-.35,1.14,glassMaterial);await emit('case',pcCase);
+// Solid PSU basement with a folded upper edge and small punched ventilation slots.
+box(pcCase,3.20,.035,1.69,.20,-1.54,.66,steel);
+const shroudVents=[];for(let i=0;i<14;i++)shroudVents.push(slot(-.99+i*.145,-.21,.062,.075));
+plate(pcCase,3.25,.97,.025,.035,.23,-2.08,1.54,steel,shroudVents);
+box(pcCase,3.24,.032,.048,.23,-1.58,1.55,trim);
+// Recessed front intake fans sit behind a continuous fascia, not a wire cage.
+for(let i=0;i<3;i++){const f=fan(pcCase,0,0,0,.56);f.rotation.y=Math.PI/2;f.position.set(1.84,.96-i*1.30,.70);}
+const intakeHoles=[rounded(1.42,3.88,.07)];
+for(const x of [-.817,.817])for(let i=0;i<25;i++)intakeHoles.push(slot(x,-1.80+i*.15,.070,.095));
+const front=plate(pcCase,1.85,4.42,.070,.070,1.96,-.40,.70,steel,intakeHoles);front.rotation.y=Math.PI/2;
+// Slim panel joints and side intake channels run along both edges of the fascia.
+for(const z of [-.24,1.64])box(pcCase,.027,4.18,.035,1.965,-.40,z,M.black);
+const accent=rgbBar(pcCase,3.92,.017,.021,2.041,-.40,1.476);accent.rotation.z=Math.PI/2;
+// Rear wall has a fan opening, motherboard I/O aperture, expansion slots and PSU cutout.
+const rearHoles=[slot(-.46,1.12,.30,1.34),slot(0,-1.75,1.22,.72)];
+const exhaustHole=new T.Path();exhaustHole.absarc(.18,1.36,.47,0,Math.PI*2,true);rearHoles.push(exhaustHole);
+for(let i=0;i<7;i++)rearHoles.push(slot(.15,-.02-i*.155,.88,.078));
+const rear=plate(pcCase,1.82,4.35,.030,.035,-1.44,-.40,.69,steel,rearHoles);rear.rotation.y=-Math.PI/2;
+const exhaust=fan(pcCase,0,0,0,.465,{rgb:false});exhaust.rotation.y=-Math.PI/2;exhaust.position.set(-1.36,.96,.87);
+for(let i=0;i<7;i++){box(pcCase,.024,.022,.90,-1.474,-.36-i*.155,.84,trim);cylinder(pcCase,.021,.014,-1.47,-.36-i*.155,1.34,M.silver).rotation.y=Math.PI/2;}
+// Four rounded supports with rubber contact pads, inset from the body edges.
+for(const x of [-1.12,1.59])for(const z of [.03,1.28]){const foot=plate(pcCase,.34,.39,.14,.055,x,-2.70,z,steel);foot.rotation.x=Math.PI/2;box(pcCase,.29,.033,.34,x,-2.855,z-.02,M.black);}
+// Top-front I/O: recessed USB sockets, audio jack and flush power switch.
+for(const z of [.51,.78]){box(pcCase,.138,.014,.056,1.40,1.806,z,M.black);box(pcCase,.102,.009,.034,1.40,1.815,z,M.metal);box(pcCase,.080,.011,.020,1.40,1.821,z,M.black);}
+cylinder(pcCase,.044,.014,1.40,1.810,1.10,trim).rotation.x=0;ring(pcCase,.034,.004,1.40,1.822,1.10,M.silver).rotation.x=Math.PI/2;
+cylinder(pcCase,.019,.012,1.40,1.808,.97,M.black).rotation.x=0;
+// The upper glass side panel fits inside the metal rails; the basement is steel.
+const sideGlass=new T.MeshStandardMaterial({name:'Smoked side glass',color:0x758ba4,transparent:true,opacity:.13,roughness:.1,metalness:.1,depthWrite:false,side:T.DoubleSide});
+const frontGlass=sideGlass.clone();frontGlass.name='Smoked front glass';
+plate(pcCase,3.15,3.16,.008,.04,.25,.04,1.605,sideGlass);
+const window=plate(pcCase,1.40,3.86,.008,.045,2.039,-.40,.70,frontGlass);window.rotation.y=Math.PI/2;
+// Rubber glass seals, four low-profile fasteners and rear panel thumb screws.
+for(const x of [-1.34,1.84])box(pcCase,.014,3.18,.016,x,.04,1.60,M.black);
+for(const y of [-1.55,1.63])box(pcCase,3.18,.014,.016,.25,y,1.60,M.black);
+for(const x of [-1.27,1.76])for(const y of [-1.46,1.54])screw(pcCase,x,y,1.624,.019);
+for(const y of [1.45,-2.28]){cylinder(pcCase,.037,.033,-1.40,y,-.301,M.black);ring(pcCase,.028,.005,-1.40,y,-.320,trim);}
+await emit('case',pcCase);

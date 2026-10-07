@@ -1,7 +1,7 @@
 /* Original procedural motherboard model. No manufacturer model or dimensions claimed. */
 import * as THREE from './vendor/three-0.160.1.module.min.js';
 import {mergeGeometries} from './vendor/BufferGeometryUtils.js';
-import {createStudioMaterials} from './preview-materials.js?v=studio-20261007-v2';
+import {createStudioMaterials} from './preview-materials.js?v=studio-20261007-v3';
 export function mountPreview(host, form) {
  const en=document.documentElement.lang==='en',t=(fr,english)=>en?english:fr;
  host.innerHTML=`<p>${t('Glissez pour tourner votre PC ou une pièce. Boutons ou flèches pour tourner, +/− pour zoomer. Sélectionnez les composants pour les ajouter.','Drag to rotate your build or an individual part. Use buttons or arrow keys to rotate, +/− to zoom. Select components in the builder to add them.')}</p><div class="motherboard-stage" tabindex="0" role="group" aria-label="${t('PC et composants génériques en 3D','Generic PC and components in 3D')}"></div><div class="preview-controls"></div><p class="preview-view-status" role="status"></p><p class="preview-count" role="status"></p><ul class="preview-legend"></ul>`;
@@ -89,7 +89,7 @@ export function mountPreview(host, form) {
  const sata=new THREE.Group();groups.storage.add(sata);box(.69,.87,.09,.8,-1.89,.43,darkMetal,sata);box(.58,.6,.014,.8,-1.89,.49,silver,sata);
  const m2=ssdGroup.children.filter(child=>child!==sata);m2.forEach(mesh=>mesh.userData.storageType='m2');sata.userData.storageType='sata';
  const fallbackTemplates=new Map(Object.entries(groups).filter(([cat])=>cat!=='motherboard').map(([cat,group])=>[cat,group.children.map(child=>child.clone(true))]));
- const MODEL_VERSION='hardware-20261007-v6',modelCache=new Map(),attached=new Map();let loaderPromise;
+ const MODEL_VERSION='hardware-20261007-v7',modelCache=new Map(),attached=new Map();let loaderPromise;
  const variantFor=(cat,p)=>cat==='gpu'?'dual-fan-gpu':cat==='storage'?(p.form_factor==='M.2 2280'?'m2':p.drive_type==='HDD'?'hdd':'sata'):cat==='cooling'?(['aio','liquid'].includes(p.cooler_type)?'aio':'cooler'):cat;
  function loadModel(variant){if(modelCache.has(variant))return;const entry={state:'loading'};modelCache.set(variant,entry);
  loaderPromise ||= import('./vendor/GLTFLoader.js').then(({GLTFLoader})=>new GLTFLoader());
@@ -116,12 +116,12 @@ export function mountPreview(host, form) {
  for(const [x,y,z] of [[1.205,-1.16,.52],[.94,-.78,.97]])cableHardware(gpuCables,.1,.035,.04,x,y,z,darkMetal);
  studio.prepare(cables);
 
- let pitch=-.17,yaw=-.55,distance=9,defaultDistance=9,drag=null,view='build',caseVisible=true,exploded=false,panelOpen=false;const viewCenter=new THREE.Vector3();let powered=false,animationFrame=0,lastFrame=0,inViewport=false,animationFrames=0;
+ let pitch=-.17,yaw=-.55,distance=10.8,defaultDistance=10.8,drag=null,view='build',caseVisible=true,exploded=false,panelOpen=false;const viewCenter=new THREE.Vector3();let powered=false,animationFrame=0,lastFrame=0,inViewport=false,animationFrames=0;
  const exampleGroup=new THREE.Group();root.add(exampleGroup);let exampleState='idle',exampleError='',exampleEmissives=[];
  const names={cpu:t('Processeur','CPU'),gpu:t('Carte graphique','Graphics card'),motherboard:t('Carte mère','Motherboard'),ram:'RAM',storage:t('Stockage','Storage'),cooling:t('Refroidissement','Cooler'),psu:t('Alimentation','Power supply'),case:t('Boîtier','Case')};
  const viewLabel=document.createElement('label');viewLabel.textContent=t('Vue 3D : ','3D view: ');const select=document.createElement('select');select.className='preview-part-select';select.setAttribute('aria-label',t('Pièce à inspecter','Part to inspect'));viewLabel.append(select);host.insertBefore(viewLabel,stage);
  for(const [cat,name] of Object.entries({build:t('PC complet','Complete build'),realistic:t('PC réaliste — exemple','Realistic example PC'),...names})){const option=document.createElement('option');option.value=cat;option.textContent=name;select.append(option);}
- select.addEventListener('change',()=>{view=select.value;distance=(view==='build'||view==='realistic')?9:6.3;update();});
+ select.addEventListener('change',()=>{view=select.value;distance=view==='build'?10.8:view==='realistic'?9:6.3;update();});
  let zoomSlider=null,zoomValue=null;
  function render(){root.rotation.set(pitch,yaw,0);root.position.copy(viewCenter).applyEuler(root.rotation).multiplyScalar(-1);camera.position.set(0,0,distance);camera.lookAt(0,0,0);renderer.render(scene,camera);if(zoomSlider){zoomSlider.value=String(Math.max(50,Math.min(250,Math.round(defaultDistance/distance*100))));zoomValue.textContent=zoomSlider.value+'%';}stage.dataset.previewYaw=String(yaw);stage.dataset.previewZoom=String(distance);}
  function move(dx=0,dy=0,dz=0){yaw+=dx;pitch=Math.max(-1.25,Math.min(1.25,pitch+dy));distance=Math.max(.55,Math.min(16,distance+dz));render();}
@@ -185,7 +185,7 @@ export function mountPreview(host, form) {
  root.rotation.set(0,0,0);root.position.set(0,0,0);
  let index=0;for(const [cat,group] of Object.entries(groups)){group.position.set(0,0,0);group.visible=!!selected[cat]&&(view==='build'||view===cat)&&(cat!=='case'||caseVisible||view==='case');if(exploded&&view==='build'&&cat!=='case'){group.position.x=(index%2?1:-1)*1.7;group.position.z=index*.24;index++;}}
  ground.visible=view==='build'&&!!selected.case&&!exploded;interiorLight.visible=(view==='build'||view==='case')&&!!selected.case;cables.visible=view==='build'&&!exploded;powerCables.forEach(mesh=>mesh.visible=!!selected.psu&&!!selected.motherboard);gpuCables.forEach(mesh=>mesh.visible=!!selected.psu&&!!selected.gpu);
- viewCenter.set(0,-.35,.35);if(view!=='build'&&view!=='realistic'){const bounds=new THREE.Box3();root.updateMatrixWorld(true);groups[view].traverseVisible(mesh=>{if(mesh.geometry){mesh.geometry.computeBoundingBox();bounds.union(mesh.geometry.boundingBox.clone().applyMatrix4(mesh.matrixWorld));}});bounds.getCenter(viewCenter);const size=bounds.getSize(new THREE.Vector3());distance=Math.max(.65,Math.max(size.x/camera.aspect,size.y)*2.15+size.z*.7);}else if(exploded)distance=12;defaultDistance=distance;
+ viewCenter.set(selected.case?.25:0,-.35,selected.case?.68:.35);if(view!=='build'&&view!=='realistic'){const bounds=new THREE.Box3();root.updateMatrixWorld(true);groups[view].traverseVisible(mesh=>{if(mesh.geometry){mesh.geometry.computeBoundingBox();bounds.union(mesh.geometry.boundingBox.clone().applyMatrix4(mesh.matrixWorld));}});bounds.getCenter(viewCenter);const size=bounds.getSize(new THREE.Vector3());distance=Math.max(.65,Math.max(size.x/camera.aspect,size.y)*2.15+size.z*.7);}else if(exploded)distance=12;else if(selected.case)distance=Math.max(10.8,8/camera.aspect);defaultDistance=distance;
  stage.dataset.installedParts=Object.keys(groups).filter(cat=>groups[cat].visible).join(',');stage.dataset.previewView=view;stage.dataset.exploded=String(exploded);
  hideCase.disabled=view!=='build';hideCase.setAttribute('aria-pressed',String(!caseVisible));explode.disabled=view!=='build';explode.setAttribute('aria-pressed',String(exploded));
  const list=host.querySelector('.preview-legend');list.replaceChildren();for(const [cat,p] of Object.entries(selected)){if(p){const li=document.createElement('li');li.textContent=names[cat]+' : '+p.name;list.append(li);}}
