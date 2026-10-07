@@ -37,3 +37,11 @@ GLTFLoader.js and BufferGeometryUtils.js are locally vendored from Three.js 0.16
 Studio appearance is applied by `assets/js/preview-materials.js`: locally generated HDR reflections and shared surface textures, generated UVs for baked geometry, subtle metal/plastic roughness and physical glass. The generic hardware geometry and original source provenance remain unchanged.
 
 The v4 geometry includes a faceted GPU shroud and inset vents, bevelled case rails, rear drive sled and cable grommets, panel seals, thumb screws and recessed roof controls. The viewer supplies routed, layered cables with combs and connector shells. These are generic visual assembly details, not dimensions or exact wiring for the selected references.
+
+The v5 pass rounds visible chip/enclosure edges while preserving small contact and fin geometry. Fan hub caps and moulded marks share the impeller pivot, so the central hub rotates with the blades. These refinements remain original generic artwork, not photorealistic product scans.
+
+## Candidate for a more realistic complete PC
+
+[Custom Gaming PC](https://sketchfab.com/3d-models/custom-gaming-pc-1a24273417534f69afa0f7c62b643ffc) by [Yolala3D | Y3D](https://sketchfab.com/Yolala3d) is listed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) (checked 7 October 2026). It is **not included in this repository**. The download API requires authenticated Sketchfab access; an authorized downloaded archive is needed before integration. Retain author credit, source, license and an account of modifications when integrating.
+
+The listing has approximately 1.04 million triangles, so inspect and optimize it before browser use. The thumbnail is an offline rendered example; it does not establish how the downloaded materials will look in WebGL. Check component separation, textures, scales and fan pivots in the actual archive. This fixed example configuration cannot be presented as an exact match for every builder selection.

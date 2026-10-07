@@ -1,5 +1,6 @@
 // Original mesh authoring helpers. No manufacturer geometry or physical-fit claims.
 import * as T from 'three';
+import {RoundedBoxGeometry} from 'three/addons/geometries/RoundedBoxGeometry.js';
 import {GLTFExporter} from 'three/addons/exporters/GLTFExporter.js';
 import {mergeGeometries,mergeVertices} from 'three/addons/utils/BufferGeometryUtils.js';
 import fs from 'node:fs';
@@ -8,7 +9,12 @@ export {T};
 const material=(name,color,metalness=.2,roughness=.5)=>new T.MeshStandardMaterial({name,color,metalness,roughness});
 export const M={metal:material('Brushed aluminium',0x626b77,.8,.32),silver:material('Machined edges',0xaab3bd,.85,.25),black:material('Graphite polymer',0x151920,.1,.58),blade:material('Satin impeller',0x20252d,.12,.6),pcb:material('PCB solder mask',0x193930,.15,.75),copper:material('Copper',0xaa6a39,.85,.3),gold:material('Gold plated contacts',0xc6a354,.75,.32),purple:material('Purple accent',0x7653db,.4,.38),white:material('Connector markings',0xcbd1da,.1,.65)};
 export function mesh(parent,g,m,x=0,y=0,z=0){const a=new T.Mesh(g,m);a.position.set(x,y,z);parent.add(a);return a;}
-export function box(p,w,h,d,x,y,z,m=M.black){return mesh(p,new T.BoxGeometry(w,h,d),m,x,y,z);}
+export function hardwareBox(w,h,d){
+ // Round visible enclosures and chips; keep tiny contacts/fins inexpensive and crisp.
+ const smallest=Math.min(w,h,d),largest=Math.max(w,h,d);
+ return smallest>=.02&&largest>=.08?new RoundedBoxGeometry(w,h,d,1,Math.min(.012,smallest*.16)):new T.BoxGeometry(w,h,d);
+}
+export function box(p,w,h,d,x,y,z,m=M.black){return mesh(p,hardwareBox(w,h,d),m,x,y,z);}
 export function cylinder(p,r,depth,x,y,z,m=M.silver,segments=24){const a=mesh(p,new T.CylinderGeometry(r,r,depth,segments),m,x,y,z);a.rotation.x=Math.PI/2;return a;}
 export function ring(p,r,t,x,y,z,m=M.silver){return mesh(p,new T.TorusGeometry(r,t,8,48),m,x,y,z);}
 export function rounded(w,h,r){const s=new T.Shape(),x=-w/2,y=-h/2;s.moveTo(x+r,y);s.lineTo(x+w-r,y);s.quadraticCurveTo(x+w,y,x+w,y+r);s.lineTo(x+w,y+h-r);s.quadraticCurveTo(x+w,y+h,x+w-r,y+h);s.lineTo(x+r,y+h);s.quadraticCurveTo(x,y+h,x,y+h-r);s.lineTo(x,y+r);s.quadraticCurveTo(x,y,x+r,y);return s;}
@@ -31,7 +37,9 @@ export function fan(p,x,y,z,r,{grille=false,frame=true}={}){
  const rotor=new T.Group();rotor.name='Fan rotor';rotor.userData.fanRotor=true;rotor.position.z=.015;f.add(rotor);
  const blades=bladeGeometry(r),bladeMaterial=M.blade.clone();bladeMaterial.side=T.DoubleSide;
  for(let i=0;i<9;i++){const a=mesh(rotor,blades,bladeMaterial);a.rotation.z=i*Math.PI*2/9;}
- cylinder(f,r*.23,.07,0,0,.014,M.black);cylinder(f,r*.17,.012,0,0,.055,M.metal);ring(f,r*.135,r*.009,0,0,.064,M.silver);
+ cylinder(rotor,r*.23,.07,0,0,-.001,M.black);cylinder(rotor,r*.17,.012,0,0,.04,M.metal);ring(rotor,r*.135,r*.009,0,0,.049,M.silver);
+ // Moulded hub marks rotate with the impeller, not with the fixed housing.
+ for(let i=0;i<3;i++){const a=i*Math.PI*2/3;box(rotor,r*.048,r*.014,.003,Math.cos(a)*r*.11,Math.sin(a)*r*.11,.052,M.black).rotation.z=a;}
  for(let i=0;i<4;i++){const a=i*Math.PI/2;wire(f,[[0,0,-.04],[Math.cos(a)*r*.45,Math.sin(a)*r*.45,-.04],[Math.cos(a+.15)*r*.94,Math.sin(a+.15)*r*.94,-.04]],r*.022,M.black);}
  if(grille){for(let i=1;i<=5;i++)ring(f,r*(.2+i*.13),r*.013,0,0,.09,M.silver);for(let i=0;i<4;i++){const a=i*Math.PI/2;wire(f,[[0,0,.09],[Math.cos(a)*r*.94,Math.sin(a)*r*.94,.09]],r*.016,M.silver);}}
  return f;

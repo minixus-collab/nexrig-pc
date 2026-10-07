@@ -1,10 +1,10 @@
 import * as T from 'three';
-import {bladeGeometry,save} from './model_geometry.mjs';
+import {bladeGeometry,hardwareBox,save} from './model_geometry.mjs';
 const model=new T.Group();model.name='NEXRIG original dual fan GPU';
 const mat=(name,color,metalness,roughness)=>new T.MeshStandardMaterial({name,color,metalness,roughness});
 const metal=mat('Brushed aluminium',0x76808a,.85,.28),edge=mat('Machined silver trim',0xc1c7cf,.86,.2),plastic=mat('Graphite polymer',0x191d23,.18,.39),bladeMat=mat('Satin fan blades',0x292e35,.3,.35),pcb=mat('Printed circuit board',0x183a32,.15,.75),copper=mat('Copper heatpipes',0xb77443,.8,.3),gold=mat('Gold contacts',0xcba94d,.85,.25),dark=mat('Black connector plastic',0x080a0d,.05,.6),purple=mat('Purple accents',0x7454ed,.5,.28);
 function mesh(g,m,x=0,y=0,z=0){const a=new T.Mesh(g,m);a.position.set(x,y,z);model.add(a);return a;}
-function box(w,h,d,x,y,z,m){return mesh(new T.BoxGeometry(w,h,d),m,x,y,z);}
+function box(w,h,d,x,y,z,m){return mesh(hardwareBox(w,h,d),m,x,y,z);}
 function cylinder(r,depth,x,y,z,m){const a=mesh(new T.CylinderGeometry(r,r,depth,48),m,x,y,z);a.rotation.x=Math.PI/2;return a;}
 function ring(r,t,x,y,z,m){return mesh(new T.TorusGeometry(r,t,12,64),m,x,y,z);}
 function extrude(shape,depth,m,z){const g=new T.ExtrudeGeometry(shape,{depth,bevelEnabled:true,bevelSegments:3,steps:1,bevelSize:.012,bevelThickness:.012,curveSegments:40});return mesh(g,m,0,0,z);}
@@ -16,8 +16,10 @@ extrude(shroud,.12,plastic,.18);
 const trim=rounded(2.76,1.12,.13),inner=new T.Path();inner.absarc(-.65,0,.465,0,Math.PI*2,true);trim.holes.push(inner);const inner2=new T.Path();inner2.absarc(.65,0,.465,0,Math.PI*2,true);trim.holes.push(inner2);extrude(trim,.016,metal,.162);
 for(const x of [-.65,.65]){
  ring(.448,.014,x,0,.314,edge);ring(.42,.009,x,0,.307,dark);
- cylinder(.108,.063,x,0,.315,plastic);ring(.087,.004,x,0,.35,edge);cylinder(.028,.005,x,0,.351,purple);
+
  const rotor=new T.Group();rotor.name='Fan rotor';rotor.userData.fanRotor=true;rotor.position.set(x,0,.286);model.add(rotor);const fanMaterial=bladeMat.clone();fanMaterial.side=T.DoubleSide;
+ model.updateMatrixWorld(true);for(const hub of [cylinder(.108,.063,x,0,.315,plastic),ring(.087,.004,x,0,.35,edge),cylinder(.028,.005,x,0,.351,purple)]){rotor.attach(hub);}
+ for(let i=0;i<3;i++){const a=i*Math.PI*2/3;const mark=box(.025,.006,.003,x+Math.cos(a)*.063,Math.sin(a)*.063,.351,dark);mark.rotation.z=a;rotor.attach(mark);}
  for(let i=0;i<9;i++){const blade=new T.Mesh(bladeGeometry(.438),fanMaterial);rotor.add(blade);blade.rotation.z=i*Math.PI*2/9;}
  for(let i=0;i<4;i++){const angle=i*Math.PI/2;const support=box(.43,.025,.023,x+Math.cos(angle)*.23,Math.sin(angle)*.23,.209,dark);support.rotation.z=angle;}
 }

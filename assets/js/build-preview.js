@@ -89,7 +89,7 @@ export function mountPreview(host, form) {
  const sata=new THREE.Group();groups.storage.add(sata);box(.69,.87,.09,.8,-1.89,.43,darkMetal,sata);box(.58,.6,.014,.8,-1.89,.49,silver,sata);
  const m2=ssdGroup.children.filter(child=>child!==sata);m2.forEach(mesh=>mesh.userData.storageType='m2');sata.userData.storageType='sata';
  const fallbackTemplates=new Map(Object.entries(groups).filter(([cat])=>cat!=='motherboard').map(([cat,group])=>[cat,group.children.map(child=>child.clone(true))]));
- const MODEL_VERSION='hardware-20261007-v4',modelCache=new Map(),attached=new Map();let loaderPromise;
+ const MODEL_VERSION='hardware-20261007-v5',modelCache=new Map(),attached=new Map();let loaderPromise;
  const variantFor=(cat,p)=>cat==='gpu'?'dual-fan-gpu':cat==='storage'?(p.form_factor==='M.2 2280'?'m2':p.drive_type==='HDD'?'hdd':'sata'):cat==='cooling'?(['aio','liquid'].includes(p.cooler_type)?'aio':'cooler'):cat;
  function loadModel(variant){if(modelCache.has(variant))return;const entry={state:'loading'};modelCache.set(variant,entry);
  loaderPromise ||= import('./vendor/GLTFLoader.js').then(({GLTFLoader})=>new GLTFLoader());
