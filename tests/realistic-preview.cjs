@@ -28,6 +28,7 @@ const server=require('node:child_process').spawn('python3',['-m','http.server','
   const stopped=await stage.getAttribute('data-animation-frames');await page.waitForTimeout(120);assert.equal(await stage.getAttribute('data-animation-frames'),stopped);assert(Number(stopped)>=frames);
   for(const width of [320,390,768]){await page.setViewportSize({width,height:1000});assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));}
   await select.selectOption('build');assert(!(await page.locator('.preview-model-credit').isVisible()));
+  await page.setViewportSize({width:1440,height:1000});
   await page.locator('#finder-game').selectOption('fortnite');await page.waitForFunction(()=>document.querySelector('.motherboard-stage').dataset.gpuModel==='ready');
   await select.selectOption('gpu');assert.equal(await stage.getAttribute('data-installed-parts'),'gpu');
   await select.selectOption('realistic');assert.equal(requests,1,'Reuse the decoded example model');

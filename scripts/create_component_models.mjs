@@ -77,10 +77,17 @@ const accent=rgbBar(pcCase,3.92,.017,.021,2.041,-.40,1.476);accent.rotation.z=Ma
 // Rear wall has a fan opening, motherboard I/O aperture, expansion slots and PSU cutout.
 const rearHoles=[slot(-.46,1.12,.30,1.34),slot(0,-1.75,1.22,.72)];
 const exhaustHole=new T.Path();exhaustHole.absarc(.18,1.36,.47,0,Math.PI*2,true);rearHoles.push(exhaustHole);
-for(let i=0;i<7;i++)rearHoles.push(slot(.15,-.02-i*.155,.88,.078));
+rearHoles.push(slot(-.1642,-.185,.86,.320));
+for(let i=0;i<4;i++)rearHoles.push(slot(-.1642,-.46-i*.155,.86,.105));
 const rear=plate(pcCase,1.82,4.35,.030,.035,-1.44,-.40,.69,steel,rearHoles);rear.rotation.y=-Math.PI/2;
 const exhaust=fan(pcCase,0,0,0,.465,{rgb:false});exhaust.rotation.y=-Math.PI/2;exhaust.position.set(-1.36,.96,.87);
-for(let i=0;i<7;i++){box(pcCase,.024,.022,.90,-1.474,-.36-i*.155,.84,trim);cylinder(pcCase,.021,.014,-1.47,-.36-i*.155,1.34,M.silver).rotation.y=Math.PI/2;}
+// A folded rail supports the card flange; the unused slots keep vented covers.
+box(pcCase,.080,.027,1.02,-1.421,-.40,.526,trim);
+for(let i=0;i<7;i++){const screw=cylinder(pcCase,.020,.016,-1.49,-.423-i*.155,1.004,M.silver);screw.rotation.set(0,0,Math.PI/2);}
+function rearCover(name,tag,y,z,w,h){const cover=group(name);cover.userData.removableCover=tag;cover.position.set(-1.483,y,z);cover.rotation.y=-Math.PI/2;pcCase.add(cover);const holes=[];for(let i=0;i<12;i++)holes.push(slot(-.35+i*.064,0,.037,h*.35));plate(cover,w,h,.012,.008,0,0,0,trim,holes);return cover;}
+for(const y of [-.505,-.665])rearCover('Removable GPU slot cover','gpu',y,.5258,.86,.154);
+for(let i=0;i<4;i++)rearCover('Unused expansion slot cover','fixed',-.86-i*.155,.5258,.86,.128);
+const blankIO=group('Removable motherboard I/O blank');blankIO.userData.removableCover='io';blankIO.position.set(-1.477,.72,.23);blankIO.rotation.y=-Math.PI/2;pcCase.add(blankIO);plate(blankIO,.326,1.326,.010,.015,0,0,0,trim);
 // Four rounded supports with rubber contact pads, inset from the body edges.
 for(const x of [-1.12,1.59])for(const z of [.03,1.28]){const foot=plate(pcCase,.34,.39,.14,.055,x,-2.70,z,steel);foot.rotation.x=Math.PI/2;box(pcCase,.29,.033,.34,x,-2.855,z-.02,M.black);}
 // Top-front I/O: recessed USB sockets, audio jack and flush power switch.

@@ -35,12 +35,24 @@ box(.93,.092,.018,-.78,-.505,-.126,pcb);for(let i=0;i<31;i++)box(.019,.068,.005,
 for(let i=0;i<26;i++){const x=-1.15+(i%13)*.178,y=i<13?-.42:.42;box(.055,.02,.025,x,y,-.09,dark);box(.009,.022,.027,x-.026,y,-.089,edge);box(.009,.022,.027,x+.026,y,-.089,edge);}
 // Power socket, recessed pin apertures and latch.
 box(.27,.11,.13,.85,.52,-.024,dark);for(let r=0;r<2;r++)for(let c=0;c<4;c++){box(.042,.008,.034,.75+c*.064,.58,-.07+r*.063,gold);}box(.12,.023,.03,.85,.59,.019,plastic);
-// Stainless expansion bracket and recognisable HDMI / DisplayPort shells.
-box(.036,1.15,.46,-1.405,0,.058,metal);box(.17,.045,.12,-1.47,.56,.1,edge);box(.07,.1,.11,-1.42,-.6,.1,edge);
-for(let i=0;i<4;i++){
- const y=-.36+i*.22;box(.06,.151,.122,-1.447,y,.049,edge);box(.063,.104,.078,-1.484,y,.049,dark);box(.066,.052,.045,-1.486,y,.047,plastic);for(let j=0;j<5;j++)box(.004,.009,.008,-1.522,y-.025+j*.012,.073,gold);
+// Rear bracket: real openings and distinct HDMI / DisplayPort socket outlines.
+function connectorShape(kind,w,h){const s=new T.Shape(),points=kind==='hdmi'?[[-w/2,h/2],[w/2,h/2],[w/2,-h*.12],[w*.34,-h/2],[-w*.34,-h/2],[-w/2,-h*.12]]:[[-w/2,-h/2],[w/2,-h/2],[w/2,h/2],[-w*.28,h/2],[-w/2,h*.10]];points.forEach(([x,y],i)=>i?s.lineTo(x,y):s.moveTo(x,y));s.closePath();return s;}
+const bracket=new T.Group();bracket.name='GPU rear mounting bracket';bracket.position.set(-1.405,0,.058);bracket.rotation.set(0,-Math.PI/2,Math.PI/2);model.add(bracket);
+const bracketShape=rounded(1.15,.46,.012),outputs=[-.36,-.14,.08,.30];
+for(let i=0;i<outputs.length;i++){const hole=connectorShape(i===0?'hdmi':'dp',.162,.091);bracketShape.holes.push(new T.Path(hole.getPoints().map(p=>new T.Vector2(p.x+outputs[i],p.y+.009))));}
+for(let i=0;i<10;i++){const hole=rounded(.033,.055,.006);bracketShape.holes.push(new T.Path(hole.getPoints().map(p=>new T.Vector2(p.x-.46+i*.102,p.y-.142))));}
+bracket.add(new T.Mesh(new T.ExtrudeGeometry(bracketShape,{depth:.026,bevelEnabled:false,curveSegments:8}),metal));
+for(let i=0;i<outputs.length;i++){
+ const port=new T.Group();port.name=i===0?'HDMI output':'DisplayPort output';port.position.set(-1.487,outputs[i],.049);port.rotation.copy(bracket.rotation);model.add(port);
+ const shell=connectorShape(i===0?'hdmi':'dp',.153,.082),opening=connectorShape(i===0?'hdmi':'dp',.132,.062);shell.holes.push(opening);
+ const wall=new T.Mesh(new T.ExtrudeGeometry(shell,{depth:.15,bevelEnabled:false}),edge);wall.position.z=-.15;port.add(wall);
+ const cavity=new T.Mesh(new T.ShapeGeometry(opening),dark);cavity.position.z=-.126;port.add(cavity);
+ const tongue=new T.Mesh(hardwareBox(.110,.012,.021),plastic);tongue.position.set(0,-.012,-.066);port.add(tongue);
+ for(let contact=0;contact<9;contact++){const pin=new T.Mesh(new T.BoxGeometry(.006,.006,.015),gold);pin.position.set(-.043+contact*.0108,-.004,-.052);port.add(pin);}
 }
-for(let i=0;i<12;i++)box(.041,.055,.02,-1.427,-.47+i*.081,.235,dark);
+// Folded top flange physically reaches the case retention rail.
+box(.17,.043,.095,-1.430,.568,-.120,edge);box(.032,.080,.030,-1.418,-.600,.060,metal);
+const flangeScrew=mesh(new T.CylinderGeometry(.024,.024,.018,12),edge,-1.484,.57,-.12);flangeScrew.rotation.z=Math.PI/2;
 // Screws with inset drive slots, side rails and accent inlays.
 for(const x of [-1.23,0,1.23])for(const y of [-.45,.45]){cylinder(.029,.02,x,y,.323,edge);box(.029,.006,.003,x,y,.335,dark);box(.006,.029,.003,x,y,.335,dark);cylinder(.029,.016,x,y,-.18,edge);}
 for(const y of [-.51,.51]){box(1.02,.026,.014,0,y,.318,edge);box(.27,.026,.016,-1.02,y,.317,purple);box(.27,.026,.016,1.02,y,.317,purple);}

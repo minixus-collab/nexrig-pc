@@ -54,9 +54,9 @@ export function fan(p,x,y,z,r,{grille=false,frame=true,rgb=true}={}){
 }
 export async function save(model,file){
  model.updateMatrixWorld(true);const packed=new T.Group();packed.name=model.name;
- const rotors=[];model.traverse(node=>{if(node.userData.fanRotor)rotors.push(node);});
+ const retained=[];model.traverse(node=>{if(node.userData.fanRotor||node.userData.removableCover)retained.push(node);});
  function packMeshes(nodes,transform,parent){const batches=new Map();for(const node of nodes){let geometry=node.geometry.clone().applyMatrix4(transform.clone().multiply(node.matrixWorld));if(geometry.index){const expanded=geometry.toNonIndexed();geometry.dispose();geometry=expanded;}geometry.deleteAttribute('uv');const list=batches.get(node.material)||[];list.push(geometry);batches.set(node.material,list);}for(const [material,list] of batches)parent.add(new T.Mesh(mergeVertices(mergeGeometries(list)),material));}
- const fixed=[];model.traverse(node=>{if(!node.isMesh)return;let parent=node.parent;while(parent){if(parent.userData.fanRotor)return;parent=parent.parent;}fixed.push(node);});packMeshes(fixed,new T.Matrix4(),packed);
- for(const rotor of rotors){const pivot=new T.Group();pivot.name='Fan rotor';pivot.userData.fanRotor=true;rotor.matrixWorld.decompose(pivot.position,pivot.quaternion,pivot.scale);const meshes=[];rotor.traverse(node=>{if(node.isMesh)meshes.push(node);});packMeshes(meshes,rotor.matrixWorld.clone().invert(),pivot);packed.add(pivot);}
- const data=await new GLTFExporter().parseAsync(packed,{binary:true});fs.writeFileSync(file,Buffer.from(data));console.log(file,data.byteLength,'bytes',rotors.length,'animated fan pivots');
+ const fixed=[];model.traverse(node=>{if(!node.isMesh)return;let parent=node.parent;while(parent){if(parent.userData.fanRotor||parent.userData.removableCover)return;parent=parent.parent;}fixed.push(node);});packMeshes(fixed,new T.Matrix4(),packed);
+ for(const rotor of retained){const pivot=new T.Group();pivot.name=rotor.name;pivot.userData={...rotor.userData};rotor.matrixWorld.decompose(pivot.position,pivot.quaternion,pivot.scale);const meshes=[];rotor.traverse(node=>{if(node.isMesh)meshes.push(node);});packMeshes(meshes,rotor.matrixWorld.clone().invert(),pivot);packed.add(pivot);}
+ const data=await new GLTFExporter().parseAsync(packed,{binary:true});fs.writeFileSync(file,Buffer.from(data));console.log(file,data.byteLength,'bytes',retained.filter(node=>node.userData.fanRotor).length,'animated fan pivots');
 }
