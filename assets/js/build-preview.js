@@ -1,6 +1,7 @@
 /* Original procedural motherboard model. No manufacturer model or dimensions claimed. */
 import * as THREE from './vendor/three-0.160.1.module.min.js';
 import {mergeGeometries} from './vendor/BufferGeometryUtils.js';
+import {createStudioMaterials} from './preview-materials.js?v=studio-20261007-v1';
 export function mountPreview(host, form) {
  const en=document.documentElement.lang==='en',t=(fr,english)=>en?english:fr;
  host.innerHTML=`<p>${t('Glissez pour tourner votre PC ou une pièce. Boutons ou flèches pour tourner, +/− pour zoomer. Sélectionnez les composants pour les ajouter.','Drag to rotate your build or an individual part. Use buttons or arrow keys to rotate, +/− to zoom. Select components in the builder to add them.')}</p><div class="motherboard-stage" tabindex="0" role="group" aria-label="${t('PC et composants génériques en 3D','Generic PC and components in 3D')}"></div><div class="preview-controls"></div><p class="preview-view-status" role="status"></p><p class="preview-count" role="status"></p><ul class="preview-legend"></ul>`;
@@ -8,12 +9,12 @@ export function mountPreview(host, form) {
  let renderer;
  try {renderer=new THREE.WebGLRenderer({antialias:true,alpha:false,powerPreference:'low-power'});} catch {throw Error('WebGL unavailable');}
  renderer.setPixelRatio(Math.min(devicePixelRatio||1,1.7));renderer.setSize(700,480);renderer.setClearColor(0x080a0e);renderer.outputColorSpace=THREE.SRGBColorSpace;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.05;
- renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;renderer.domElement.setAttribute('aria-hidden','true');stage.append(renderer.domElement);
- const scene=new THREE.Scene(),camera=new THREE.PerspectiveCamera(36,700/480,.1,50),board=new THREE.Group();const root=new THREE.Group();scene.add(root);root.add(board);
- scene.add(new THREE.HemisphereLight(0xe4eaff,0x192231,1.35));
- const key=new THREE.DirectionalLight(0xffffff,2.8);key.position.set(-3,5,6);key.castShadow=true;key.shadow.mapSize.set(1024,1024);Object.assign(key.shadow.camera,{left:-4,right:4,top:4,bottom:-4,near:.1,far:20});key.shadow.bias=-.0004;key.shadow.normalBias=.015;scene.add(key);
- const fill=new THREE.DirectionalLight(0x858dff,1.5);fill.position.set(4,-2,3);scene.add(fill);
- const rim=new THREE.DirectionalLight(0x82dfd0,1.5);rim.position.set(-4,-1,-3);scene.add(rim);const interiorLight=new THREE.PointLight(0xc4c2ff,1.5,4,2);interiorLight.position.set(-.35,1.05,.95);root.add(interiorLight);
+ renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFShadowMap;renderer.domElement.setAttribute('aria-hidden','true');stage.append(renderer.domElement);
+ const scene=new THREE.Scene(),camera=new THREE.PerspectiveCamera(36,700/480,.1,50),board=new THREE.Group();const root=new THREE.Group();scene.add(root);root.add(board);const studio=createStudioMaterials(renderer,scene);const ground=new THREE.Mesh(new THREE.PlaneGeometry(4.6,3.8),new THREE.MeshStandardMaterial({color:0x11151c,roughness:.95,metalness:0,envMapIntensity:.15}));ground.rotation.x=-Math.PI/2;ground.position.set(0,-2.89,.5);ground.receiveShadow=true;ground.visible=false;root.add(ground);
+ scene.add(new THREE.HemisphereLight(0xe4eaff,0x192231,.75));
+ const key=new THREE.DirectionalLight(0xfff7ee,2.2);key.position.set(-3,5,6);key.castShadow=true;key.shadow.mapSize.set(1024,1024);Object.assign(key.shadow.camera,{left:-4,right:4,top:4,bottom:-4,near:.1,far:20});key.shadow.bias=-.0004;key.shadow.normalBias=.009;key.shadow.radius=3;scene.add(key);
+ const fill=new THREE.DirectionalLight(0xd3d9ff,.9);fill.position.set(4,-2,3);scene.add(fill);
+ const rim=new THREE.DirectionalLight(0xa3b8d6,1.1);rim.position.set(-4,-1,-3);scene.add(rim);const interiorLight=new THREE.PointLight(0xc4c2ff,1.5,4,2);interiorLight.position.set(-.35,1.05,.95);root.add(interiorLight);
  const mat=(color,metalness=.1,roughness=.65)=>new THREE.MeshStandardMaterial({color,metalness,roughness});
  const pcb=mat(0x20252a,.2,.85),black=mat(0x111419,.2,.7),silver=mat(0xb6bcc4,.82,.3),darkMetal=mat(0x373e48,.75,.45),gold=mat(0xc8a46a,.72,.4),white=mat(0xd1d6df,.2,.7),purple=mat(0x7454dc,.4,.4);
  function box(w,h,d,x,y,z,material=black,parent=board){const mesh=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),material);mesh.position.set(x,y,z);parent.add(mesh);return mesh;}
@@ -72,6 +73,7 @@ export function mountPreview(host, form) {
  // Batch the board's many small details by material rather than issuing hundreds of draws.
  const boardBatches=new Map();for(const child of [...board.children]){if(!child.isMesh||child.isInstancedMesh)continue;child.updateMatrix();const geometry=child.geometry.clone().applyMatrix4(child.matrix);const expanded=geometry.index?geometry.toNonIndexed():geometry;const entry=boardBatches.get(child.material)||{geometry:[],nodes:[]};entry.geometry.push(expanded);entry.nodes.push(child);boardBatches.set(child.material,entry);}
  for(const [material,entry] of boardBatches){const geometry=mergeGeometries(entry.geometry);if(!geometry)continue;const mesh=new THREE.Mesh(geometry,material);mesh.castShadow=!material.transparent;mesh.receiveShadow=!material.transparent;board.remove(...entry.nodes);board.add(mesh);const originals=new Set(entry.nodes.map(node=>node.geometry));originals.forEach(geometry=>geometry.dispose());}
+ studio.prepare(board);
  // Optional selected components; remain generic, independent of product dimensions.
  const installed=new THREE.Group();root.add(installed);const cpuGroup=new THREE.Group(),ramGroup=new THREE.Group(),ssdGroup=new THREE.Group();installed.add(cpuGroup,ramGroup,ssdGroup);
  box(.43,.45,.025,-.2,.54,.127,silver,cpuGroup);
@@ -93,7 +95,7 @@ export function mountPreview(host, form) {
  loaderPromise ||= import('./vendor/GLTFLoader.js').then(({GLTFLoader})=>new GLTFLoader());
  loaderPromise.then(loader=>loader.loadAsync(new URL('../models/nexrig-'+variant+'.glb?v='+MODEL_VERSION,import.meta.url).href)).then(gltf=>{entry.state='ready';entry.model=gltf.scene;update();}).catch(()=>{entry.state='failed';loaderPromise=null;update();});}
  function attachModel(cat,variant,p){if(attached.get(cat)===variant)return;const entry=modelCache.get(variant);if(entry?.state!=='ready'){if(attached.has(cat)){groups[cat].clear();for(const child of fallbackTemplates.get(cat))groups[cat].add(child.clone(true));attached.delete(cat);}return;}
- const parent=groups[cat];parent.clear();const model=entry.model.clone(true);model.traverse(mesh=>{if(mesh.isMesh){mesh.castShadow=!mesh.material.transparent;mesh.receiveShadow=!mesh.material.transparent;}});parent.add(model);attached.set(cat,variant);
+ const parent=groups[cat];parent.clear();const model=entry.model.clone(true);studio.prepare(model);model.traverse(mesh=>{if(mesh.isMesh){mesh.castShadow=!mesh.material.transparent;mesh.receiveShadow=!mesh.material.transparent;}});parent.add(model);attached.set(cat,variant);
  if(cat==='cpu'){model.position.set(-.2,.54,.13);label('NEXRIG',-.2,.585,.171,.24,.045,parent);label('GENERIC CPU',-.2,.525,.171,.23,.024,parent);}
  if(cat==='gpu'){model.scale.setScalar(.78);model.position.set(-.03,-.62,.65);}
  if(cat==='ram'){model.position.set(.43,.68,.29);model.rotation.set(0,Math.PI/2,Math.PI/2);for(let i=1;i<4;i++){const stick=model.clone(true);stick.position.x=.43+i*.135;parent.add(stick);}}
@@ -162,7 +164,7 @@ export function mountPreview(host, form) {
  const drive=selected.storage,isM2=drive?.form_factor==='M.2 2280';if(!attached.has('storage'))groups.storage.children.forEach(mesh=>mesh.visible=mesh.userData.storageType==='m2'?isM2:!isM2);
  root.rotation.set(0,0,0);root.position.set(0,0,0);
  let index=0;for(const [cat,group] of Object.entries(groups)){group.position.set(0,0,0);group.visible=!!selected[cat]&&(view==='build'||view===cat)&&(cat!=='case'||caseVisible||view==='case');if(exploded&&view==='build'&&cat!=='case'){group.position.x=(index%2?1:-1)*1.7;group.position.z=index*.24;index++;}}
- interiorLight.visible=(view==='build'||view==='case')&&!!selected.case;cables.visible=view==='build'&&!exploded;powerCables.forEach(mesh=>mesh.visible=!!selected.psu&&!!selected.motherboard);gpuCables.forEach(mesh=>mesh.visible=!!selected.psu&&!!selected.gpu);
+ ground.visible=view==='build'&&!!selected.case&&!exploded;interiorLight.visible=(view==='build'||view==='case')&&!!selected.case;cables.visible=view==='build'&&!exploded;powerCables.forEach(mesh=>mesh.visible=!!selected.psu&&!!selected.motherboard);gpuCables.forEach(mesh=>mesh.visible=!!selected.psu&&!!selected.gpu);
  viewCenter.set(0,-.35,.35);if(view!=='build'){const bounds=new THREE.Box3();root.updateMatrixWorld(true);groups[view].traverseVisible(mesh=>{if(mesh.geometry){mesh.geometry.computeBoundingBox();bounds.union(mesh.geometry.boundingBox.clone().applyMatrix4(mesh.matrixWorld));}});bounds.getCenter(viewCenter);const size=bounds.getSize(new THREE.Vector3());distance=Math.max(.65,Math.max(size.x/camera.aspect,size.y)*2.15+size.z*.7);}else if(exploded)distance=12;defaultDistance=distance;
  stage.dataset.installedParts=Object.keys(groups).filter(cat=>groups[cat].visible).join(',');stage.dataset.previewView=view;stage.dataset.exploded=String(exploded);
  hideCase.disabled=view!=='build';hideCase.setAttribute('aria-pressed',String(!caseVisible));explode.disabled=view!=='build';explode.setAttribute('aria-pressed',String(exploded));

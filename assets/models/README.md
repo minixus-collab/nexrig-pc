@@ -33,3 +33,5 @@ python3 scripts/build_catalogue.py
 `model_geometry.mjs` supplies the mesh helpers, pitched fan geometry, batching and Node FileReader adapter. Preserve the pinned Three.js version. Bump `MODEL_VERSION` in `build-preview.js` after asset edits to invalidate cached files.
 
 GLTFLoader.js and BufferGeometryUtils.js are locally vendored from Three.js 0.160.1 with imports adapted to the site's existing module. The MIT license is retained at `assets/js/vendor/three-LICENSE.txt`.
+
+Studio appearance is applied by `assets/js/preview-materials.js`: locally generated HDR reflections and shared surface textures, generated UVs for baked geometry, subtle metal/plastic roughness and physical glass. The generic hardware geometry and original source provenance remain unchanged.
