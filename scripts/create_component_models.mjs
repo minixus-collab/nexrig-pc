@@ -1,5 +1,5 @@
 // Original generic hardware, authored for NEXRIG. Illustrative dimensions only.
-import {T,M,box,cylinder,ring,plate,screw,wire,slot,fan,save} from './model_geometry.mjs';
+import {T,M,box,cylinder,ring,plate,screw,wire,slot,fan,rgbRing,rgbBar,save} from './model_geometry.mjs';
 import fs from 'node:fs';
 const output=process.argv[2]||'.';fs.mkdirSync(output,{recursive:true});
 const group=name=>{const g=new T.Group();g.name=name;return g;};
@@ -16,7 +16,7 @@ const ram=group('Original generic memory module');plate(ram,1.31,.285,.012,.006,
 for(let side of [-1,1]){for(let i=0;i<8;i++){box(ram,.118,.115,.012,-.53+i*.15,-.004,side*.025,M.black);for(let j=0;j<4;j++){box(ram,.009,.014,.006,-.57+i*.15+j*.025,-.075,side*.025,M.silver);}}
  for(let i=0;i<53;i++){if(i===25||i===26)continue;box(ram,.013,.056,.002,-.621+i*.024,-.116,side*.014,M.gold);}
  plate(ram,1.22,.16,.015,.016,0,.04,side*.034,M.metal);for(let i=0;i<10;i++)box(ram,.028,.105,.004,-.52+i*.116,.042,side*.052,M.black);}
-plate(ram,1.19,.026,.06,.009,0,.143,-.032,M.white);plate(ram,.49,.045,.002,.008,0,.05,.056,M.purple);for(const x of [-.61,.61])screw(ram,x,.092,.055,.01);await emit('ram',ram);
+rgbBar(ram,1.19,.026,.06,0,.143,-.002);plate(ram,.49,.045,.002,.008,0,.05,.056,M.purple);for(const x of [-.61,.61])screw(ram,x,.092,.055,.01);await emit('ram',ram);
 // M.2: exposed NAND, controller, keyed edge contacts and mounting screw notch.
 const m2=group('Original generic M.2 SSD');plate(m2,.8,.22,.015,.01,0,0,-.01,M.pcb);for(let i=0;i<3;i++)box(m2,.16,.13,.023,-.18+i*.21,0,.012,M.black);box(m2,.11,.13,.02,-.32,0,.012,M.metal);
 for(let i=0;i<15;i++){if(i===4||i===5)continue;box(m2,.042,.008,.002,-.379,-.095+i*.013,.01,M.gold);}ring(m2,.032,.009,.39,0,.006,M.gold);
@@ -32,10 +32,10 @@ box(cooler,.87,.045,.028,0,-.32,-.34,M.metal);for(const x of [-.39,.39])screw(co
 // AIO variant: dual-fan radiator, fin channels, flexible tubes and pump block.
 const aio=group('Original generic liquid cooler'),radiator=group('Radiator');aio.add(radiator);
 plate(radiator,.94,1.96,.12,.05,0,0,-.15,M.black);for(let i=0;i<55;i++)box(radiator,.8,.012,.055,0,-.83+i*.031,-.01,M.metal);fan(radiator,0,-.49,.05,.43);fan(radiator,0,.49,.05,.43);radiator.scale.setScalar(.8);radiator.rotation.y=Math.PI/2;radiator.position.set(1.05,.44,.46);
-const pump=group('Pump');pump.position.set(-.2,.54,.28);aio.add(pump);cylinder(pump,.24,.18,0,0,0,M.black);ring(pump,.22,.022,0,0,.1,M.purple);cylinder(pump,.15,.004,0,0,.101,M.metal);
+const pump=group('Pump');pump.position.set(-.2,.54,.28);aio.add(pump);cylinder(pump,.24,.18,0,0,0,M.black);rgbRing(pump,.22,.022,0,0,.1);cylinder(pump,.15,.004,0,0,.101,M.metal);
 for(let i=0;i<2;i++)wire(aio,[[-.07+i*.13,.66,.36],[.29+i*.09,1.12,.69],[.73+i*.075,1.16,.72],[1.0,.99,.35+i*.16]],.033,M.black);await emit('aio',aio);
 // PSU: folded enclosure, open fan aperture and wire grille, rear socket/switch, modular sockets.
-const psu=group('Original generic modular PSU');box(psu,1.26,.72,.84,0,0,-.05,M.black);const hole=new T.Path();hole.absarc(-.11,0,.294,0,Math.PI*2,true);plate(psu,1.29,.74,.016,.035,0,0,.38,M.metal,[hole]);fan(psu,-.11,0,.372,.293,{grille:true,frame:false});
+const psu=group('Original generic modular PSU');box(psu,1.26,.72,.84,0,0,-.05,M.black);const hole=new T.Path();hole.absarc(-.11,0,.294,0,Math.PI*2,true);plate(psu,1.29,.74,.016,.035,0,0,.38,M.metal,[hole]);fan(psu,-.11,0,.372,.293,{grille:true,frame:false,rgb:false});
 for(const x of [-.58,.58])for(const y of [-.3,.3])screw(psu,x,y,.404,.018);
 for(let i=0;i<7;i++)for(let j=0;j<4;j++){const socket=box(psu,.065,.04,.024,.37+i*.026,0,.423,M.black);socket.position.y=-.11+j*.072;}
 // IEC recess and rocker on rear face, plus punched vents rather than drawn lines.
@@ -46,15 +46,15 @@ plate(psu,.64,.25,.002,.008,-.16,0,.392,M.black);await emit('psu',psu);
 // Tower case: bent panels, removable glass, rear expansion slots, front mesh, feet and I/O.
 const pcCase=group('Original generic mid tower');
 for(const x of [-1.38,1.38])for(const z of [-.2,1.12])box(pcCase,.06,4.58,.06,x,-.35,z,M.metal);
-for(const y of [1.94,-2.64]){const panel=plate(pcCase,2.84,1.4,.04,.055,0,y,.46,M.black);panel.rotation.x=Math.PI/2;}
-box(pcCase,2.75,4.48,.035,0,-.35,-.235,M.black);
+for(const y of [1.94,-2.64]){const panel=plate(pcCase,2.84,1.4,.04,.055,0,y,.46,M.casePanel);panel.rotation.x=Math.PI/2;}
+box(pcCase,2.75,4.48,.035,0,-.35,-.235,M.casePanel);
 // PSU basement cover and motherboard standoff posts.
-box(pcCase,2.73,.035,1.34,0,-1.57,.46,M.black);for(const [x,y] of [[-1.09,1.4],[1.08,1.4],[-1.09,-1.4],[1.08,-1.4]])cylinder(pcCase,.038,.16,x,y,-.13,M.gold);
+box(pcCase,2.73,.035,1.34,0,-1.57,.46,M.casePanel);for(const [x,y] of [[-1.09,1.4],[1.08,1.4],[-1.09,-1.4],[1.08,-1.4]])cylinder(pcCase,.038,.16,x,y,-.13,M.gold);
 for(const x of [-1.09,1.09])for(const y of [1.82,-2.53])screw(pcCase,x,y,1.165,.023);
 for(let i=0;i<7;i++){box(pcCase,.033,.14,.96,-1.4,-.37-i*.15,.52,M.metal);for(let j=0;j<6;j++)box(pcCase,.04,.058,.07,-1.423,-.37-i*.15,.12+j*.15,M.black);}
 // Front fan rail points along X; mesh ribs leave a view of the real fan gaps.
 for(let i=0;i<3;i++){const f=fan(pcCase,0,0,0,.475);f.rotation.y=Math.PI/2;f.position.set(1.38,1.14-i*1.16,.46);}
-for(let i=0;i<23;i++)box(pcCase,.023,4.2,.014,1.44,-.35,-.13+i*.054,M.metal);for(let i=0;i<33;i++)box(pcCase,.023,.016,1.27,1.448,-2.42+i*.126,.46,M.metal);
+for(let i=0;i<17;i++)box(pcCase,.017,4.2,.007,1.44,-.35,-.13+i*.079,M.black);for(let i=0;i<25;i++)box(pcCase,.017,.007,1.27,1.448,-2.42+i*.173,.46,M.black);
 box(pcCase,.06,4.48,.05,1.43,-.35,-.205,M.black);box(pcCase,.06,4.48,.05,1.43,-.35,1.13,M.black);
 for(const x of [-1,1])for(const z of [0,.9]){const foot=plate(pcCase,.3,.18,.15,.04,x,-2.72,z,M.black);foot.rotation.x=Math.PI/2;}
 for(let i=0;i<16;i++)box(pcCase,.9,.006,.018,.59,1.941,-.07+i*.073,M.metal);
@@ -64,6 +64,9 @@ for(const z of [-.21,1.13]){const rail=plate(pcCase,.09,4.5,.065,.035,1.43,-.35,
 // Tray cable grommets and drive sled, visible when the case is inspected alone.
 for(const y of [.54,-.95]){const opening=slot(0,0,.18,.48);plate(pcCase,.27,.57,.022,.065,1.18,y,-.195,M.black,[opening]);for(let i=0;i<4;i++)box(pcCase,.15,.012,.012,1.18,y-.16+i*.11,-.164,M.black);}
 plate(pcCase,.76,.99,.025,.04,.8,-1.99,-.18,M.metal);for(const x of [.48,1.12])for(const y of [-2.38,-1.6])screw(pcCase,x,y,-.148,.023);
+const psuOpening=slot(-.32,0,1.34,.56);plate(pcCase,2.67,.91,.025,.035,0,-2.1,1.025,M.casePanel,[psuOpening]);
+// Slim RGB strip sits on the front rail, following the case's vertical edge.
+const frontStrip=rgbBar(pcCase,4.2,.035,.035,1.53,-.35,1.14);frontStrip.rotation.z=Math.PI/2;
 // Rear thumb screws, hinge bosses and panel seals.
 for(const y of [1.7,-2.4]){cylinder(pcCase,.047,.048,-1.3,y,1.19,M.black);ring(pcCase,.039,.008,-1.3,y,1.217,M.metal);}
 for(const x of [-1.33,1.33])box(pcCase,.016,4.39,.015,x,-.35,1.13,M.black);for(const y of [1.85,-2.55])box(pcCase,2.67,.016,.015,0,y,1.13,M.black);

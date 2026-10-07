@@ -21,6 +21,13 @@ export function createStudioMaterials(renderer,scene){
   mesh.castShadow=false;return;
  }
  uvFor(mesh.geometry);if(prepared.has(material))return;prepared.add(material);
+ if(material.name==='RGB diffuser'){
+  // Use the vertex spectrum for emission too, preserving visible blade geometry.
+  material.onBeforeCompile=shader=>{shader.fragmentShader=shader.fragmentShader.replace('#include <emissivemap_fragment>','#include <emissivemap_fragment>\n#ifdef USE_COLOR\n totalEmissiveRadiance *= vColor;\n#endif');};
+  material.customProgramCacheKey=()=> 'nexrig-rgb-spectrum-v1';material.envMapIntensity=.18;material.roughness=.34;material.needsUpdate=true;return;
+ }
+ if(material.name==='Brushed aluminium')material.color.setHex(0x7c8692);
+ if(material.name==='Satin case panels'){material.roughnessMap=plasticTexture;material.bumpMap=plasticTexture;material.bumpScale=.00006;}
  const metallic=material.metalness>.55;material.envMapIntensity=metallic?.72:.3;
  if(metallic){material.roughnessMap=metalTexture;material.bumpMap=metalTexture;material.bumpScale=.00012;material.roughness=Math.max(.25,material.roughness);}
  else if(!material.map&&material.metalness<.35){material.roughnessMap=plasticTexture;material.bumpMap=plasticTexture;material.bumpScale=.00009;material.roughness=Math.max(.52,material.roughness);}

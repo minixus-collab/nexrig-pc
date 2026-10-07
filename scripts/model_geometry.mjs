@@ -7,7 +7,15 @@ import fs from 'node:fs';
 globalThis.FileReader=class{readAsArrayBuffer(blob){blob.arrayBuffer().then(x=>{this.result=x;this.onloadend?.();});}readAsDataURL(blob){blob.arrayBuffer().then(x=>{this.result='data:application/octet-stream;base64,'+Buffer.from(x).toString('base64');this.onloadend?.();});}};
 export {T};
 const material=(name,color,metalness=.2,roughness=.5)=>new T.MeshStandardMaterial({name,color,metalness,roughness});
-export const M={metal:material('Brushed aluminium',0x626b77,.8,.32),silver:material('Machined edges',0xaab3bd,.85,.25),black:material('Graphite polymer',0x151920,.1,.58),blade:material('Satin impeller',0x20252d,.12,.6),pcb:material('PCB solder mask',0x193930,.15,.75),copper:material('Copper',0xaa6a39,.85,.3),gold:material('Gold plated contacts',0xc6a354,.75,.32),purple:material('Purple accent',0x7653db,.4,.38),white:material('Connector markings',0xcbd1da,.1,.65)};
+export const M={metal:material('Brushed aluminium',0x626b77,.8,.32),silver:material('Machined edges',0xaab3bd,.85,.25),black:material('Graphite polymer',0x151920,.1,.58),blade:material('Satin impeller',0x20252d,.12,.6),pcb:material('PCB solder mask',0x193930,.15,.75),copper:material('Copper',0xaa6a39,.85,.3),gold:material('Gold plated contacts',0xc6a354,.75,.32),purple:material('Purple accent',0x7653db,.4,.38),white:material('Connector markings',0xcbd1da,.1,.65),casePanel:material('Satin case panels',0x9098a3,.45,.42),rgb:material('RGB diffuser',0xffffff,0,.34)};
+M.rgb.vertexColors=true;
+export function spectrum(geometry,axis='angle'){
+ const position=geometry.attributes.position,colors=[];const color=new T.Color();geometry.computeBoundingBox();const bounds=geometry.boundingBox;
+ for(let i=0;i<position.count;i++){const phase=axis==='angle'?(Math.atan2(position.getY(i),position.getX(i))+Math.PI)/(Math.PI*2):(position.getX(i)-bounds.min.x)/Math.max(.0001,bounds.max.x-bounds.min.x);color.setHSL((.58+phase*.72)%1,.95,.48);colors.push(color.r,color.g,color.b);}
+ geometry.setAttribute('color',new T.Float32BufferAttribute(colors,3));return geometry;
+}
+export function rgbRing(parent,r,t,x,y,z){return mesh(parent,spectrum(new T.TorusGeometry(r,t,8,64)),M.rgb,x,y,z);}
+export function rgbBar(parent,w,h,d,x,y,z){return mesh(parent,spectrum(new T.BoxGeometry(w,h,d,16,1,1),'length'),M.rgb,x,y,z);}
 export function mesh(parent,g,m,x=0,y=0,z=0){const a=new T.Mesh(g,m);a.position.set(x,y,z);parent.add(a);return a;}
 export function hardwareBox(w,h,d){
  // Round visible enclosures and chips; keep tiny contacts/fins inexpensive and crisp.
@@ -30,10 +38,10 @@ export function bladeGeometry(radius){
  for(let i=0;i<rows;i++)for(let j=0;j<cols;j++){const a=i*(cols+1)+j,b=a+cols+1;indices.push(a,b,a+1,b,b+1,a+1);}
  const g=new T.BufferGeometry();g.setAttribute('position',new T.Float32BufferAttribute(vertices,3));g.setIndex(indices);g.computeVertexNormals();return g;
 }
-export function fan(p,x,y,z,r,{grille=false,frame=true}={}){
+export function fan(p,x,y,z,r,{grille=false,frame=true,rgb=true}={}){
  const f=new T.Group();f.position.set(x,y,z);p.add(f);
  if(frame){const hole=new T.Path();hole.absarc(0,0,r*.96,0,Math.PI*2,true);plate(f,r*2.14,r*2.14,.04,r*.13,0,0,-.035,M.black,[hole]);for(const dx of [-1,1])for(const dy of [-1,1])screw(f,dx*r*.9,dy*r*.9,.014,r*.045);}
- ring(f,r*.97,r*.025,0,0,.017,M.metal);ring(f,r*.91,r*.012,0,0,.006,M.purple);
+ ring(f,r*.97,r*.025,0,0,.017,M.metal);if(rgb)rgbRing(f,r*.91,r*.026,0,0,.021);else ring(f,r*.91,r*.012,0,0,.006,M.metal);
  const rotor=new T.Group();rotor.name='Fan rotor';rotor.userData.fanRotor=true;rotor.position.z=.015;f.add(rotor);
  const blades=bladeGeometry(r),bladeMaterial=M.blade.clone();bladeMaterial.side=T.DoubleSide;
  for(let i=0;i<9;i++){const a=mesh(rotor,blades,bladeMaterial);a.rotation.z=i*Math.PI*2/9;}
