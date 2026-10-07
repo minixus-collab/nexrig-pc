@@ -27,5 +27,18 @@
  form.addEventListener('change',()=>update());form.addEventListener('reset',()=>requestAnimationFrame(()=>update()));
  form.addEventListener('submit',event=>{event.preventDefault();update();if(add.disabled)return;document.dispatchEvent(new CustomEvent('nexrig:add-build',{detail:{ids:cats.map(cat=>selection()[cat].id)}}));});
  document.addEventListener('nexrig:cart-ready',()=>update(false));document.addEventListener('nexrig:build-added',()=>{status.textContent=text('Les huit composants ont été ajoutés au panier de démonstration.','All eight components were added to the demonstration cart.');});
+ const previewToggle=document.getElementById('preview-toggle'),previewHost=document.getElementById('preview-content'),previewStatus=document.getElementById('preview-status');
+ if(previewToggle&&previewHost){
+  previewToggle.hidden=false;let mounted=false;
+  previewToggle.addEventListener('click',async()=>{
+   if(!mounted){previewToggle.disabled=true;previewStatus.textContent=text('Chargement de la vue…','Loading preview…');
+    try{const module=await import(previewToggle.dataset.previewModule);module.mountPreview(previewHost,form);mounted=true;previewStatus.textContent='';}
+    catch{previewStatus.textContent=text('La vue n’a pas pu être chargée. Réessayez ; les sélecteurs restent disponibles.','The preview could not load. Try again; component selectors remain available.');return;}
+    finally{previewToggle.disabled=false;}
+   }
+   previewHost.hidden=!previewHost.hidden;previewToggle.setAttribute('aria-expanded',String(!previewHost.hidden));
+   previewToggle.textContent=previewHost.hidden?text('Voir en 3D','View in 3D'):text('Masquer la vue 3D','Hide 3D preview');
+  });
+ }
  update(false);
 })();
