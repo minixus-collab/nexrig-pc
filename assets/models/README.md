@@ -1,9 +1,35 @@
-# Original NEXRIG GPU model
+# Original NEXRIG hardware models
 
-`nexrig-dual-fan-gpu.glb` is an original generic dual-fan GPU model created for NEXRIG. It does not reproduce a manufacturer product or certify dimensions. No downloaded manufacturer geometry, branding or textures are included. Mesh geometry and materials are authored in `scripts/create_gpu_model.mjs`.
+These GLBs are original generic models authored for NEXRIG. They contain no downloaded manufacturer geometry, logos or third-party textures and do not reproduce an exact product or certify physical fit. The detailed motherboard is authored in `assets/js/build-preview.js` with its own generated PCB texture.
 
-365 meshes: contoured shroud with circular openings, curved fan blades, 96 heatsink fins, copper heatpipes, port shells, PCB components, power socket, gold PCIe contacts and vented backplate. Approximately 3.34 MB uncompressed; loaded on demand when the viewer has a selected GPU, never on initial page load.
+| Asset | Details |
+| --- | --- |
+| `nexrig-dual-fan-gpu.glb` | Contoured shroud and circular openings, nine separate swept/pitched blades per fan, heatsink fins, copper pipes, ports, vented backplate and PCIe contacts |
+| `nexrig-cpu.glb` | Layered substrate, stepped heatspreader, underside contact array and edge components |
+| `nexrig-ram.glb` | Keyed gold contacts, IC packages, heatspreader, diffuser and screws; viewer shows the selected kit's module count up to four |
+| `nexrig-m2.glb` | Controller, NAND packages, keyed contacts, mounting ring and small PCB components |
+| `nexrig-sata.glb` / `nexrig-hdd.glb` | Rounded enclosure, connector contacts, fasteners and different SSD/HDD covers |
+| `nexrig-cooler.glb` | Stacked fins, bent copper heatpipes, mounting hardware and pitched impeller |
+| `nexrig-aio.glb` | Dual-fan radiator, pump and flexible hoses |
+| `nexrig-psu.glb` | Folded enclosure, open fan aperture, wire grille, power inlet, switch and modular sockets |
+| `nexrig-case.glb` | Roof/floor/back panels, front fan mesh, three detailed fans, rear expansion slots, basement, feet, I/O and separate smoked side panel |
 
-To regenerate, install Three.js 0.160.1 in a temporary directory, copy the generator there and run `node create_gpu_model.mjs /absolute/path/to/nexrig-dual-fan-gpu.glb`. The script includes a Node FileReader adapter for GLB export and needs no textures or external assets. Preserve the pinned version.
+The assembled layout mounts RAM perpendicular to the board and the GPU horizontally, adds illustrative power cables and supports opening the side panel, hiding the case and an exploded view. The geometry is shared with the individual inspection views; selected references remain clearly labeled as generic representations. Air/AIO and M.2/SATA/HDD variants follow catalogue fields. Case format, dimensions, radiator size, motherboard layout and exact product appearance are not matched.
 
-GLTFLoader.js and BufferGeometryUtils.js are locally vendored from Three.js 0.160.1, with import paths adapted for this site's existing local module. They use the same MIT license retained at `assets/js/vendor/three-LICENSE.txt`.
+Approximately 6 MB of GLBs cover all variants; only selected variants load after activating the viewer. Geometry is baked, merged by material and indexed to remove duplicate vertices. Models use 4–10 material batches each; the motherboard's small details are also batched. Loaded variants are cached in the current preview. Missing assets keep simplified geometry and offer an explicit retry button. There is no continuous rendering loop or external runtime model request.
+
+## Regenerate
+
+Use an isolated temporary directory with Node.js and Three.js 0.160.1:
+
+```sh
+npm install --prefix /tmp/nexrig-model-tools --cache /tmp/nexrig-npm-cache three@0.160.1 --ignore-scripts --no-audit --no-fund
+cp scripts/model_geometry.mjs scripts/create_gpu_model.mjs scripts/create_component_models.mjs /tmp/nexrig-model-tools/
+node /tmp/nexrig-model-tools/create_gpu_model.mjs "$PWD/assets/models/nexrig-dual-fan-gpu.glb"
+node /tmp/nexrig-model-tools/create_component_models.mjs "$PWD/assets/models"
+python3 scripts/build_catalogue.py
+```
+
+`model_geometry.mjs` supplies the mesh helpers, pitched fan geometry, batching and Node FileReader adapter. Preserve the pinned Three.js version. Bump `MODEL_VERSION` in `build-preview.js` after asset edits to invalidate cached files.
+
+GLTFLoader.js and BufferGeometryUtils.js are locally vendored from Three.js 0.160.1 with imports adapted to the site's existing module. The MIT license is retained at `assets/js/vendor/three-LICENSE.txt`.

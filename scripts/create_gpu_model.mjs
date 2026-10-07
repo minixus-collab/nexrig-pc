@@ -1,7 +1,5 @@
 import * as T from 'three';
-import {GLTFExporter} from 'three/addons/exporters/GLTFExporter.js';
-import fs from 'node:fs';
-globalThis.FileReader=class{readAsArrayBuffer(blob){blob.arrayBuffer().then(x=>{this.result=x;this.onloadend?.();});}readAsDataURL(blob){blob.arrayBuffer().then(x=>{this.result='data:application/octet-stream;base64,'+Buffer.from(x).toString('base64');this.onloadend?.();});}};
+import {bladeGeometry,save} from './model_geometry.mjs';
 const model=new T.Group();model.name='NEXRIG original dual fan GPU';
 const mat=(name,color,metalness,roughness)=>new T.MeshStandardMaterial({name,color,metalness,roughness});
 const metal=mat('Brushed aluminium',0x76808a,.85,.28),edge=mat('Machined silver trim',0xc1c7cf,.86,.2),plastic=mat('Graphite polymer',0x191d23,.18,.39),bladeMat=mat('Satin fan blades',0x292e35,.3,.35),pcb=mat('Printed circuit board',0x183a32,.15,.75),copper=mat('Copper heatpipes',0xb77443,.8,.3),gold=mat('Gold contacts',0xcba94d,.85,.25),dark=mat('Black connector plastic',0x080a0d,.05,.6),purple=mat('Purple accents',0x7454ed,.5,.28);
@@ -19,10 +17,8 @@ const trim=rounded(2.76,1.12,.13),inner=new T.Path();inner.absarc(-.65,0,.465,0,
 for(const x of [-.65,.65]){
  ring(.448,.014,x,0,.314,edge);ring(.42,.009,x,0,.307,dark);
  cylinder(.108,.063,x,0,.315,plastic);ring(.087,.004,x,0,.35,edge);cylinder(.028,.005,x,0,.351,purple);
- for(let i=0;i<11;i++){
-  const shape=new T.Shape();shape.moveTo(.09,-.022);shape.bezierCurveTo(.2,-.11,.34,-.17,.402,-.068);shape.bezierCurveTo(.435,-.016,.36,.1,.325,.15);shape.bezierCurveTo(.3,.03,.17,.032,.095,.025);shape.closePath();
-  const g=new T.ExtrudeGeometry(shape,{depth:.012,bevelEnabled:true,bevelThickness:.003,bevelSize:.003,bevelSegments:2,curveSegments:12});const fan=mesh(g,bladeMat,x,0,.282);fan.rotation.z=i*Math.PI*2/11;
- }
+ const fanMaterial=bladeMat.clone();fanMaterial.side=T.DoubleSide;
+ for(let i=0;i<9;i++){const blade=mesh(bladeGeometry(.438),fanMaterial,x,0,.286);blade.rotation.z=i*Math.PI*2/9;}
  for(let i=0;i<4;i++){const angle=i*Math.PI/2;const support=box(.43,.025,.023,x+Math.cos(angle)*.23,Math.sin(angle)*.23,.209,dark);support.rotation.z=angle;}
 }
 // Segmented real heatsink, copper pipe bends and exposed circuit board.
@@ -47,4 +43,4 @@ for(let i=0;i<12;i++)box(.041,.055,.02,-1.427,-.47+i*.081,.235,dark);
 for(const x of [-1.23,0,1.23])for(const y of [-.45,.45]){cylinder(.029,.02,x,y,.323,edge);box(.029,.006,.003,x,y,.335,dark);box(.006,.029,.003,x,y,.335,dark);cylinder(.029,.016,x,y,-.18,edge);}
 for(const y of [-.51,.51]){box(1.02,.026,.014,0,y,.318,edge);box(.27,.026,.016,-1.02,y,.317,purple);box(.27,.026,.016,1.02,y,.317,purple);}
 // No brand logos or claims about a real product.
-const out=await new GLTFExporter().parseAsync(model,{binary:true});fs.writeFileSync(process.argv[2] || 'nexrig-dual-fan-gpu.glb',Buffer.from(out));console.log('Original GLB bytes:',out.byteLength,'meshes:',model.children.length);
+await save(model,process.argv[2] || 'nexrig-dual-fan-gpu.glb');
