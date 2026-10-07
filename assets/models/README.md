@@ -1,6 +1,6 @@
 # Original NEXRIG hardware models
 
-These GLBs are original generic models authored for NEXRIG. They contain no downloaded manufacturer geometry, logos or third-party textures and do not reproduce an exact product or certify physical fit. The detailed motherboard is authored in `assets/js/build-preview.js` with its own generated PCB texture.
+The `nexrig-*.glb` files are original generic models authored for NEXRIG. They contain no downloaded manufacturer geometry, logos or third-party textures and do not reproduce an exact product or certify physical fit. The detailed motherboard is authored in `assets/js/build-preview.js` with its own generated PCB texture.
 
 | Asset | Details |
 | --- | --- |
@@ -45,3 +45,5 @@ The v5 pass rounds visible chip/enclosure edges while preserving small contact a
 [Custom Gaming PC](https://sketchfab.com/3d-models/custom-gaming-pc-1a24273417534f69afa0f7c62b643ffc) by [Yolala3D | Y3D](https://sketchfab.com/Yolala3d) is listed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) (checked 7 October 2026). It is **not included in this repository**. The download API requires authenticated Sketchfab access; an authorized downloaded archive is needed before integration. Retain author credit, source, license and an account of modifications when integrating.
 
 The listing has approximately 1.04 million triangles, so inspect and optimize it before browser use. The thumbnail is an offline rendered example; it does not establish how the downloaded materials will look in WebGL. Check component separation, textures, scales and fan pivots in the actual archive. This fixed example configuration cannot be presented as an exact match for every builder selection.
+
+A separate licensed realistic example is included under [`yolala-custom-pc/`](yolala-custom-pc/README.md). Its provenance and CC BY attribution are distinct from the original generic assets. It is optional, loads on demand and does not change with builder selections.
