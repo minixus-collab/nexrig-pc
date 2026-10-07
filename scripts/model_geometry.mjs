@@ -28,16 +28,19 @@ export function fan(p,x,y,z,r,{grille=false,frame=true}={}){
  const f=new T.Group();f.position.set(x,y,z);p.add(f);
  if(frame){const hole=new T.Path();hole.absarc(0,0,r*.96,0,Math.PI*2,true);plate(f,r*2.14,r*2.14,.04,r*.13,0,0,-.035,M.black,[hole]);for(const dx of [-1,1])for(const dy of [-1,1])screw(f,dx*r*.9,dy*r*.9,.014,r*.045);}
  ring(f,r*.97,r*.025,0,0,.017,M.metal);ring(f,r*.91,r*.012,0,0,.006,M.purple);
+ const rotor=new T.Group();rotor.name='Fan rotor';rotor.userData.fanRotor=true;rotor.position.z=.015;f.add(rotor);
  const blades=bladeGeometry(r),bladeMaterial=M.blade.clone();bladeMaterial.side=T.DoubleSide;
- for(let i=0;i<9;i++){const a=mesh(f,blades,bladeMaterial,0,0,.015);a.rotation.z=i*Math.PI*2/9;}
+ for(let i=0;i<9;i++){const a=mesh(rotor,blades,bladeMaterial);a.rotation.z=i*Math.PI*2/9;}
  cylinder(f,r*.23,.07,0,0,.014,M.black);cylinder(f,r*.17,.012,0,0,.055,M.metal);ring(f,r*.135,r*.009,0,0,.064,M.silver);
  for(let i=0;i<4;i++){const a=i*Math.PI/2;wire(f,[[0,0,-.04],[Math.cos(a)*r*.45,Math.sin(a)*r*.45,-.04],[Math.cos(a+.15)*r*.94,Math.sin(a+.15)*r*.94,-.04]],r*.022,M.black);}
  if(grille){for(let i=1;i<=5;i++)ring(f,r*(.2+i*.13),r*.013,0,0,.09,M.silver);for(let i=0;i<4;i++){const a=i*Math.PI/2;wire(f,[[0,0,.09],[Math.cos(a)*r*.94,Math.sin(a)*r*.94,.09]],r*.016,M.silver);}}
  return f;
 }
 export async function save(model,file){
- // Bake transforms and batch like materials to keep draw calls and transfer size low.
- model.updateMatrixWorld(true);const batches=new Map();model.traverse(node=>{if(!node.isMesh)return;let geometry=node.geometry.clone().applyMatrix4(node.matrixWorld);if(geometry.index){const expanded=geometry.toNonIndexed();geometry.dispose();geometry=expanded;}geometry.deleteAttribute('uv');const key=node.material;const list=batches.get(key)||[];list.push(geometry);batches.set(key,list);});
- const packed=new T.Group();packed.name=model.name;for(const [material,list] of batches)packed.add(new T.Mesh(mergeVertices(mergeGeometries(list)),material));
- const data=await new GLTFExporter().parseAsync(packed,{binary:true});fs.writeFileSync(file,Buffer.from(data));console.log(file,data.byteLength,'bytes',packed.children.length,'material batches');
+ model.updateMatrixWorld(true);const packed=new T.Group();packed.name=model.name;
+ const rotors=[];model.traverse(node=>{if(node.userData.fanRotor)rotors.push(node);});
+ function packMeshes(nodes,transform,parent){const batches=new Map();for(const node of nodes){let geometry=node.geometry.clone().applyMatrix4(transform.clone().multiply(node.matrixWorld));if(geometry.index){const expanded=geometry.toNonIndexed();geometry.dispose();geometry=expanded;}geometry.deleteAttribute('uv');const list=batches.get(node.material)||[];list.push(geometry);batches.set(node.material,list);}for(const [material,list] of batches)parent.add(new T.Mesh(mergeVertices(mergeGeometries(list)),material));}
+ const fixed=[];model.traverse(node=>{if(!node.isMesh)return;let parent=node.parent;while(parent){if(parent.userData.fanRotor)return;parent=parent.parent;}fixed.push(node);});packMeshes(fixed,new T.Matrix4(),packed);
+ for(const rotor of rotors){const pivot=new T.Group();pivot.name='Fan rotor';pivot.userData.fanRotor=true;rotor.matrixWorld.decompose(pivot.position,pivot.quaternion,pivot.scale);const meshes=[];rotor.traverse(node=>{if(node.isMesh)meshes.push(node);});packMeshes(meshes,rotor.matrixWorld.clone().invert(),pivot);packed.add(pivot);}
+ const data=await new GLTFExporter().parseAsync(packed,{binary:true});fs.writeFileSync(file,Buffer.from(data));console.log(file,data.byteLength,'bytes',rotors.length,'animated fan pivots');
 }
