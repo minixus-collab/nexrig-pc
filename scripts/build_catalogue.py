@@ -390,25 +390,25 @@ def compact_category_intro(doc, cat, lang, count):
  return doc.replace('</main>',overview+'</main>',1)
 
 BLOG_ARTICLES = [
- {'slug':'quelle-carte-graphique-choisir', 'cover':BASE+'assets/images/blog/quelle-carte-graphique-choisir.webp', 'paths':{'fr':'blog/quelle-carte-graphique-choisir/','en':'en/blog/how-to-choose-a-graphics-card/'},
+ {'slug':'quelle-carte-graphique-choisir', 'cover':'https://hyperpc.ae/images/support/articles/how-to-choose-vga/content/how-to-choose-vga-banner_webp.jpg', 'paths':{'fr':'blog/quelle-carte-graphique-choisir/','en':'en/blog/how-to-choose-a-graphics-card/'},
   'titles':{'fr':'Quelle carte graphique choisir pour son PC gamer ?','en':'How to choose a graphics card for your gaming PC'},
   'descriptions':{'fr':'Quelle carte graphique choisir ? Comparez jeux, résolution, VRAM et compatibilité pour sélectionner un GPU adapté à votre PC gamer.','en':'Learn how to choose a graphics card for your gaming PC: compare games, resolution, VRAM, benchmarks, compatibility and your whole-system budget.'}},
- {'slug':'gta-6-pc','cover':BASE+'assets/images/blog/gta-6-pc.webp','paths':{'fr':'blog/gta-6-pc/','en':'en/blog/gta-6-pc/'},
+ {'slug':'gta-6-pc','cover':'https://ichef.bbci.co.uk/news/1024/cpsprodpb/6ddf/live/9349ecd0-bb62-11f0-824f-39b3b0e3b0ee.jpg.webp','paths':{'fr':'blog/gta-6-pc/','en':'en/blog/gta-6-pc/'},
  'titles':{'fr':'GTA 6 sur PC : date de sortie et configuration, ce que l’on sait','en':'GTA 6 on PC: release date and system requirements explained'},
  'descriptions':{'fr':'GTA 6 sur PC : distinguez annonces, estimations de configuration et benchmarks. Préparez votre PC sans confondre hypothèses et exigences officielles.','en':'GTA 6 on PC: understand release-date uncertainty, hardware estimates and what to verify before upgrading. No invented requirements or FPS promises.'}},
- {'slug':'vram-carte-graphique', 'cover':BASE+'assets/images/blog/vram-carte-graphique.webp', 'paths':{'fr':'blog/vram-carte-graphique/','en':'en/blog/what-is-vram/'},
+ {'slug':'vram-carte-graphique', 'cover':'https://staticg.sportskeeda.com/editor/2023/04/2b0f3-16826203142306-1920.jpg', 'paths':{'fr':'blog/vram-carte-graphique/','en':'en/blog/what-is-vram/'},
   'titles':{'fr':'VRAM d’une carte graphique : à quoi sert-elle et combien faut-il ?','en':'What is VRAM, and how much do you need?'},
   'descriptions':{'fr':'Comprenez la VRAM d’une carte graphique, sa différence avec la RAM et les besoins selon vos jeux. Choisissez votre GPU sans comparer les Go seuls.','en':'Understand graphics card VRAM, how it differs from system RAM and what affects gaming requirements. Compare GPUs using more than memory capacity.'}},
- {'slug':'choisir-ram','cover':BASE+'assets/images/blog/choisir-ram.webp','paths':{'fr':'blog/choisir-ram/','en':'en/blog/how-to-choose-ram/'},
+ {'slug':'choisir-ram','cover':'https://cdn.mos.cms.futurecdn.net/aFrdtqm8QLfdsRBkwhDjcC.jpg','paths':{'fr':'blog/choisir-ram/','en':'en/blog/how-to-choose-ram/'},
   'titles':{'fr':'Quelle RAM choisir pour son PC gamer : capacité, DDR4 ou DDR5 ?','en':'How to choose RAM for a gaming PC: capacity, DDR4 or DDR5?'},
   'descriptions':{'fr':'Choisir la RAM de son PC gamer : 16 ou 32 Go, DDR4 ou DDR5, compatibilité, vitesse et profils XMP/EXPO. Vérifiez la plateforme avant d’acheter.','en':'Choose RAM for a gaming PC: capacity, DDR4 versus DDR5, compatibility, speed and XMP/EXPO profiles. Check the platform before buying.'}},
- {'slug':'temperature-carte-graphique','cover':BASE+'assets/images/blog/temperature-carte-graphique.webp','paths':{'fr':'blog/temperature-carte-graphique/','en':'en/blog/gpu-temperature/'},
+ {'slug':'temperature-carte-graphique','cover':'https://cdn.mos.cms.futurecdn.net/W9gHnzYr6LU6Fg8FsrHouT.jpg','paths':{'fr':'blog/temperature-carte-graphique/','en':'en/blog/gpu-temperature/'},
  'titles':{'fr':'Température de carte graphique : comment la surveiller et réduire la chauffe','en':'GPU temperature: how to monitor it and reduce heat'},
  'descriptions':{'fr':'Surveillez la température de votre carte graphique : GPU, hotspot, ventilation et nettoyage. Identifiez les vérifications utiles sans seuil universel.','en':'Learn to monitor GPU temperature, distinguish hotspot readings and check airflow, dust and settings without assuming one safe limit for every card.'}},
- {'slug':'ssd-maroc','cover':BASE+'assets/images/blog/ssd-maroc.webp','paths':{'fr':'blog/ssd-maroc/','en':'en/blog/ssd-buying-guide-morocco/'},
+ {'slug':'ssd-maroc','cover':'https://cdn.mos.cms.futurecdn.net/KEgqpKtN3p9PnWzfDLPcn.jpg','paths':{'fr':'blog/ssd-maroc/','en':'en/blog/ssd-buying-guide-morocco/'},
   'titles':{'fr':'SSD au Maroc : comment choisir et comparer les prix','en':'SSDs in Morocco: how to choose and compare prices'},
   'descriptions':{'fr':'Choisir un SSD au Maroc : SATA ou NVMe, capacité, compatibilité et garantie. Comparez les offres réelles sans confondre les prix fictifs de NEXRIG.','en':'Choose an SSD in Morocco: compare SATA and NVMe, capacity, compatibility and warranty. Separate real seller offers from NEXRIG demonstration prices.'}},
- {'slug':'probleme-carte-graphique','cover':BASE+'assets/images/blog/probleme-carte-graphique.webp','paths':{'fr':'blog/probleme-carte-graphique/','en':'en/blog/graphics-card-problems/'},
+ {'slug':'probleme-carte-graphique','cover':'https://maketecheasier.com/wp-content/uploads/2024/01/Graphics-card-not-working-featured.jpg','paths':{'fr':'blog/probleme-carte-graphique/','en':'en/blog/graphics-card-problems/'},
   'titles':{'fr':'Problème de carte graphique : symptômes et solutions','en':'Graphics card problems: symptoms and troubleshooting steps'},
   'descriptions':{'fr':'Problème de carte graphique : vérifiez écran noir, artefacts, plantages et FPS avant de remplacer le GPU. Câbles, pilotes, température et support.','en':'Troubleshoot graphics card problems: black screens, artifacts, crashes and low FPS. Check cables, drivers and temperatures before replacing your GPU.'}}
 ]
@@ -422,7 +422,7 @@ def build_blog(lang):
   article=(ROOT/'content/blog'/(entry['slug']+'.'+lang+'.html')).read_text().removeprefix('<meta name="robots" content="noindex,follow">\n')
   bread=[(WORDS[lang]['home'],homedir(lang)),('Blog',index),(title,url)]
   doc=document(title+' | NEXRIG',description,url,entry['paths'][other],lang,article,bread)
-  schema={'@context':'https://schema.org','@type':'BlogPosting','headline':title,'description':description,'inLanguage':lang,'mainEntityOfPage':LIVE+url,'image':LIVE+entry['cover'].removeprefix(BASE)}
+  schema={'@context':'https://schema.org','@type':'BlogPosting','headline':title,'description':description,'inLanguage':lang,'mainEntityOfPage':LIVE+url,'image':entry['cover']}
   doc=doc.replace('</head>','<script type="application/ld+json">'+schema_text(schema)+'</script></head>')
   target=ROOT/url/'index.html';target.parent.mkdir(parents=True,exist_ok=True);target.write_text(doc)
   label=('Dépannage' if lang=='fr' else 'Troubleshooting') if entry['slug']=='probleme-carte-graphique' else ('Gaming' if lang=='en' else 'Jeux PC') if entry['slug']=='gta-6-pc' else ('Guide d’achat' if lang=='fr' else 'Buying guide') if entry['slug'] in ['quelle-carte-graphique-choisir','ssd-maroc','choisir-ram'] else ('Matériel expliqué' if lang=='fr' else 'Hardware explained')
