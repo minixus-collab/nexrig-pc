@@ -223,6 +223,24 @@ class CatalogueTests(unittest.TestCase):
             self.assertTrue(title.startswith('PC gamer Maroc' if lang=='fr' else 'Gaming PC Morocco'))
             self.assertEqual(text.count('data-product-id="nexrig-atlas"'),1)
 
+    def test_local_blog_covers_and_website_schema(self):
+        articles = list((ROOT / 'blog').glob('*/index.html')) + list((ROOT / 'en/blog').glob('*/index.html'))
+        self.assertEqual(len(articles), 14)
+        for path in articles:
+            text = path.read_text()
+            image = next(attrs for tag, attrs in Page(text).tags if tag == 'img' and '/assets/images/blog/' in attrs.get('src', ''))
+            self.assertTrue(image.get('alt'))
+            asset = ROOT / image['src'].removeprefix(PREFIX)
+            self.assertTrue(asset.is_file())
+            self.assertLess(asset.stat().st_size, 150000)
+            schemas = [json.loads(s) for s in re.findall(r'<script type="application/ld\+json">(.*?)</script>', text, re.S)]
+            article = next(s for s in schemas if s['@type'] == 'BlogPosting')
+            self.assertEqual(article['image'], 'https://minixus-collab.github.io' + image['src'])
+        for path in [ROOT / 'index.html', ROOT / 'en/index.html']:
+            schema = json.loads(re.search(r'<script type="application/ld\+json" id="website-schema">(.*?)</script>', path.read_text(), re.S)[1])
+            self.assertEqual(schema['url'], LIVE)
+            self.assertEqual(schema['@id'], LIVE + '#website')
+
     def test_product_pages_and_truthful_schema(self):
         for lang, folder in [('fr', 'produits'), ('en', 'en/products')]:
             for p in self.products:
