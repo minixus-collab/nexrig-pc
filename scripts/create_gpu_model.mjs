@@ -10,7 +10,7 @@ function ring(r,t,x,y,z,m){return mesh(new T.TorusGeometry(r,t,12,64),m,x,y,z);}
 function extrude(shape,depth,m,z){const g=new T.ExtrudeGeometry(shape,{depth,bevelEnabled:true,bevelSegments:3,steps:1,bevelSize:.012,bevelThickness:.012,curveSegments:40});return mesh(g,m,0,0,z);}
 function rounded(w,h,r){const s=new T.Shape(),x=-w/2,y=-h/2;s.moveTo(x+r,y);s.lineTo(x+w-r,y);s.quadraticCurveTo(x+w,y,x+w,y+r);s.lineTo(x+w,y+h-r);s.quadraticCurveTo(x+w,y+h,x+w-r,y+h);s.lineTo(x+r,y+h);s.quadraticCurveTo(x,y+h,x,y+h-r);s.lineTo(x,y+r);s.quadraticCurveTo(x,y,x+r,y);return s;}
 // A contoured shroud with actual circular openings, not circles painted on a box.
-const shroud=rounded(2.72,1.08,.12);
+const shroud=new T.Shape();shroud.moveTo(-1.36,-.39);shroud.lineTo(-1.18,-.54);shroud.lineTo(-.3,-.54);shroud.lineTo(-.18,-.49);shroud.lineTo(.3,-.49);shroud.lineTo(.45,-.54);shroud.lineTo(1.18,-.54);shroud.lineTo(1.36,-.36);shroud.lineTo(1.36,.4);shroud.lineTo(1.18,.54);shroud.lineTo(.3,.54);shroud.lineTo(.18,.49);shroud.lineTo(-.3,.49);shroud.lineTo(-.45,.54);shroud.lineTo(-1.18,.54);shroud.lineTo(-1.36,.36);shroud.closePath();
 for(const x of [-.65,.65]){const hole=new T.Path();hole.absarc(x,0,.448,0,Math.PI*2,true);shroud.holes.push(hole);}
 extrude(shroud,.12,plastic,.18);
 const trim=rounded(2.76,1.12,.13),inner=new T.Path();inner.absarc(-.65,0,.465,0,Math.PI*2,true);trim.holes.push(inner);const inner2=new T.Path();inner2.absarc(.65,0,.465,0,Math.PI*2,true);trim.holes.push(inner2);extrude(trim,.016,metal,.162);
@@ -42,5 +42,9 @@ for(let i=0;i<12;i++)box(.041,.055,.02,-1.427,-.47+i*.081,.235,dark);
 // Screws with inset drive slots, side rails and accent inlays.
 for(const x of [-1.23,0,1.23])for(const y of [-.45,.45]){cylinder(.029,.02,x,y,.323,edge);box(.029,.006,.003,x,y,.335,dark);box(.006,.029,.003,x,y,.335,dark);cylinder(.029,.016,x,y,-.18,edge);}
 for(const y of [-.51,.51]){box(1.02,.026,.014,0,y,.318,edge);box(.27,.026,.016,-1.02,y,.317,purple);box(.27,.026,.016,1.02,y,.317,purple);}
+// Faceted corner guards, inset vent cuts and side screw bosses.
+for(const sign of [-1,1])for(const y of [-.45,.45]){const guard=new T.Shape();const x=sign*1.2;guard.moveTo(x-sign*.13,y);guard.lineTo(x+sign*.11,y);guard.lineTo(x+sign*.11,y-Math.sign(y)*.16);guard.lineTo(x-sign*.03,y-Math.sign(y)*.08);guard.closePath();extrude(guard,.012,dark,.3);}
+for(let i=0;i<5;i++){const rib=box(.017,.16,.012,-.07+i*.034,0,.325,metal);rib.rotation.z=-.3;}
+for(let side of [-1,1])for(let i=0;i<12;i++){box(.1,.025,.14,-.99+i*.18,side*.512,.069,dark);}
 // No brand logos or claims about a real product.
 await save(model,process.argv[2] || 'nexrig-dual-fan-gpu.glb');

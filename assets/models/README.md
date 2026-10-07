@@ -35,3 +35,5 @@ python3 scripts/build_catalogue.py
 GLTFLoader.js and BufferGeometryUtils.js are locally vendored from Three.js 0.160.1 with imports adapted to the site's existing module. The MIT license is retained at `assets/js/vendor/three-LICENSE.txt`.
 
 Studio appearance is applied by `assets/js/preview-materials.js`: locally generated HDR reflections and shared surface textures, generated UVs for baked geometry, subtle metal/plastic roughness and physical glass. The generic hardware geometry and original source provenance remain unchanged.
+
+The v4 geometry includes a faceted GPU shroud and inset vents, bevelled case rails, rear drive sled and cable grommets, panel seals, thumb screws and recessed roof controls. The viewer supplies routed, layered cables with combs and connector shells. These are generic visual assembly details, not dimensions or exact wiring for the selected references.

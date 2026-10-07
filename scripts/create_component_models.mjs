@@ -57,8 +57,18 @@ for(let i=0;i<3;i++){const f=fan(pcCase,0,0,0,.475);f.rotation.y=Math.PI/2;f.pos
 for(let i=0;i<23;i++)box(pcCase,.023,4.2,.014,1.44,-.35,-.13+i*.054,M.metal);for(let i=0;i<33;i++)box(pcCase,.023,.016,1.27,1.448,-2.42+i*.126,.46,M.metal);
 box(pcCase,.06,4.48,.05,1.43,-.35,-.205,M.black);box(pcCase,.06,4.48,.05,1.43,-.35,1.13,M.black);
 for(const x of [-1,1])for(const z of [0,.9]){const foot=plate(pcCase,.3,.18,.15,.04,x,-2.72,z,M.black);foot.rotation.x=Math.PI/2;}
-for(let i=0;i<16;i++)box(pcCase,.9,.006,.018,.59,1.962,-.07+i*.073,M.metal);
-cylinder(pcCase,.05,.024,1.05,1.945,.92,M.silver);for(let i=0;i<2;i++)box(pcCase,.11,.014,.045,.56+i*.18,1.973,.98,M.metal);
+for(let i=0;i<16;i++)box(pcCase,.9,.006,.018,.59,1.941,-.07+i*.073,M.metal);
+cylinder(pcCase,.05,.024,1.05,1.945,.92,M.silver).rotation.x=0;for(let i=0;i<2;i++)box(pcCase,.11,.014,.045,.56+i*.18,1.949,.98,M.metal);
+// Bevelled front rails and inset channels frame the fan mesh.
+for(const z of [-.21,1.13]){const rail=plate(pcCase,.09,4.5,.065,.035,1.43,-.35,z,M.metal);rail.rotation.y=Math.PI/2;box(pcCase,.026,4.23,.023,1.48,-.35,z,M.black);}
+// Tray cable grommets and drive sled, visible when the case is inspected alone.
+for(const y of [.54,-.95]){const opening=slot(0,0,.18,.48);plate(pcCase,.27,.57,.022,.065,1.18,y,-.195,M.black,[opening]);for(let i=0;i<4;i++)box(pcCase,.15,.012,.012,1.18,y-.16+i*.11,-.164,M.black);}
+plate(pcCase,.76,.99,.025,.04,.8,-1.99,-.18,M.metal);for(const x of [.48,1.12])for(const y of [-2.38,-1.6])screw(pcCase,x,y,-.148,.023);
+// Rear thumb screws, hinge bosses and panel seals.
+for(const y of [1.7,-2.4]){cylinder(pcCase,.047,.048,-1.3,y,1.19,M.black);ring(pcCase,.039,.008,-1.3,y,1.217,M.metal);}
+for(const x of [-1.33,1.33])box(pcCase,.016,4.39,.015,x,-.35,1.13,M.black);for(const y of [1.85,-2.55])box(pcCase,2.67,.016,.015,0,y,1.13,M.black);
+// Front I/O recesses, jack and embossed switch ring.
+for(let i=0;i<2;i++)box(pcCase,.077,.015,.026,.56+i*.18,1.958,.98,M.black);ring(pcCase,.032,.007,.93,1.96,.83,M.silver).rotation.x=Math.PI/2;
 // A light smoked panel is a separate named object, toggled in the viewer.
 const glassMaterial=new T.MeshStandardMaterial({name:'Smoked side glass',color:0x758ba4,transparent:true,opacity:.13,roughness:.1,metalness:.1,depthWrite:false,side:T.DoubleSide});
 plate(pcCase,2.68,4.38,.008,.04,0,-.35,1.14,glassMaterial);await emit('case',pcCase);

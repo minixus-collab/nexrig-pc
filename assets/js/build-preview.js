@@ -89,7 +89,7 @@ export function mountPreview(host, form) {
  const sata=new THREE.Group();groups.storage.add(sata);box(.69,.87,.09,.8,-1.89,.43,darkMetal,sata);box(.58,.6,.014,.8,-1.89,.49,silver,sata);
  const m2=ssdGroup.children.filter(child=>child!==sata);m2.forEach(mesh=>mesh.userData.storageType='m2');sata.userData.storageType='sata';
  const fallbackTemplates=new Map(Object.entries(groups).filter(([cat])=>cat!=='motherboard').map(([cat,group])=>[cat,group.children.map(child=>child.clone(true))]));
- const MODEL_VERSION='hardware-20261007-v3',modelCache=new Map(),attached=new Map();let loaderPromise;
+ const MODEL_VERSION='hardware-20261007-v4',modelCache=new Map(),attached=new Map();let loaderPromise;
  const variantFor=(cat,p)=>cat==='gpu'?'dual-fan-gpu':cat==='storage'?(p.form_factor==='M.2 2280'?'m2':p.drive_type==='HDD'?'hdd':'sata'):cat==='cooling'?(['aio','liquid'].includes(p.cooler_type)?'aio':'cooler'):cat;
  function loadModel(variant){if(modelCache.has(variant))return;const entry={state:'loading'};modelCache.set(variant,entry);
  loaderPromise ||= import('./vendor/GLTFLoader.js').then(({GLTFLoader})=>new GLTFLoader());
@@ -99,15 +99,23 @@ export function mountPreview(host, form) {
  if(cat==='cpu'){model.position.set(-.2,.54,.13);label('NEXRIG',-.2,.585,.171,.24,.045,parent);label('GENERIC CPU',-.2,.525,.171,.23,.024,parent);}
  if(cat==='gpu'){model.scale.setScalar(.78);model.position.set(-.03,-.62,.65);}
  if(cat==='ram'){model.position.set(.43,.68,.29);model.rotation.set(0,Math.PI/2,Math.PI/2);for(let i=1;i<4;i++){const stick=model.clone(true);stick.position.x=.43+i*.135;parent.add(stick);}}
- if(cat==='storage'){if(variant==='m2')model.position.set(-.1,-.28,.18);else model.position.set(.8,-1.98,.43);}
+ if(cat==='storage'){if(variant==='m2')model.position.set(-.1,-.28,.18);else model.position.set(.8,-1.98,-.1);}
  if(cat==='cooling'){if(variant==='aio'){model.position.set(0,0,0);}else model.position.set(-.2,.54,.49);}
  if(cat==='psu'){model.position.set(-.3,-2.04,.42);label('MODULAR PSU',-.3,-2.04,.83,.63,.08,parent);}
  }
 
  const cables=new THREE.Group();root.add(cables);
  function cable(points,r=.014,color=0x232735){const mesh=new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(points.map(p=>new THREE.Vector3(...p))),28,r,8,false),mat(color,.15,.65));cables.add(mesh);return mesh;}
- const powerCables=[];for(let i=0;i<6;i++)powerCables.push(cable([[-.16+i*.031,-1.67,.45],[.22+i*.03,-1.5,.42],[1.17+i*.015,-1.2,.36],[1.22+i*.015,.16,.23],[1.08+i*.009,.37,.23]],.013,i%3?0x1b2029:0x675291));
- const gpuCables=[];for(let i=0;i<4;i++)gpuCables.push(cable([[.15+i*.025,-1.67,.49],[1.08+i*.016,-1.39,.78],[1.08+i*.016,-.78,.77],[.72+i*.016,-.63,.58]],.012));
+ const powerCables=[];for(let i=0;i<12;i++)powerCables.push(cable([[.08+i*.019,-1.68,.31],[.49+i*.017,-1.48,.24],[1.21+(i%6)*.014,-1.34,.12+Math.floor(i/6)*.02],[1.24+(i%6)*.014,.32+i*.021,.1+Math.floor(i/6)*.02],[1.10,.33+i*.026,.23]],.0085,i%4===0?0x6a5984:0x20242d));
+ const gpuCables=[];for(let i=0;i<8;i++)gpuCables.push(cable([[.08+i*.022,-1.68,.36],[1.21+(i%4)*.022,-1.43,.4+Math.floor(i/4)*.024],[1.19+(i%4)*.022,-.86,.85+Math.floor(i/4)*.024],[.79+i*.018,-.76,1.025+Math.floor(i/4)*.024],[.55+i*.023,-.59,1.075]],.009,i%4===0?0x625279:0x1d232a));
+ // Cable combs and connector shells belong to their respective cable bundles.
+ const cableHardware=(array,w,h,d,x,y,z,material=black)=>{const mesh=box(w,h,d,x,y,z,material,cables);array.push(mesh);return mesh;};
+ cableHardware(powerCables,.1,.39,.055,1.1,.47,.211);for(let i=0;i<12;i++)cableHardware(powerCables,.018,.021,.008,1.1,.33+i*.026,.242,darkMetal);
+ for(const y of [-1.1,-.5])cableHardware(powerCables,.11,.033,.065,1.255,y,.115,darkMetal);
+ cableHardware(gpuCables,.2,.067,.08,.63,-.594,1.077);cableHardware(gpuCables,.056,.02,.034,.63,-.63,1.087,darkMetal);
+ for(const [x,y,z] of [[1.205,-1.16,.52],[.94,-.78,.97]])cableHardware(gpuCables,.1,.035,.04,x,y,z,darkMetal);
+ studio.prepare(cables);
+
  let pitch=-.17,yaw=-.55,distance=9,defaultDistance=9,drag=null,view='build',caseVisible=true,exploded=false,panelOpen=false;const viewCenter=new THREE.Vector3();let powered=false,animationFrame=0,lastFrame=0,inViewport=false,animationFrames=0;
  const names={cpu:t('Processeur','CPU'),gpu:t('Carte graphique','Graphics card'),motherboard:t('Carte mère','Motherboard'),ram:'RAM',storage:t('Stockage','Storage'),cooling:t('Refroidissement','Cooler'),psu:t('Alimentation','Power supply'),case:t('Boîtier','Case')};
  const viewLabel=document.createElement('label');viewLabel.textContent=t('Vue 3D : ','3D view: ');const select=document.createElement('select');select.className='preview-part-select';select.setAttribute('aria-label',t('Pièce à inspecter','Part to inspect'));viewLabel.append(select);host.insertBefore(viewLabel,stage);
