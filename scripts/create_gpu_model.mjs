@@ -17,8 +17,8 @@ const trim=rounded(2.76,1.12,.13),inner=new T.Path();inner.absarc(-.65,0,.465,0,
 for(const x of [-.65,.65]){
  ring(.448,.014,x,0,.314,edge);ring(.42,.009,x,0,.307,dark);
  cylinder(.108,.063,x,0,.315,plastic);ring(.087,.004,x,0,.35,edge);cylinder(.028,.005,x,0,.351,purple);
- const fanMaterial=bladeMat.clone();fanMaterial.side=T.DoubleSide;
- for(let i=0;i<9;i++){const blade=mesh(bladeGeometry(.438),fanMaterial,x,0,.286);blade.rotation.z=i*Math.PI*2/9;}
+ const rotor=new T.Group();rotor.name='Fan rotor';rotor.userData.fanRotor=true;rotor.position.set(x,0,.286);model.add(rotor);const fanMaterial=bladeMat.clone();fanMaterial.side=T.DoubleSide;
+ for(let i=0;i<9;i++){const blade=new T.Mesh(bladeGeometry(.438),fanMaterial);rotor.add(blade);blade.rotation.z=i*Math.PI*2/9;}
  for(let i=0;i<4;i++){const angle=i*Math.PI/2;const support=box(.43,.025,.023,x+Math.cos(angle)*.23,Math.sin(angle)*.23,.209,dark);support.rotation.z=angle;}
 }
 // Segmented real heatsink, copper pipe bends and exposed circuit board.
