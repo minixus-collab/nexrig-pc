@@ -10,6 +10,7 @@ const server=require('node:child_process').spawn('python3',['-m','http.server','
   const page=await browser.newPage({viewport:{width:1440,height:1000}}),errors=[];let requests=0;
   page.on('pageerror',e=>errors.push(e.message));page.on('request',r=>{if(r.url().includes('/yolala-custom-pc/pc.glb'))requests++;});
   await page.goto('http://127.0.0.1:8782/nexrig-pc/'+(lang==='en'?'en/pc-builder/':'configurateur/'));
+  await page.addStyleTag({content:'html{scroll-behavior:auto!important}'});
   await page.locator('#preview-toggle').click();const select=page.locator('.preview-part-select'),stage=page.locator('.motherboard-stage');await select.waitFor();
   assert.equal(requests,0,'The detailed model must not load in the generic preview');
   await select.selectOption('realistic');await page.waitForFunction(()=>document.querySelector('.motherboard-stage').dataset.exampleModel==='ready',null,{timeout:60000});

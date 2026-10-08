@@ -138,7 +138,25 @@ export function mountPreview(host, form) {
  function move(dx=0,dy=0,dz=0){yaw+=dx;pitch=Math.max(-1.25,Math.min(1.25,pitch+dy));distance=Math.max(.55,Math.min(16,distance+dz));render();}
  const actions=[['←',t('Tourner à gauche','Rotate left'),()=>move(-.16)],['→',t('Tourner à droite','Rotate right'),()=>move(.16)],['↑',t('Tourner vers le haut','Rotate up'),()=>move(0,-.12)],['↓',t('Tourner vers le bas','Rotate down'),()=>move(0,.12)],['+',t('Zoom avant','Zoom in'),()=>move(0,0,-.4)],['−',t('Zoom arrière','Zoom out'),()=>move(0,0,.4)],[t('Recentrer','Reset view'),t('Recentrer la vue','Reset view'),()=>{pitch=-.17;yaw=-.55;distance=defaultDistance;render();}]];
  for(const [text,label,action] of actions){const button=document.createElement('button');button.type='button';button.className='shop-button secondary';button.textContent=text;button.setAttribute('aria-label',label);button.addEventListener('click',action);controls.append(button);}
- function toggle(label,action){const button=document.createElement('button');button.type='button';button.className='shop-button secondary';button.textContent=label;button.setAttribute('aria-pressed','false');button.addEventListener('click',()=>{action();update();});controls.append(button);return button;}
+ // Short, on-demand transitions; final visibility and ARIA state still come from update().
+ let transitionFrame=0,finishTransition=null;
+ function transitionNodes(){const nodes=[...Object.values(groups)];groups.case.traverse(node=>{if(node.material?.name==='Smoked side glass')nodes.push(node);});exampleGroup.traverse(node=>{if(node.userData.previewSidePanel)nodes.push(node);});return nodes;}
+ function transition(action){if(finishTransition)finishTransition();const nodes=transitionNodes(),before=new Map(nodes.map(node=>[node,{position:node.position.clone(),visible:node.visible}])),oldDistance=distance;action();update();
+ if(matchMedia('(prefers-reduced-motion: reduce)').matches||document.hidden||host.hidden)return;
+ const changes=[],materials=[];
+ for(const node of nodes){const old=before.get(node),target={position:node.position.clone(),visible:node.visible};const isPanel=node.material?.name==='Smoked side glass'||node.userData.previewSidePanel;
+ const isCase=node===groups.case;
+ if(old.visible===target.visible&&old.position.equals(target.position))continue;
+ const start=old.position.clone(),end=target.position.clone();if(isPanel){if(!old.visible)start.z+=.85;if(!target.visible)end.z+=.85;}
+ if((isPanel||isCase)&&old.visible!==target.visible){node.visible=true;node.traverse(mesh=>{if(!mesh.isMesh)return;const originals=Array.isArray(mesh.material)?mesh.material:[mesh.material],clones=originals.map(material=>{const clone=material.clone();clone.onBeforeCompile=material.onBeforeCompile;clone.customProgramCacheKey=material.customProgramCacheKey;clone.transparent=true;clone.depthWrite=false;return clone;});materials.push({mesh,original:mesh.material,clones,opacities:originals.map(m=>m.opacity),from:old.visible?1:0,to:target.visible?1:0});mesh.material=Array.isArray(mesh.material)?clones:clones[0];});}
+ changes.push({node,start,end,target});node.position.copy(start);
+ }
+ if(!changes.length)return;const targetDistance=distance,startTime=performance.now();stage.dataset.transitionActive='true';
+ finishTransition=()=>{if(transitionFrame)cancelAnimationFrame(transitionFrame);transitionFrame=0;for(const {node,target} of changes){node.position.copy(target.position);node.visible=target.visible;}for(const {mesh,original,clones} of materials){mesh.material=original;clones.forEach(m=>m.dispose());}distance=targetDistance;stage.dataset.transitionActive='false';finishTransition=null;render();};
+ function frame(time){transitionFrame=0;if(document.hidden||host.hidden||!inViewport){finishTransition();return;}const progress=Math.min(1,(time-startTime)/420),eased=progress*progress*(3-2*progress);for(const {node,start,end} of changes)node.position.lerpVectors(start,end,eased);for(const {clones,opacities,from,to} of materials)clones.forEach((m,i)=>m.opacity=opacities[i]*(from+(to-from)*eased));distance=oldDistance+(targetDistance-oldDistance)*eased;render();if(progress<1)transitionFrame=requestAnimationFrame(frame);else finishTransition();}
+ transitionFrame=requestAnimationFrame(frame);
+ }
+ function toggle(label,action){const button=document.createElement('button');button.type='button';button.className='shop-button secondary';button.textContent=label;button.setAttribute('aria-pressed','false');button.addEventListener('click',()=>transition(action));controls.append(button);return button;}
  const hideCase=toggle(t('Masquer le boîtier','Hide case'),()=>caseVisible=!caseVisible),explode=toggle(t('Vue éclatée','Exploded view'),()=>exploded=!exploded);
  const retryModels=document.createElement('button');retryModels.type='button';retryModels.className='shop-button secondary';retryModels.textContent=t('Réessayer les modèles','Retry models');retryModels.hidden=true;retryModels.addEventListener('click',()=>{for(const [key,entry] of modelCache)if(entry.state==='failed')modelCache.delete(key);update();});controls.append(retryModels);retryModels.addEventListener('click',()=>{if(exampleState==='failed'){exampleState='idle';update();}});
  const sidePanel=toggle(t('Ouvrir le panneau latéral','Open side panel'),()=>panelOpen=!panelOpen);
@@ -183,6 +201,7 @@ export function mountPreview(host, form) {
  }
  const products=new Map(JSON.parse(document.getElementById('builder-products').textContent).map(p=>[p.id,p]));
  function update(){
+ if(finishTransition)finishTransition();
  const selected={};for(const cat of Object.keys(groups))selected[cat]=products.get(form.elements[cat].value);powerButton.disabled=view==='realistic'?exampleState!=='ready':!Object.values(selected).some(Boolean);if(powerButton.disabled)powered=false;
  if(view!=='build'&&view!=='realistic'&&!selected[view])view='build';select.value=view;
  const loading=[],failed=[];for(const [cat,p] of Object.entries(selected)){if(view==='realistic'||!p||cat==='motherboard')continue;const variant=variantFor(cat,p);loadModel(variant);const entry=modelCache.get(variant);stage.dataset[cat+'Model']=entry.state;stage.dataset[cat+'Variant']=variant;attachModel(cat,variant,p);if(entry.state==='loading')loading.push(names[cat]);if(entry.state==='failed')failed.push(names[cat]);}
@@ -210,6 +229,6 @@ export function mountPreview(host, form) {
  }else{exampleGroup.visible=false;credit.hidden=true;}
  applyPower();render();}
  const observer=new ResizeObserver(()=>{if(!stage.clientWidth||!stage.clientHeight)return;renderer.setSize(stage.clientWidth,stage.clientHeight);camera.aspect=stage.clientWidth/stage.clientHeight;camera.updateProjectionMatrix();update();});observer.observe(stage);
- renderer.domElement.addEventListener('webglcontextlost',event=>{event.preventDefault();powered=false;applyPower();stopAnimation();host.querySelector('.preview-view-status').textContent=t('La vue 3D a été interrompue. Rechargez la page ; le configurateur reste utilisable.','The 3D view was interrupted. Reload the page; the builder remains usable.');});
+ renderer.domElement.addEventListener('webglcontextlost',event=>{event.preventDefault();if(finishTransition)finishTransition();powered=false;applyPower();stopAnimation();host.querySelector('.preview-view-status').textContent=t('La vue 3D a été interrompue. Rechargez la page ; le configurateur reste utilisable.','The 3D view was interrupted. Reload the page; the builder remains usable.');});
  form.addEventListener('change',update);form.addEventListener('reset',()=>requestAnimationFrame(update));update();
 }
